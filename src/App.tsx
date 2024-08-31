@@ -1,10 +1,9 @@
-import { ForgetPassword } from "./page/visitor/authentication/forgetPassword"
-
+import { Login } from "./page/visitor/authentication"
 function App() {
 
   return (
     <>
-     <ForgetPassword/>
+     <Login/>
     </>
   )
 }
