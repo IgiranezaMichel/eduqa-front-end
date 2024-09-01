@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material"
 import { Navigation } from "../../../component/navigation"
 import { HodMenu } from "../../../util/hodMenu"
-import { ArrowRight, CalendarMonth, HistoryEduSharp, People, Visibility } from "@mui/icons-material"
+import { HistoryEduSharp, People, Visibility } from "@mui/icons-material"
 import { DashboardCard } from "./component/DashboardCard"
 import { Suggestions } from "./component/suggestions"
 import { CourseOnTrack } from "./component/courseontrack"
@@ -43,8 +43,6 @@ export const HOD=()=>{
      </section>
 
      <section className=" w-[40%]">
-        <CourseOnTrack/>
-        <CourseOnTrack/>
         <CourseOnTrack/>
      </section>
     </div>
