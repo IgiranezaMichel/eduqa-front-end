@@ -1,6 +1,6 @@
 import {Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import { ForgetPassword } from "./page/visitor/authentication/forgetPassword"
-import { Login } from "./page/visitor/authentication"
+import { Login } from "./page/visitor/authentication/login"
 function App() {
 
   return (
