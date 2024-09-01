@@ -1,4 +1,5 @@
 import { Button, TextField } from "@mui/material"
+import { Link } from "react-router-dom"
 export const Login=()=>{
     return <>
     <section className="h-screen w-screen bg-slate-300 flex items-center justify-center">
@@ -19,7 +20,7 @@ export const Login=()=>{
                 </div>
                 <Button className="bg-blue-950/90 w-full normal-case text-white p-3 font-bold text-xl">Sign In</Button>
                 <div>
-                    Forgot Password ? 
+                    Forgot Password ? <Link to={'forgot-password'}>reset password</Link>
                 </div>
             </section>
         </section>
