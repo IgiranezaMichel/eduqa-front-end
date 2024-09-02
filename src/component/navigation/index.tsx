@@ -46,7 +46,7 @@ export const Navigation:FC<Items>=(prop)=>{
 
             <section className="ms-[20%] w-[80%] px-2 fixed h-full pb-20">
  
-                    <div className="fixed  w-[80%]  flex justify-between">
+                    <div className="fixed  w-[80%]  flex justify-between border-b border-b-blue-300/50">
                     <div>
                     </div>
                     <div className="flex gap-5 items-center pe-4 my-2">

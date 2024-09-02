@@ -1,31 +1,20 @@
-import { Add, Download, Search } from "@mui/icons-material"
+import { Search } from "@mui/icons-material"
 import { Navigation } from "../../../component/navigation"
 import { HodMenu } from "../../../util/hodMenu"
 import { InputAdornment, TextField } from "@mui/material"
 
-export const HodManageStudent=()=>{
-    return <Navigation items={HodMenu}>
-        <div className="float-end py-3 ">
-            <button className="p-1 bg-green-800/80 text-white mx-2 hover:bg-blue-600"><Download/> Import Student</button>
-            <button className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add/> Add Student</button>
-        </div>
+export const HodManageReport=()=>{
+    return <Navigation items={HodMenu}> 
         <div className="flex items-center justify-between clear-both py-3">
             <section>
                 <div className="font-bold text-xl">
-                    List of Student
+                    List of Report
                 </div>
                 <div className="text-gray-500 text-sm">
-                    This table contains all the student in the department 
+                    This table contains all the Report in the department 
                </div>
             </section>
-            <section>
-                <label htmlFor="">Status</label><br />
-                <select name="" id="" className="p-1">
-                    <option value="">select status</option>
-                    <option value="">active</option>
-                    <option value="">inactive</option>
-                </select>
-            </section>
+ 
         </div>  
         <div className="flex justify-between items-center py-4">
         <div> 
@@ -38,9 +27,7 @@ export const HodManageStudent=()=>{
                     < Search/>
                 </InputAdornment> ), }} />
         </div>
-        <section>
-            <button className="p-1 bg-green-800/80">Export</button>
-        </section>
+     
         </div>
 
 

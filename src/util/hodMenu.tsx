@@ -1,23 +1,12 @@
-import { Dashboard } from "@mui/icons-material";
+import { Dashboard, Description, Folder, Grading, LockPerson, School } from "@mui/icons-material";
 import { INavigationItems } from "../interface/navigationitems";
 
 export const HodMenu:INavigationItems[]=[
     {icon:<Dashboard/>,link:'/hod',name:'Overview'},
-    {icon:<Dashboard/>,link:'/hod/lectures',name:'lectures'},
-    {icon:<Dashboard/>,link:'/hod/semesters',name:'Semesters'},
-    {icon:<Dashboard/>,link:'/hod/students',name:'Students'},
-    {icon:<Dashboard/>,link:'/hod/courses',name:'Courses'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
-    {icon:<Dashboard/>,link:'/hod/reports',name:'Reports'},
+    {icon:<LockPerson/>,link:'/hod/lectures',name:'lectures'},
+    {icon:<Folder/>,link:'/hod/semesters',name:'Semesters'},
+    {icon:<School/>,link:'/hod/students',name:'Students'},
+    {icon:<Description/>,link:'/hod/courses',name:'Courses'},
+    {icon:<Grading/>,link:'/hod/reports',name:'Reports'},
+
 ]
