@@ -1,13 +1,31 @@
-import { Add, Download, Search } from "@mui/icons-material"
+import { Add, Close, Download, Search } from "@mui/icons-material"
 import { Navigation } from "../../../component/navigation"
 import { HodMenu } from "../../../util/hodMenu"
-import { InputAdornment, TextField } from "@mui/material"
+import { Dialog, IconButton, InputAdornment, TextField } from "@mui/material"
+import { CreateStudent } from "../../../form/student/create"
+import { useState } from "react"
+import { IStudent } from "../../../interface/student"
 
 export const HodManageStudent=()=>{
+    const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
+    const [ student ,setStudent] = useState<IStudent>(
+        {
+            firstName:'',
+            lastName:'',
+            email:'',
+            phone:'',
+            gender:'',
+            profile:'',
+            regNumber:'',
+            semester:'',
+            id:''
+        }
+    );
+
     return <Navigation items={HodMenu}>
         <div className="float-end py-3 ">
             <button className="p-1 bg-green-800/80 text-white mx-2 hover:bg-blue-600"><Download/> Import Student</button>
-            <button className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add/> Add Student</button>
+            <button onClick={() => setOpenDialog({ type: 'create', open: true })}  className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add/> Add Student</button>
         </div>
         <div className="flex items-center justify-between clear-both py-3">
             <section>
@@ -150,5 +168,25 @@ export const HodManageStudent=()=>{
         </div>
     </div>
  </section>
+
+ <Dialog maxWidth='xs' PaperProps={{ className: 'w-full' }} open={openDialog.open}>
+
+            <CreateStudent student={student}>
+                <section className="flex justify-between p-2 items-center mb-4">
+                    <div>
+                        {openDialog.type == 'create' ? <>
+                            <div className="text-blue-900/80 font-bold text-lg">Add new Course</div>
+                            <div className="text-sm text-slate-600">
+                                Add new student to the list of student fill the form below
+
+                            </div>
+                        </> : <>Update Course</>}
+                    </div>
+                    <IconButton className="bg-blue-200/50" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
+
+                </section>
+            </CreateStudent>
+        </Dialog>
+
  </Navigation>
 }

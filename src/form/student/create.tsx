@@ -16,6 +16,7 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
         regNumber: prop.student.regNumber,
         profile: prop.student.profile,
         semester: prop.student.semester,
+        phone:'',
         id:prop.student.id
  
     })

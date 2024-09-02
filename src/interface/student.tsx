@@ -1,11 +1,10 @@
-import { CourseCategory } from "../enum/coursecategory"
-
 export interface IStudent{
     id?:string
     firstName:string
     lastName:string
     regNumber:string
-    gender:CourseCategory
+    phone:string
+    gender:string    
     email:string
     semester:string
     profile:string
