@@ -25,9 +25,19 @@ export const CreateCourse: FC<ICourseItem> = (prop) => {
             <div>
                 {prop.children}
             </div>
-            <section className="p-2">
-                <TextField label='Course name' value={course.name}
+            <form className="p-2">
+                <TextField required label='Module Code' value={course.name}
                     onChange={(e) => setCourse({ ...course, name: e.target.value })} className="mb-5" fullWidth />
+                <TextField required label='Module name' value={course.name}
+                    onChange={(e) => setCourse({ ...course, name: e.target.value })} className="mb-5" fullWidth />
+                <TextField required label='Module Credit' value={course.name}
+                    onChange={(e) => setCourse({ ...course, name: e.target.value })} className="mb-5" fullWidth />
+                <TextField required label='Course Semester' value={course.name}
+                    onChange={(e) => setCourse({ ...course, name: e.target.value })} className="mb-5" fullWidth />
+                <TextField required label='Assing Course' value={course.name}
+                    onChange={(e) => setCourse({ ...course, name: e.target.value })} className="mb-5" fullWidth />
+
+
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Select course Course Category</InputLabel>
                     <Select
@@ -35,16 +45,15 @@ export const CreateCourse: FC<ICourseItem> = (prop) => {
                         id="demo-simple-select"
                         value={course.type}
                         label="Select course Course Category"
-
                     >
                         <MenuItem value={CourseCategory.GENERAL}>General Course</MenuItem>
                         <MenuItem value={CourseCategory.CORE}>Core Course</MenuItem>
                      </Select>
                 </FormControl>
-                <div className="float-end py-2">
-                    <Button variant="contained">submit</Button>
+                <div className="py-2 ">
+                <Button className="bg-blue-950/90 w-full normal-case text-white p-3 font-bold text-xl">Add new course</Button>
                 </div>
-            </section>
+            </form>
         </div>
 
     </>

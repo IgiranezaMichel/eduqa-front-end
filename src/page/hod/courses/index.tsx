@@ -164,9 +164,15 @@ const [course,setCourse]=useState<ICourse>({
  </section>
  <Dialog maxWidth='xs' PaperProps={{className:'w-full'}} open={openDialog.open}>
     <CreateCourse course={course}>
-        <section className="flex justify-between p-2 items-center">
+        <section className="flex justify-between p-2 items-center mb-4">
             <div>
-                {openDialog.type=='create'?<>Add new Course</>:<>Update Course</>}
+                {openDialog.type=='create'?<>
+                <div className="text-blue-900/80 font-bold text-lg">Add new Course</div>
+                <div className="text-sm text-slate-600">
+                    Add new course to the list of courses fill the form below
+                    
+                    </div>                
+                </>:<>Update Course</>}
             </div>
             <IconButton className="bg-blue-200/50" onClick={()=>setOpenDialog({...openDialog,open:false})}><Close/></IconButton>
 
