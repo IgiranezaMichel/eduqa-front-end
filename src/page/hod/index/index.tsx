@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material"
 import { Navigation } from "../../../component/navigation"
 import { HodMenu } from "../../../util/hodMenu"
-import { HistoryEduSharp, People, Visibility } from "@mui/icons-material"
+import { Feedback, HistoryEduSharp, People, Visibility } from "@mui/icons-material"
 import { DashboardCard } from "./component/DashboardCard"
 import { Suggestions } from "./component/suggestions"
 import { CourseOnTrack } from "./component/courseontrack"
@@ -32,7 +32,7 @@ export const HOD=()=>{
     <div className="flex items-center justify-between border-t-4 border-t-blue-900 mt-5 p-2 border border-b-4 border-b-blue-200/50">
     <DashboardCard icon={<People/>} title="Students" className="border-r border-r-blue-200/50 px-5" total={15}  />
     <DashboardCard icon={<HistoryEduSharp/>} className="border-r border-r-blue-200/50 px-5" title="Courses"  total={15}  />
-    <DashboardCard icon={<People/>} className="border-r border-r-blue-200/50 px-5" title="Lecturers"  total={15}  />
+    <DashboardCard icon={<Feedback/>} className="border-r border-r-blue-200/50 px-5" title="Lecturers"  total={15}  />
     <DashboardCard icon={<People/>}  title="Suggestions"  total={15}  />
     </div> 
 
