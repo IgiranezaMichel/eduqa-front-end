@@ -1,12 +1,31 @@
-import { Add, Article, Search } from "@mui/icons-material"
+import { Add, Article, Close, Search } from "@mui/icons-material"
 import { Navigation } from "../../../component/navigation"
 import { HodMenu } from "../../../util/hodMenu"
-import { InputAdornment, TextField } from "@mui/material"
+import { Dialog, IconButton, InputAdornment, TextField } from "@mui/material"
+import { useState } from "react"
+import { CreateCourse } from "../../../form/course/create"
+import { ICourse } from "../../../interface/course"
+import { CourseCategory } from "../../../enum/coursecategory"
 
 export const HodManageCourses=()=>{
+const [openDialog,setOpenDialog]=useState({open:false,type:'create'});
+const [course,setCourse]=useState<ICourse>({
+    name:'',
+    type:CourseCategory.GENERAL,
+    departmentId:'',
+    id:''
+})
+
+
+
+
+
+
+
+
     return <Navigation items={HodMenu}>
         <div className="float-end py-3 ">
-           <button className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add/> Add Course</button>
+           <button onClick={()=>setOpenDialog({type:'create',open:true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add/> Add Course</button>
         </div>
         <div className="flex items-center justify-between clear-both py-3">
             <section>
@@ -41,14 +60,7 @@ export const HodManageCourses=()=>{
             <button className="p-1 bg-green-800/80">Export</button>
         </section>
         </div>
-
-
-
-
-
-
-
-
+ 
  <section className="container  mx-auto overflow-hidden">
     <div className="flex flex-col">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -150,5 +162,23 @@ export const HodManageCourses=()=>{
         </div>
     </div>
  </section>
+ <Dialog maxWidth='xs' PaperProps={{className:'w-full'}} open={openDialog.open}>
+    <CreateCourse course={course}>
+        <section className="flex justify-between p-2 items-center">
+            <div>
+                {openDialog.type=='create'?<>Add new Course</>:<>Update Course</>}
+            </div>
+            <IconButton className="bg-blue-200/50" onClick={()=>setOpenDialog({...openDialog,open:false})}><Close/></IconButton>
+
+        </section>
+    </CreateCourse>                
+ </Dialog>
+
+
+
+
+
+
+
  </Navigation>
 }
