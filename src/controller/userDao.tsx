@@ -15,12 +15,12 @@ export class UserDao {
         if(user.id){
             form.append("id",user.id);
         }
-        return Axios().post("/user/register",form);
+        return Axios().post("/user/register",form,{headers:{"Content-Type":"application/json"}});
     }
     public login=(email:string,password:string)=>{
         return Axios().post("/user/login",{email,password});
     }
     public getAllUserPage=(page:IPage)=>{
-        return Axios().get("/user/get/all",{params:page});
+        return Axios().post("/user/get/all",page);
     }
 }

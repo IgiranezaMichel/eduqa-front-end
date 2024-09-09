@@ -1,5 +1,5 @@
 export interface IPage {
-    ageNumber: number
+    pageNumber: number
     pageSize: number
     sortBy: string
     search: string
