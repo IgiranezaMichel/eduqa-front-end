@@ -4,7 +4,7 @@ import { HodMenu } from "../../../util/hodMenu"
 import { Dialog, IconButton, InputAdornment, TextField } from "@mui/material"
 import { CreateStudent } from "../../../form/student/create"
 import { useState } from "react"
-import { IStudent } from "../../../interface/student"
+import { IStudent } from "../../../interface/user"
 
 export const HodManageStudent=()=>{
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
