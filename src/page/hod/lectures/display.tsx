@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Role } from "../../../enum/role";
 import { IPage } from "../../../interface/page";
 
-export const DisplayStudent = () => {
+export const DisplayLecture = () => {
     const { content, update } = useUserContext();
     console.log(content);
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
@@ -31,7 +31,7 @@ export const DisplayStudent = () => {
     )
     return <section className=" overflow-hidden h-full">
         <div className="float-end py-1">
-            <button className="p-1 bg-green-800/80 text-white mx-2 hover:bg-blue-600"><Download /> Import Student</button>
+            <button className="p-1 bg-green-800/80 text-white mx-2 hover:bg-blue-600"><Download /> Import Lecture</button>
             <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Student</button>
         </div>
         <div className="flex items-center justify-between clear-both py-1">
@@ -41,10 +41,10 @@ export const DisplayStudent = () => {
                 </div>
                 <section>
                     <div className="font-bold text-xl">
-                        List of Student
+                        List of Lecture
                     </div>
                     <div className="text-gray-500 text-sm">
-                        This table contains all the student in the department
+                        This table contains all the lecture in the department
                     </div>
                 </section>
             </section>
@@ -108,8 +108,10 @@ export const DisplayStudent = () => {
                                         </th>
                                     </tr>
                                 </thead>
-                                {content != undefined && content.data != undefined && content.data.length != 0 && <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {content.data.map((data: any, index: number) => <tr>
+                                {content != undefined && content.data != undefined &&  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                    {content.data.length != 0 &&content.data.map((data: any, index: number) => 
+                                    <>
+                                    <tr>
                                         <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
                                                 <span>{index + 1}</span>
@@ -157,36 +159,42 @@ export const DisplayStudent = () => {
                                             </div>
                                         </td>
                                     </tr>
+                                     <tr>
+                                     <td colSpan={9}>
+                                         <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
+                                             <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
+                                             <div className="flex gap-3">
+                                                 <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
+                                                     <option value="10">10</option>
+                                                     <option value="20">20</option>
+                                                     <option value="30">30</option>
+                                                 </select>
+                                                 <div>
+                                                     <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
+                                                         disabled={content.pageNumber == 0}
+                                                         className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
+                                                 </div>
+                                                 <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                                             </div>
+                                         </div>
+                                     </td>
+                                 </tr>
+                                 </>
                                     )}
-                                             <tr>
-                                <td colSpan={9}>
-                                    <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
-                                            <div>{content.pageNumber+1} page out of {content.totalPage} in {content.size} records</div>
-                                            <div className="flex gap-3">
-                                                <select onChange={e=>setPage({...page,pageSize:Number(e.target.value)})} className="border border-gray-300 rounded-md text-sm">
-                                                    <option value="10">10</option>
-                                                    <option value="20">20</option>
-                                                    <option value="30">30</option>
-                                                </select>
-                                                <div>
-                                                    <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber-1})}}
-                                                    disabled={content.pageNumber==0}
-                                                    className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
-                                                </div>
-                                                <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber+1})}} disabled={content.pageNumber+1==content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
-                                            </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    { content.data.length == 0 && <tr>
+                                    <td colSpan={6} className="text-center py-4 text-gray-500">No data found</td>
+                                </tr>}
                                 </tbody>}
+                                
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-         </section>
-         <div><button>Previous</button></div>
+        </section>
+        <div><button>Previous</button></div>
         <Dialog maxWidth='xs' PaperProps={{ className: 'w-full' }} open={openDialog.open}>
+
             <CreateStudent student={student}>
                 <section className="flex justify-between p-2 items-center mb-4">
                     <div>
