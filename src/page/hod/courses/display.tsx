@@ -158,6 +158,11 @@ export const DisplayCourse=()=>{
                                     <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
                                             <div>{content.pageNumber+1} page out of {content.totalPage} in {content.size} records</div>
                                             <div className="flex gap-3">
+                                            <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
+                                                     <option value="10">10</option>
+                                                     <option value="20">20</option>
+                                                     <option value="30">30</option>
+                                                 </select>
                                                 <div>
                                                     <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber-1})}}
                                                     disabled={content.pageNumber==0}
