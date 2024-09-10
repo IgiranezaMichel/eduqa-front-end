@@ -20,7 +20,7 @@ export const Navigation:FC<Items>=(prop)=>{
 
 
 
-    return <section className="fixed w-full h-screen bg-white">
+    return <section className="fixed w-full h-screen">
         <div className="flex">
             <div className="w-[20%] h-screen border-r-2 border-r-blue-400/30 fixed">
                     <div className="flex items-center justify ms-5 py-5">
