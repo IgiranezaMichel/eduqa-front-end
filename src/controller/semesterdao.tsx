@@ -13,11 +13,14 @@ export class SemesterDao {
         }
         return Axios().post("/semester/register",form,{headers:{"Content-Type":"application/json"}});
     }
-
     public getAllSemesterPage=(page:IPage)=>{
         return Axios().post("/semester/all/page",page);
     }
     public getAllSemester=()=>{
         return Axios().get("/semester/all");
     }
+    public getCurrentSemester=()=>{
+        return Axios().get("/semester/get/current-semester");
+    }
+    
 }
