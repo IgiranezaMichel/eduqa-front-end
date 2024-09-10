@@ -17,4 +17,7 @@ export class SemesterDao {
     public getAllSemesterPage=(page:IPage)=>{
         return Axios().post("/semester/all/page",page);
     }
+    public getAllSemester=()=>{
+        return Axios().get("/semester/all");
+    }
 }
