@@ -9,7 +9,6 @@ import { Createsemester } from "../../../form/semester/create"
 import { HodOverview } from "../index/component/overview"
 import { ISemester } from "../../../interface/semester"
 
-
 export const HodDisplaySemester = () => {
     const [semesterList, setSemesterList] = useState([])
     const [semester, setSemester] = useState<ISemester>({
