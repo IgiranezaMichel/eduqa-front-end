@@ -1,3 +1,4 @@
+import { Role } from "../enum/role";
 import { IPage } from "../interface/page";
 import { IUser } from "../interface/user";
 import { Axios } from "../util/axios";
@@ -23,4 +24,8 @@ export class UserDao {
     public getAllUserPage=(page:IPage)=>{
         return Axios().post("/user/get/all",page);
     }
+    public countUserByRole=(role:Role)=>{
+        return Axios().get(`/user/get/total/by-role?role=${role}`);
+    }
+    
 }
