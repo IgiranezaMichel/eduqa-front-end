@@ -21,8 +21,8 @@ export class UserDao {
     public login=(email:string,password:string)=>{
         return Axios().post("/user/login",{email,password});
     }
-    public getAllUserPage=(page:IPage)=>{
-        return Axios().post("/user/get/all",page);
+    public getAllUserPage=(page:IPage,role:Role)=>{
+        return Axios().post(`/user/get/all?role=${role}`,page);
     }
     public countUserByRole=(role:Role)=>{
         return Axios().get(`/user/get/total/by-role?role=${role}`);
