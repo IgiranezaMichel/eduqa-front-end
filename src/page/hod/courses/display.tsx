@@ -155,7 +155,6 @@ export const DisplayCourse=()=>{
                             </tr>)}
                             <tr>
                                 <td colSpan={9}>
-                                    {/* pagination */}
                                     <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
                                             <div>{content.pageNumber+1} page out of {content.totalPage} in {content.size} records</div>
                                             <div className="flex gap-3">
