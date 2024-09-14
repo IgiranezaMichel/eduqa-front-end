@@ -51,7 +51,7 @@ const saveStudent = (e:any) => {
             <form className="p-2" onSubmit={saveStudent}>
                 <TextField required label='First Name' value={student.name}
                     onChange={(e) => setStudent({ ...student, name: e.target.value })} className="mb-5" fullWidth />
-                <FormControl fullWidth>
+                <FormControl fullWidth className="mb-4">
                     <InputLabel id="gender-simple-select-label">Select gender</InputLabel>
                     <Select
                         labelId="gender-simple-select-label"
