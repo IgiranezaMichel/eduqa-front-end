@@ -1,11 +1,11 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { IUser } from "../../interface/user";
-import { Role } from "../../enum/role";
 import { UserDao } from "../../controller/userDao";
 import { toast, Toaster } from "sonner";
 import { useUserContext } from "../../context/user";
 import { DepartmentDao } from "../../controller/departmentdao";
+import { UserStatus } from "../../enum/userStatus";
 interface IStudentItem {
     student: IUser,
     refereEntity:string
@@ -22,6 +22,7 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
         phoneNumber: prop.student.phoneNumber,
         picture: prop.student.picture,
         role: prop.student.role,
+        status:UserStatus.ACTIVE
 
     })
     console.log(student);
