@@ -60,6 +60,7 @@ export const DisplayCourse=()=>{
             <button className="p-1 bg-green-800/80 text-white font-bold">Export</button>
         </section>
         </div>
+        
      <section className="container  mx-auto bg-white overflow-y-auto w-full overflow-x-auto h-[calc(100vh-10rem)] pb-20">
     <div className="flex flex-col">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
