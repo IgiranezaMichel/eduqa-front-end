@@ -75,11 +75,11 @@ export const DisplayStudent = () => {
         </div>
         <section className="container  mx-auto">
             <div className="flex flex-col ">
-                <div className="-mx-4 -my-2 overflow-x-auto  overflow-auto mb-20 h-80 mb-20 sm:-mx-6 lg:-mx-8">
+                <div className="-mx-4 -my-2 overflow-x-auto overflow-auto mb- h-80 sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
-                                <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0 fixed">
+                                <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0">
                                     <tr>
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <div className="flex items-center gap-x-3">
@@ -134,13 +134,9 @@ export const DisplayStudent = () => {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Monthly subscription</td>
+                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{data.departmentName}</td>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-
                                                 <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                             </div>
                                         </td>
@@ -158,36 +154,34 @@ export const DisplayStudent = () => {
                                         </td>
                                     </tr>
                                     )}
-                                             <tr>
-                                <td colSpan={9}>
-                                    <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
-                                            <div>{content.pageNumber+1} page out of {content.totalPage} in {content.size} records</div>
-                                            <div className="flex gap-3">
-                                                <select onChange={e=>setPage({...page,pageSize:Number(e.target.value)})} className="border border-gray-300 rounded-md text-sm">
-                                                    <option value="10">10</option>
-                                                    <option value="20">20</option>
-                                                    <option value="30">30</option>
-                                                </select>
-                                                <div>
-                                                    <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber-1})}}
-                                                    disabled={content.pageNumber==0}
-                                                    className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
-                                                </div>
-                                                <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber+1})}} disabled={content.pageNumber+1==content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
-                                            </div>
-                                    </div>
-                                </td>
-                            </tr>
+
                                 </tbody>}
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-         </section>
-         <div><button>Previous</button></div>
-        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full' }} open={openDialog.open}>
-            <CreateStudent student={student}>
+        </section>
+        <td colSpan={9}>
+            <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
+                <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
+                <div className="flex gap-3">
+                    <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                    <div>
+                        <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
+                            disabled={content.pageNumber == 0}
+                            className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
+                    </div>
+                    <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                </div>
+            </div>
+        </td>
+        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full', style: { maxHeight: '90dvh', overflow: 'auto' } }} open={openDialog.open} disablePortal>
+            <CreateStudent refereEntity="student" student={student}>
                 <section className="flex justify-between p-2 items-center mb-4">
                     <div>
                         {openDialog.type == 'create' ? <>
