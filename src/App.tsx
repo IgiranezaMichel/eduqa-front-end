@@ -8,6 +8,7 @@ import { HodManageCourses } from "./page/hod/courses"
 import { HodManageSemester } from "./page/hod/semester"
 import { HodManageReport } from "./page/hod/report"
 import { HodManageDepartment } from "./page/hod/department"
+import { InstructorHome } from "./page/instructor/index"
 function App() {
 
   return (
@@ -23,6 +24,10 @@ function App() {
         <Route path="/hod/courses" element={<HodManageCourses/>}></Route>
         <Route path="/hod/semesters" element={<HodManageSemester/>}></Route>
         <Route path="/hod/reports" element={<HodManageReport/>}></Route>
+
+
+        <Route path="/instructor" element={<InstructorHome/>}></Route>
+        
       </Routes>
       </div>
     </Router>
