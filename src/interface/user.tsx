@@ -9,4 +9,5 @@ export interface IUser{
     password:string
     picture:string
     role:Role
+    departmentId?:string
 }
