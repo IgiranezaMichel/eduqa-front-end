@@ -167,9 +167,9 @@ export const DisplayCourse=()=>{
                                                 <div>
                                                     <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber-1})}}
                                                     disabled={content.pageNumber==0}
-                                                    className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
+                                                    className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
                                                 </div>
-                                                <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber+1})}} disabled={content.pageNumber+1==content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                                                <button onClick={()=>{setPage({...page,pageNumber:content.pageNumber+1})}} disabled={content.pageNumber+1==content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
                                             </div>
                                     </div>
                                 </td>
