@@ -6,6 +6,7 @@ import { IUser } from "../../../interface/user";
 import { useEffect, useState } from "react";
 import { Role } from "../../../enum/role";
 import { IPage } from "../../../interface/page";
+import { UserStatus } from "../../../enum/userStatus";
 
 export const DisplayLecture = () => {
     const { content, update } = useUserContext();
@@ -20,7 +21,8 @@ export const DisplayLecture = () => {
             picture: '',
             id: '',
             password: '',
-            role: Role.ROLE_INSTRACTOR
+            role: Role.ROLE_INSTRACTOR,
+            status:UserStatus.ACTIVE
         }
     );
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
@@ -173,7 +175,7 @@ export const DisplayLecture = () => {
                                                                     disabled={content.pageNumber == 0}
                                                                     className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
                                                             </div>
-                                                            <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                                                            <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
                                                         </div>
                                                     </div>
                                                 </td>
