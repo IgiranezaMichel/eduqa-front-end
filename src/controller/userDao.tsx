@@ -13,6 +13,7 @@ export class UserDao {
         form.append("email",user.email);
         form.append("password",user.password);
         form.append("phoneNumber",user.phoneNumber);
+        form.append("status",user.status);
         if(user.departmentId)
         form.append("departmentId",user.departmentId);
         if(user.id){
