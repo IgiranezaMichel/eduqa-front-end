@@ -1,4 +1,4 @@
-import { Add, Close, ContactEmergency, Download, People, Search } from "@mui/icons-material";
+import { Add, BookmarkAdd, Close, ContactEmergency, Delete, Download, Edit, People, Search } from "@mui/icons-material";
 import { useUserContext } from "../../../context/user"
 import { CreateStudent } from "../../../form/student/create";
 import { Dialog, IconButton, InputAdornment, TextField } from "@mui/material";
@@ -20,7 +20,7 @@ export const DisplayLecture = () => {
             picture: '',
             id: '',
             password: '',
-            role: Role.ROLE_STUDENT
+            role: Role.ROLE_INSTRACTOR
         }
     );
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
@@ -32,7 +32,7 @@ export const DisplayLecture = () => {
     return <section className=" overflow-hidden h-full">
         <div className="float-end py-1">
             <button className="p-1 bg-green-800/80 text-white mx-2 hover:bg-blue-600"><Download /> Import Lecture</button>
-            <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Student</button>
+            <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Lecture</button>
         </div>
         <div className="flex items-center justify-between clear-both py-1">
             <section className="flex items-center">
@@ -75,11 +75,11 @@ export const DisplayLecture = () => {
         </div>
         <section className="container  mx-auto">
             <div className="flex flex-col ">
-                <div className="-mx-4 -my-2 overflow-x-auto  overflow-auto mb-20 h-80 mb-20 sm:-mx-6 lg:-mx-8">
+                <div className="-mx-4 -my-2 overflow-x-auto  overflow-auto h-80 mb-20 sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
-                                <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0 fixed">
+                                <thead className="bg-gray-50 dark:bg-gray-800  top-0 sticky">
                                     <tr>
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <div className="flex items-center gap-x-3">
@@ -90,7 +90,7 @@ export const DisplayLecture = () => {
                                         </th>
 
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            Student
+                                            Lecture
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             Contacts
@@ -102,90 +102,89 @@ export const DisplayLecture = () => {
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             Registration period
                                         </th>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            Total Course
+                                        </th>
 
                                         <th scope="col" className="relative py-3.5 px-4">
                                             <span className="sr-only">Actions</span>
                                         </th>
                                     </tr>
                                 </thead>
-                                {content != undefined && content.data != undefined &&  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                    {content.data.length != 0 &&content.data.map((data: any, index: number) => 
-                                    <>
-                                    <tr>
-                                        <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                                            <div className="inline-flex items-center gap-x-3">
-                                                <span>{index + 1}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <div className="flex items-center gap-x-2">
-                                                <img className="object-cover w-8 h-8 rounded-full" src={data.picture} alt="" />
-                                                <div>
-                                                    <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.name}</h2>
-                                                    <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.gender}</p>
-                                                </div>
-                                            </div>
-                                        </td>
+                                {content != undefined && content.data != undefined && <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                    {content.data.length != 0 && content.data.map((data: any, index: number) =>
+                                        <>
+                                            <tr>
+                                                <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                                    <div className="inline-flex items-center gap-x-3">
+                                                        <span>{index + 1}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2">
+                                                        <img className="object-cover w-8 h-8 rounded-full" src={data.picture} alt="" />
+                                                        <div>
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.name}</h2>
+                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.gender}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                            <div className="flex items-center gap-x-2">
-                                                <ContactEmergency />
-                                                <div>
-                                                    <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.email}</h2>
-                                                    <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.phoneNumber}</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Monthly subscription</td>
-                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
-                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2">
+                                                        <ContactEmergency />
+                                                        <div>
+                                                            <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.email}</h2>
+                                                            <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.phoneNumber}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{data.departmentName}</td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
 
-                                                <h2 className="text-sm font-normal">{data.timeStamp}</h2>
-                                            </div>
-                                        </td>
-
-                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div className="flex items-center gap-x-6">
-                                                <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                    delete
-                                                </button>
-
-                                                <button onClick={() => { setStudent(data); setOpenDialog({ type: 'update', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                    Edit
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                     <tr>
-                                     <td colSpan={9}>
-                                         <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
-                                             <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
-                                             <div className="flex gap-3">
-                                                 <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
-                                                     <option value="10">10</option>
-                                                     <option value="20">20</option>
-                                                     <option value="30">30</option>
-                                                 </select>
-                                                 <div>
-                                                     <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
-                                                         disabled={content.pageNumber == 0}
-                                                         className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
-                                                 </div>
-                                                 <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
-                                             </div>
-                                         </div>
-                                     </td>
-                                 </tr>
-                                 </>
+                                                        <h2 className="text-sm font-normal">{data.timeStamp}</h2>
+                                                    </div>
+                                                </td>
+                                                <td className="text-center"><span className="p-1 rounded-md bg-gray-100 text-gray-600">{data.totalCourse}</span></td>
+                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-6">
+                                                        <div className=""><BookmarkAdd className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
+                                                        <div className=""><Delete className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
+                                                        <div className="" onClick={() => { setStudent(data); setOpenDialog({ type: 'update', open: true }) }}><Edit className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colSpan={9}>
+                                                    <div className="flex border-t gap-4 items-center border-gray-200 bg-white px-4 py-3 sm:px-6">
+                                                        <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
+                                                        <div className="flex gap-3">
+                                                            <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
+                                                                <option value="10">10</option>
+                                                                <option value="20">20</option>
+                                                                <option value="30">30</option>
+                                                            </select>
+                                                            <div>
+                                                                <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
+                                                                    disabled={content.pageNumber == 0}
+                                                                    className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
+                                                            </div>
+                                                            <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </>
                                     )}
-                                    { content.data.length == 0 && <tr>
-                                    <td colSpan={6} className="text-center py-4 text-gray-500">No data found</td>
-                                </tr>}
+                                    {content.data.length == 0 && <tr>
+                                        <td colSpan={6} className="text-center py-4 text-gray-500">No data found</td>
+                                    </tr>}
                                 </tbody>}
-                                
+
                             </table>
                         </div>
                     </div>
@@ -193,21 +192,24 @@ export const DisplayLecture = () => {
             </div>
         </section>
         <div><button>Previous</button></div>
-        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full' }} open={openDialog.open}>
+        <Dialog maxWidth='xs' PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }} open={openDialog.open}>
 
-            <CreateStudent student={student}>
-                <section className="flex justify-between p-2 items-center mb-4">
+            <CreateStudent refereEntity="lecture" student={student}>
+                <section className="flex justify-between p-2 items-center mb-4 sticky top-0 bg-black/10">
                     <div>
                         {openDialog.type == 'create' ? <>
-                            <div className="text-blue-900/80 font-bold text-lg">Add new Course</div>
+                            <div className="text-blue-900/80 font-bold text-lg">Add new Lecture</div>
                             <div className="text-sm text-slate-600">
-                                Add new student to the list of student fill the form below
+                                Add new student to the list of lecture fill the form below
 
                             </div>
-                        </> : <>Update Course</>}
+                        </> : <>   <div className="text-blue-900/80 font-bold text-lg">Update Lecture</div>
+                            <div className="text-sm text-slate-600">
+                                Update lecture infromation fill the form below
+
+                            </div></>}
                     </div>
                     <IconButton className="bg-blue-200/50" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
-
                 </section>
             </CreateStudent>
         </Dialog>
