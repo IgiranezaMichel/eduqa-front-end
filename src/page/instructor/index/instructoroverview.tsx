@@ -6,6 +6,7 @@ import { Role } from "../../../enum/role";
 import { CourseDao } from "../../../controller/courseDao";
 import { SemesterDao } from "../../../controller/semesterdao";
 import { DashboardCard } from "../../hod/index/component/DashboardCard";
+import { LectureCourseDao } from "../../../controller/lecturecourses";
 
 export const InstructorOverview = () => {
     const [totalStudents, setTotalStudents] = useState(0)
@@ -17,7 +18,7 @@ export const InstructorOverview = () => {
         }).catch((err) => {
             toast.error(err.message);
         });
-        new CourseDao().countCourse().then((res) => {
+        new LectureCourseDao().countCourse().then((res) => {
             setTotalCourses(res.data)
         }).catch((err) => {
             toast.error(err.message);
