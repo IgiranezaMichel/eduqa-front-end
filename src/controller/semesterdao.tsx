@@ -11,7 +11,7 @@ export class SemesterDao {
         if(Semester.id){
             form.append("id",Semester.id);
         }
-        return Axios().post("/semester/register",form,{headers:{"Content-Type":"application/json"}});
+        return Axios().post("/semester/register",form,{headers:{"Content-Type":"application/json"},withCredentials:true});
     }
     public getAllSemesterPage=(page:IPage)=>{
         return Axios().post("/semester/all/page",page);
