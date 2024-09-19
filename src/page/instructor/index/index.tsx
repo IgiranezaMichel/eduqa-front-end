@@ -1,6 +1,6 @@
 import { Navigation } from "../../../component/navigation"
 import { InstructorMenu } from "../../../util/instructorMenu"
-import { IndexOverviewHeading } from "../../component/overview"
+import { IndexOverviewHeading } from "../../component"
 import { InstructorOverview } from "./instructoroverview"
 import { RecentCourse } from "./recentcourse"
 

@@ -3,7 +3,7 @@ import { HodMenu } from "../../../util/hodMenu"
 import { Suggestions } from "./component/suggestions"
 import { CourseOnTrack } from "./component/courseontrack"
 import { HodOverview } from "./component/overview"
-import { IndexOverviewHeading } from "../../component/overview"
+import { IndexOverviewHeading } from "../../component"
 
 export const HOD=()=>{
     return <Navigation items={HodMenu}>

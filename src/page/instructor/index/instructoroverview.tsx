@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { UserDao } from "../../../controller/userDao";
 import { Role } from "../../../enum/role";
-import { CourseDao } from "../../../controller/courseDao";
 import { SemesterDao } from "../../../controller/semesterdao";
 import { DashboardCard } from "../../hod/index/component/DashboardCard";
 import { LectureCourseDao } from "../../../controller/lecturecourses";
+import { UserStatus } from "../../../enum/userStatus";
 
 export const InstructorOverview = () => {
     const [totalStudents, setTotalStudents] = useState(0)
     const [totalCourses, setTotalCourses] = useState(0)
     const [semester, setSemester] = useState<any>({})
     useEffect(() => {
-        new UserDao().countUserByRole(Role.ROLE_STUDENT).then((res) => {
+        new UserDao().countUserByRole(Role.ROLE_STUDENT,UserStatus.ACTIVE).then((res) => {
             setTotalStudents(res.data)
         }).catch((err) => {
             toast.error(err.message);

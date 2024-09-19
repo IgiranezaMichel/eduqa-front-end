@@ -1,13 +1,12 @@
 import { Visibility } from "@mui/icons-material"
-import { Chip } from "@mui/material"
-
-export const IndexOverviewHeading=()=>{
+export const OverviewHeading=()=>{
     return <div>
     <div className="rounded-xl bg-blue-900 bg-blue-950/90">
         <div className="flex text-white p-5">
             <section>
                 <div className="mb-4 text-xl">
-                Welcome ,<span className="text-yellow-400">Josephan </span>
+                Welcome ,<span className="text-yellow-400">
+                    </span>
                 </div> 
                 <div className="text-sm">
                 re, ipsum dolor sit omet consectecture

@@ -3,10 +3,11 @@ import { Role } from "../enum/role";
 import { IPage } from "../interface/page";
 import { IUser } from "../interface/user";
 import { Axios } from "../util/axios";
+import { UserStatus } from "../enum/userStatus";
 
 export class UserDao {
     public async successLogin() {
-        return axios.get("/success-login");
+        return axios.get("http://localhost:8080/success-login",{withCredentials:true});
     }
     public registerUser=(user:IUser)=>{
         const form=new FormData();
@@ -20,6 +21,7 @@ export class UserDao {
         form.append("status",user.status);
         if(user.departmentId)
         form.append("departmentId",user.departmentId);
+        form.append("code",user.code);
         if(user.id){
             form.append("id",user.id);
         }
@@ -28,11 +30,11 @@ export class UserDao {
     public login=(username:string,password:string)=>{
         return axios.post(`http://localhost:8080/login?username=${username}&password=${password}`,{},{withCredentials:true});
     }
-    public getAllUserPage=(page:IPage,role:Role)=>{
-        return Axios().post(`/user/get/all?role=${role}`,page,{withCredentials:true});
+    public getAllUserPage=(page:IPage,role:Role,status:UserStatus)=>{
+        return Axios().post(`/user/get/all?role=${role}&status=${status}`,page,{withCredentials:true});
     }
-    public countUserByRole=(role:Role)=>{
-        return Axios().get(`/user/get/total/by-role?role=${role}`,{withCredentials:true});
+    public countUserByRole=(role:Role,status:UserStatus)=>{
+        return Axios().get(`/user/get/total/by-role?role=${role}&status=${status}`,{withCredentials:true});
     }
     
 }

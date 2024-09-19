@@ -6,9 +6,10 @@ import { IUser } from "../../../interface/user";
 import { useEffect, useState } from "react";
 import { Role } from "../../../enum/role";
 import { IPage } from "../../../interface/page";
+import { UserStatus } from "../../../enum/userStatus";
 
 export const DisplayStudent = () => {
-    const { content, update } = useUserContext();
+    const { content, update,refresh } = useUserContext();
     console.log(content);
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const [student, setStudent] = useState<IUser>(
@@ -20,14 +21,16 @@ export const DisplayStudent = () => {
             picture: '',
             id: '',
             password: '',
-            role: Role.ROLE_STUDENT
+            role: Role.ROLE_STUDENT,
+            status:UserStatus.ACTIVE,
+            code:''
         }
     );
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
     useEffect(
         () => {
             update(page);
-        }, [page]
+        }, [page,refresh]
     )
     return <section className=" overflow-hidden h-full">
         <div className="float-end py-1">
@@ -49,10 +52,10 @@ export const DisplayStudent = () => {
                 </section>
             </section>
             <section>
-                <select name="" id="" className="p-1">
+                <select onChange={e=>e.target.value!=''&&refresh(e.target.value)} name="" id="" className="p-1">
                     <option value="">select status</option>
-                    <option value="">active</option>
-                    <option value="">inactive</option>
+                    <option value={UserStatus.ACTIVE}>active</option>
+                    <option value={UserStatus.INACTIVE}>inactive</option>
                 </select>
             </section>
         </div>
@@ -84,7 +87,7 @@ export const DisplayStudent = () => {
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <div className="flex items-center gap-x-3">
                                                 <button className="flex items-center gap-x-2">
-                                                    <span>#</span>
+                                                    <span>Id</span>
                                                 </button>
                                             </div>
                                         </th>
@@ -112,7 +115,7 @@ export const DisplayStudent = () => {
                                     {content.data.map((data: any, index: number) => <tr>
                                         <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
-                                                <span>{index + 1}</span>
+                                                <span>{data.code}</span>
                                             </div>
                                         </td>
                                         <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">

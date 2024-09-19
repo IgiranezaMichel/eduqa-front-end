@@ -1,14 +1,14 @@
+import { useEffect, useState } from "react"
+import { UserDao } from "../../../controller/userDao"
+import { Role } from "../../../enum/role"
+import { toast } from "sonner"
+import { CourseDao } from "../../../controller/courseDao"
+import { SemesterDao } from "../../../controller/semesterdao"
 import { Feedback, HistoryEduSharp, People } from "@mui/icons-material"
-import { DashboardCard } from "./DashboardCard"
-import { useEffect, useState } from "react";
-import { UserDao } from "../../../../controller/userDao";
-import { CourseDao } from "../../../../controller/courseDao";
-import { Role } from "../../../../enum/role";
-import { toast } from "sonner";
-import { SemesterDao } from "../../../../controller/semesterdao";
-import { UserStatus } from "../../../../enum/userStatus";
+import { DashboardCard } from "../../hod/index/component/DashboardCard"
+import { UserStatus } from "../../../enum/userStatus"
 
-export const HodOverview = () => {
+export const AdminIndexOverviewReport = () => {
     const [totalStudents, setTotalStudents] = useState(0)
     const [totalCourses, setTotalCourses] = useState(0)
     const [totalLecture, setTotalLecture] = useState(0)
@@ -44,14 +44,14 @@ export const HodOverview = () => {
                 <div className="text-sm font-bold">{semester.semesterName}</div>
             </div>
             <DashboardCard icon={<People />} title="Students"
-            path="/hod/students"
+            path="/admin/student"
              className="border-r border-r-blue-200 px-5" total={totalStudents} />
-            <DashboardCard icon={<HistoryEduSharp />}  path="/hod/courses"
+            <DashboardCard icon={<HistoryEduSharp />}  path="/admin/course"
             className="border-r border-r-blue-200 px-5" title="Courses" total={totalCourses} />
-            <DashboardCard icon={<People />} path="/hod/lectures"
+            <DashboardCard icon={<People />} path="/admin/lecture"
              className="border-r border-r-blue-200 ps-5" title="Lecturers" total={totalLecture} />
             <DashboardCard icon={<Feedback />} 
-            path="/hod/suggestions"
+            path="/admin/suggestion"
             title="Suggestions" total={15} />
         </div></>
 }

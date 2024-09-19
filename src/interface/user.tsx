@@ -4,6 +4,7 @@ import { UserStatus } from "../enum/userStatus"
 export interface IUser{
     id:string
     name:string
+    code:string
     gender:string
     phoneNumber:string
     email:string

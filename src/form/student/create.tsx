@@ -22,11 +22,10 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
         phoneNumber: prop.student.phoneNumber,
         picture: prop.student.picture,
         role: prop.student.role,
-        status:UserStatus.ACTIVE
+        status:UserStatus.ACTIVE,
+        code:prop.student.code
 
-    })
-    console.log(student);
-    
+    })    
     const [departments, setDepartments] = useState<any>([])
     useEffect(
         () => {
@@ -52,8 +51,13 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
     const saveStudent = (e: any) => {
         e.preventDefault();
         new UserDao().registerUser(student).then(
-            data => { toast.success(data.data); refresh() }
-        ).catch(err => toast.error(err))
+            data => { toast.success(data.data);
+                 refresh() }
+        ).catch(err => {
+            console.log(err)
+            toast.error(err.response.data)
+        }
+    )
     }
 
     return <>

@@ -1,7 +1,8 @@
 import { ReactNode, useEffect, useState } from "react"
 import { UserDao } from "../../../controller/userDao"
+import { AuthProvider } from "../../../context/authentication";
 
-export const SuccessAuthenticationPage=(prop:{children:ReactNode})=>{
+export const SuccessAuthenticationPage=()=>{
     const [isLoading,setIsLoading]=useState(true)
     useEffect(
         ()=>{
@@ -12,9 +13,10 @@ export const SuccessAuthenticationPage=(prop:{children:ReactNode})=>{
             .catch(err=>console.log(err))
         }
     );
-    return <>
+    
+    return <AuthProvider>
     {isLoading?<>
     loading ...
-    </>:prop.children}
-    </>
+    </>:<></>}
+    </AuthProvider>
 }

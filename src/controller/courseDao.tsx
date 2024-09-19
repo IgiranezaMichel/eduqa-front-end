@@ -4,6 +4,9 @@ import { IPage } from "../interface/page";
 import { Axios } from "../util/axios";
 
 export class CourseDao {
+    public getAllCourses() {
+        return Axios().get("/course/all");
+    }
     public registercourse=(course:ICourse)=>{
         const form=new FormData();
         form.append("name",course.name);

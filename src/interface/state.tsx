@@ -1,5 +1,5 @@
 export interface IState{
     content:any,
-    refresh:()=>void,
+    refresh:(data?:any)=>void,
     update:(data:any)=>void
 }

@@ -9,6 +9,13 @@ import { HodManageSemester } from "./page/hod/semester"
 import { HodManageReport } from "./page/hod/report"
 import { HodManageDepartment } from "./page/hod/department"
 import { InstructorHome } from "./page/instructor/index"
+import { AuthProvider } from "./context/authentication"
+import { Admin } from "./page/admin/index"
+import { AdminManageUser } from "./page/admin/user"
+import { AdminManageSemester } from "./page/admin/semester"
+import { AdminManagingStudent } from "./page/admin/student"
+import { AdminManageCourse } from "./page/admin/course"
+import { AdminReport } from "./page/admin/report"
 function App() {
 
   return (
@@ -17,17 +24,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Login/>}></Route>
         <Route path="/forgot-password" element={<ForgetPassword/>}></Route>
-        <Route path="/hod" element={<HOD/>}></Route>
-        <Route path="/hod/department" element={<HodManageDepartment/>}></Route>
-        <Route path="/hod/lectures" element={<HodManageLecturers/>}></Route>
-        <Route path="/hod/students" element={<HodManageStudent/>}></Route>
-        <Route path="/hod/courses" element={<HodManageCourses/>}></Route>
-        <Route path="/hod/semesters" element={<HodManageSemester/>}></Route>
-        <Route path="/hod/reports" element={<HodManageReport/>}></Route>
-
-
-        <Route path="/instructor" element={<InstructorHome/>}></Route>
         
+        <Route path="/hod" element={<AuthProvider><HOD/></AuthProvider>}></Route>
+        <Route path="/hod/department" element={<AuthProvider><HodManageDepartment/></AuthProvider>}></Route>
+        <Route path="/hod/lectures" element={<AuthProvider><HodManageLecturers/></AuthProvider>}></Route>
+        <Route path="/hod/students" element={<AuthProvider><HodManageStudent/></AuthProvider>}></Route>
+        <Route path="/hod/courses" element={<AuthProvider><HodManageCourses/></AuthProvider>}></Route>
+        <Route path="/hod/semesters" element={<AuthProvider><HodManageSemester/></AuthProvider>}></Route>
+        <Route path="/hod/reports" element={<AuthProvider><HodManageReport/></AuthProvider>}></Route>
+        <Route path="/instructor" element={<AuthProvider><InstructorHome/></AuthProvider>}></Route>
+
+        <Route path="/admin" element={<AuthProvider><Admin/></AuthProvider>}></Route>
+        <Route path="/admin/user" element={<AuthProvider><AdminManageUser/></AuthProvider>}></Route>
+        <Route path="/admin/semester" element={<AuthProvider><AdminManageSemester/></AuthProvider>}></Route>
+        <Route path="/admin/student" element={<AuthProvider><AdminManagingStudent/></AuthProvider>}></Route>
+        <Route path="/admin/course" element={<AuthProvider><AdminManageCourse/></AuthProvider>}></Route>
+        <Route path="/admin/report" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
+       
       </Routes>
       </div>
     </Router>

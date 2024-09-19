@@ -3,19 +3,24 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import {toast, Toaster} from 'sonner'
 import { UserDao } from "../../../controller/userDao";
+import { AuthProvider } from "../../../context/authentication";
+import { SuccessAuthenticationPage } from "./successPage";
 export const Login=()=>{
     const [userName,setUserName]=useState('');
     const [password,setPassword]=useState('');
     const [isLoading,setIsLoading]=useState(false)
+    const [hasAuthenticated,setHasAuthenticated]=useState(false);
     const loginHandler=async(e:any)=>{
         e.preventDefault();
         setIsLoading(true);
         new UserDao().login(userName,password)
-        .then(()=>{setIsLoading(false);}
+        .then(()=>{setIsLoading(false);setHasAuthenticated(true)}
         )
         .catch(err=>{setIsLoading(false);toast.error(err.response.data||err.message)})
     }
+    
     return <>
+    {hasAuthenticated?<SuccessAuthenticationPage/>:
     <form onSubmit={loginHandler} className="h-screen w-screen bg-slate-300 flex items-center justify-center">
     <div className="grid grid-cols-2 items-center w-[70%] m-auto bg-white">
         <section className="p-10">
@@ -60,6 +65,6 @@ export const Login=()=>{
         </section>
     </div>
     </form>
-    
+    }
     </>
 }
