@@ -36,5 +36,7 @@ export class UserDao {
     public countUserByRole=(role:Role,status:UserStatus)=>{
         return Axios().get(`/user/get/total/by-role?role=${role}&status=${status}`,{withCredentials:true});
     }
-    
+    public   getAllUserByRoleAndStatus=async(role:Role,status:UserStatus)=>{
+        return Axios().get(`/user/get/all/by-role-and-status?role=${role}&status=${status}`,{withCredentials:true});
+    }
 }
