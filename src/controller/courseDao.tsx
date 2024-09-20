@@ -28,5 +28,7 @@ export class CourseDao {
     public countCourseByDepartment=(role:Role)=>{
         return Axios().get(`/course/get/total/by-department?department=${role}`);
     }
-    
+    public getAvailabelCourseWithInASemesterPage=(page:IPage,semesterId:string)=>{
+        return Axios().post(`/course/get/available/by-semester/${semesterId}`,page);
+    }
 }
