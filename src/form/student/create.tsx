@@ -51,8 +51,8 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
     const saveStudent = (e: any) => {
         e.preventDefault();
         new UserDao().registerUser(student).then(
-            data => { toast.success(data.data);
-                 refresh() }
+            data => {refresh(UserStatus.ACTIVE) ;toast.success(data.data);
+                 }
         ).catch(err => {
             console.log(err)
             toast.error(err.response.data)
