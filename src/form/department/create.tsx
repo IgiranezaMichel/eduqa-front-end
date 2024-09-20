@@ -13,6 +13,7 @@ export const CreateDepartment: FC<IDepartmentItems> = (prop) => {
         name: prop.department.name,
         id: prop.department.id,
     })
+
     const savedepartment = (e: any) => {
         e.preventDefault();
                 new DepartmentDao().createDepartment(department).then(
