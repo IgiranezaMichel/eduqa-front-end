@@ -14,22 +14,22 @@ export const useUserContext=()=>{
     return user;
 }
 
-export const UserProvider = (prop:{children:any,role:Role})=>{
+export const UserProvider = (prop:{children:any,role:Role,status:UserStatus})=>{
     const [page, setPage] = useState<IPage>({
         pageNumber:0,pageSize:10,search:'',sortBy:'id'
     });
-    const [userStatus, setUserStatus] = useState<UserStatus>(UserStatus.ACTIVE);
+    const [refresh, setRefresh] = useState<Boolean>(false);
     const [content, setContent] = useState<any>([]);
     useEffect(
         ()=>{
-            new UserDao().getAllUserPage(page,prop.role,userStatus).then((data)=>{
+            new UserDao().getAllUserPage(page,prop.role,prop.status).then((data)=>{
                 setContent(data.data);
             });
-        },[page,userStatus]
+        },[page,refresh,prop.status,prop.role]
     );
     const contextDate:IState={
         content:content,
-        refresh:(data:UserStatus)=>setUserStatus(data),
+        refresh:()=>setRefresh(!refresh),
         update:(data:IPage)=>setPage(data)
     }
     return <UserContext.Provider value={contextDate}>{prop.children}</UserContext.Provider>
