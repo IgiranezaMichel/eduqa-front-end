@@ -45,7 +45,11 @@ export const AuthProvider = (prop: { children: ReactNode }) => {
 
                 }
                 else if (user.role == Role.ROLE_STUDENT) {
-                    navigation("/student")
+                    if (location.pathname == "/")
+                        navigation("/student")
+                    else {
+                        navigation(location.pathname)
+                    }
                 }
                 else {
                     navigation("/")
