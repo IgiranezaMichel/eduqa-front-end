@@ -42,7 +42,7 @@ function App() {
         <Route path="/instructor/student" element={<AuthProvider><InstructorManageStudent/></AuthProvider>}></Route>
 
         <Route path="/student" element={<AuthProvider><StudentIndex/></AuthProvider>}></Route>
-        <Route path="/student/semester" element={<AuthProvider><StudentSemester/></AuthProvider>}></Route>
+        <Route path="/student/semesters" element={<AuthProvider><StudentSemester/></AuthProvider>}></Route>
         <Route path="/student/course" element={<AuthProvider><StudentCourse/></AuthProvider>}></Route>
         
         <Route path="/admin" element={<AuthProvider><Admin/></AuthProvider>}></Route>
