@@ -6,6 +6,9 @@ import { Axios } from "../util/axios";
 import { UserStatus } from "../enum/userStatus";
 
 export class UserDao {
+    public async changeUserStatus(id: any, userStatus: UserStatus) {
+      return Axios().get(`/user/change/status/${id}?status=${userStatus}`)
+    }
     public async successLogin() {
         return axios.get("http://localhost:8080/success-login",{withCredentials:true});
     }
