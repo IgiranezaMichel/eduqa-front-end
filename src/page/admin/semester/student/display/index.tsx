@@ -3,6 +3,8 @@ import { Add, Close, Phone } from "@mui/icons-material"
 import { Dialog, IconButton } from "@mui/material"
 import { RegistrationForm } from "../../../../../form/registration";
 import { useSemesterUserContext } from "../../../../../context/semesteruser";
+import RegistrationStatusPieChart from "../../../../../component/chart";
+import { Role } from "../../../../../enum/role";
 
  const StudentHomeTable=(prop:{semester:any})=>{
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
@@ -22,10 +24,13 @@ import { useSemesterUserContext } from "../../../../../context/semesteruser";
         <section>
          <div>
     <div className="flex justify-between items-center py-2">
-        <div>
-        <h1><b>semester </b> {prop.semester.semesterName}</h1>
+        <div className="flex gap-2 items-center">        
+            <RegistrationStatusPieChart role={Role.ROLE_STUDENT} semesterId={prop.semester.id}/>
+<div>
+<h1><b>semester </b> {prop.semester.semesterName}</h1>
         <h1><b>starting date </b> {prop.semester.startingDate}</h1>
         <h1><b>ending date </b> {prop.semester.endDate}</h1>
+</div>
         </div>
         <img className="w-20" src="../../auca.png" alt="" />
     </div>
