@@ -3,15 +3,14 @@ import { useUserContext } from "../../../context/user"
 import { CreateStudent } from "../../../form/student/create";
 import { Dialog, IconButton, InputAdornment, TextField } from "@mui/material";
 import { IUser } from "../../../interface/user";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Role } from "../../../enum/role";
 import { IPage } from "../../../interface/page";
 import { UserStatus } from "../../../enum/userStatus";
 import { LectureCourseCreateForm } from "../../../form/lecturecourse/create";
 
-export const DisplayLecture = () => {
+export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
     const { content, update } = useUserContext();
-    console.log(content);
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const [student, setStudent] = useState<IUser>(
         {
@@ -34,10 +33,7 @@ export const DisplayLecture = () => {
         }, [page]
     )
     return <section className=" overflow-hidden h-full">
-        <div className="float-end py-1">
-            <button className="p-1 bg-green-800/80 text-white mx-2 hover:bg-blue-600"><Download /> Import Lecture</button>
-            <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Lecture</button>
-        </div>
+    
         <div className="flex items-center justify-between clear-both py-1">
             <section className="flex items-center">
                 <div className="items-center p-2 bg-green-800/10 text-black font-bold mx-2 hover:bg-blue-600">
@@ -52,13 +48,7 @@ export const DisplayLecture = () => {
                     </div>
                 </section>
             </section>
-            <section>
-                <select name="" id="" className="p-1">
-                    <option value="">select status</option>
-                    <option value="">active</option>
-                    <option value="">inactive</option>
-                </select>
-            </section>
+            
         </div>
         <div className="flex justify-between items-center py-2">
             <div>
@@ -73,7 +63,9 @@ export const DisplayLecture = () => {
                             </InputAdornment>),
                     }} />
             </div>
-            <section>
+            <section className="flex gap-2">
+                {prop.selectStatus}
+                 <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Lecture</button>
                 <button className="p-1 bg-green-800/80">Export</button>
             </section>
         </div>
@@ -166,7 +158,7 @@ export const DisplayLecture = () => {
                                     </>
 
                                     {content.data.length == 0 && <tr>
-                                        <td colSpan={6} className="text-center py-4 text-gray-500">No data found</td>
+                                        <td colSpan={7} className="text-center py-4 text-gray-500">No data found</td>
                                     </tr>}
                                 </tbody>}
 
@@ -224,9 +216,12 @@ export const DisplayLecture = () => {
         </Dialog>
         <Dialog open={openDialog.open&&openDialog.type=='edit'}>
             <LectureCourseCreateForm lecture={student}>
-          <div className="flex justify-between">
-          <div className="text-sm text-slate-600"> Add new student to the list of lecture fill the form below </div>
-          <IconButton className="bg-blue-200/50" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
+          <div className="flex justify-between gap-2">
+          <div>
+          <div className="text-blue-900/80 font-bold text-lg">Assign Lecture Course</div>
+          <div className="text-sm text-slate-600">To Assign lecture course fill the form below </div>
+          </div>
+          <IconButton className="bg-blue-200/50 rounded-none" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
           </div>
             </LectureCourseCreateForm>
         </Dialog>
