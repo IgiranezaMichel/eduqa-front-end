@@ -13,9 +13,13 @@ import { AuthProvider } from "./context/authentication"
 import { Admin } from "./page/admin/index"
 import { AdminManageUser } from "./page/admin/user"
 import { AdminManageSemester } from "./page/admin/semester"
-import { AdminManagingStudent } from "./page/admin/student"
 import { AdminManageCourse } from "./page/admin/course"
 import { AdminReport } from "./page/admin/report"
+import { InstructureCourse } from "./page/instructor/course"
+import { InstructorManageStudent } from "./page/instructor/student"
+import { StudentIndex } from "./page/student/index"
+import { StudentSemester } from "./page/student/semester"
+import { StudentCourse } from "./page/student/course"
 function App() {
 
   return (
@@ -32,12 +36,18 @@ function App() {
         <Route path="/hod/courses" element={<AuthProvider><HodManageCourses/></AuthProvider>}></Route>
         <Route path="/hod/semesters" element={<AuthProvider><HodManageSemester/></AuthProvider>}></Route>
         <Route path="/hod/reports" element={<AuthProvider><HodManageReport/></AuthProvider>}></Route>
+        
         <Route path="/instructor" element={<AuthProvider><InstructorHome/></AuthProvider>}></Route>
+        <Route path="/instructor/course" element={<AuthProvider><InstructureCourse/></AuthProvider>}></Route>
+        <Route path="/instructor/student" element={<AuthProvider><InstructorManageStudent/></AuthProvider>}></Route>
 
+        <Route path="/student" element={<AuthProvider><StudentIndex/></AuthProvider>}></Route>
+        <Route path="/student/semester" element={<AuthProvider><StudentSemester/></AuthProvider>}></Route>
+        <Route path="/student/course" element={<AuthProvider><StudentCourse/></AuthProvider>}></Route>
+        
         <Route path="/admin" element={<AuthProvider><Admin/></AuthProvider>}></Route>
         <Route path="/admin/user" element={<AuthProvider><AdminManageUser/></AuthProvider>}></Route>
         <Route path="/admin/semester" element={<AuthProvider><AdminManageSemester/></AuthProvider>}></Route>
-        <Route path="/admin/student" element={<AuthProvider><AdminManagingStudent/></AuthProvider>}></Route>
         <Route path="/admin/course" element={<AuthProvider><AdminManageCourse/></AuthProvider>}></Route>
         <Route path="/admin/report" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
        
