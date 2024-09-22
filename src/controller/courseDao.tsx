@@ -4,6 +4,9 @@ import { IPage } from "../interface/page";
 import { Axios } from "../util/axios";
 
 export class CourseDao {
+    public async getLectureCourseWithInSemester(id: any) {
+        return Axios().get("/course/lecture/" + id);
+    }
     public getAllCourses() {
         return Axios().get("/course/all");
     }
