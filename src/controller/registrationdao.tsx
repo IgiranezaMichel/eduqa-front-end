@@ -13,4 +13,7 @@ export class RegistrationDao{
     public async getRegisteredUserForASemesterCount(semester:string,role:Role){
         return Axios().get(`/registration/get/semester/registration/count/status/${semester}?role=${role}`,{withCredentials:true});
     }
+    public async getUserRegistrationHistory(page:IPage){
+        return Axios().post(`/registration/get/registration/history`,page,{withCredentials:true});
+    }
 }
