@@ -4,6 +4,8 @@ import { CourseDao } from "../../controller/courseDao";
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { SemesterDao } from "../../controller/semesterdao";
 import { IUser } from "../../interface/user";
+import { LectureCourseDao } from "../../controller/lecturecourses";
+import { toast, Toaster } from "sonner";
 export interface ICreateLectureCourseForm {
     lecture: IUser
     children: ReactNode
@@ -22,20 +24,27 @@ export const LectureCourseCreateForm: FC<ICreateLectureCourseForm> = (prop) => {
     useEffect(
         () => {
             new CourseDao().getAllCourses().then((courses) => {
-                setCourseList(courses);
+                setCourseList(courses.data);
             });
             new SemesterDao().getCurrentSemester().then((semester) => {
-                setSemester(semester);
+                setLectureCourses({...lectureCourses,semesterId:semester.data.id})
+                setSemester(semester.data);
             })
                 .catch((err) => {
                     console.log(err);
                 })
-        }
+        },[]
     )
-    return <>
-        <div className="mb-4">{prop.children}</div>
+    const submitLectureCourse=(e:any)=>{
+        e.preventDefault();
+        new LectureCourseDao().createLectureCourse(lectureCourses)
+        .then(data=>toast.success(data.data))
+        .catch(err=>toast.error(err.response.message))
+    }
+    return <form onSubmit={submitLectureCourse} className="p-2">
+        <div className="mb-4 flex items-center">{prop.children}</div>
         <div>
-            <div className="font-bold">
+            <div className="font-bold ">
                 {semester.name}
             </div>
 
@@ -47,9 +56,13 @@ export const LectureCourseCreateForm: FC<ICreateLectureCourseForm> = (prop) => {
                     label="Select Course"
                     onChange={(e) => setLectureCourses({ ...lectureCourses, courseId: e.target.value as string })}
                 >
-                    {courseList.map((data: any) => <MenuItem key={data.id} value={data.id}>{data.name}</MenuItem>)}
+                    {courseList!=undefined&&courseList.length!=0&&courseList.map((data: any) => <MenuItem className="flex justify-between" key={data.id} value={data.id}>
+                    <div>{data.code}</div>
+                    <div className="text-sm">{data.name}</div>
+                    </MenuItem>)}
                 </Select>
             </FormControl>
+           
             <FormControl fullWidth className="mb-4">
                 <InputLabel id="gender-simple-select-label">Select Group</InputLabel>
                 <Select labelId="gender-simple-select-label"
@@ -66,5 +79,6 @@ export const LectureCourseCreateForm: FC<ICreateLectureCourseForm> = (prop) => {
                 <Button type="submit" className="bg-blue-950/90 w-full normal-case text-white p-3 font-bold text-xl">Confirm Course</Button>
             </div>
         </div>
-    </>
+        <Toaster/>
+    </form>
 }
