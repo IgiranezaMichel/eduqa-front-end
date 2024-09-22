@@ -10,4 +10,7 @@ export class RegistrationDao{
     public async getAvailabelUserRegisteredForASemesterPage(page:IPage,semester:string,role:Role){
         return Axios().post(`/registration/get/available/by-semester/${semester}?role=${role}`,page,{withCredentials:true});
     }
+    public async getRegisteredUserForASemesterCount(semester:string,role:Role){
+        return Axios().get(`/registration/get/semester/registration/count/status/${semester}?role=${role}`,{withCredentials:true});
+    }
 }
