@@ -39,7 +39,7 @@ export const LectureCourseCreateForm: FC<ICreateLectureCourseForm> = (prop) => {
         e.preventDefault();
         new LectureCourseDao().createLectureCourse(lectureCourses)
         .then(data=>toast.success(data.data))
-        .catch(err=>toast.error(err.response.message))
+        .catch(err=>toast.error(err.response.data))
     }
     return <form onSubmit={submitLectureCourse} className="p-2">
         <div className="mb-4 flex items-center">{prop.children}</div>
