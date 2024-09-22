@@ -3,6 +3,9 @@ import { ISemester } from "../interface/semester";
 import { Axios } from "../util/axios";
 
 export class SemesterDao {
+    public async getSemester(value: any) {
+      return await Axios().get(`/semester/get/${value}`);
+    }
     public registerSemester=(Semester:ISemester)=>{
         const form=new FormData();
         form.append("name",Semester.name);
