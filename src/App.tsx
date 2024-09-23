@@ -50,6 +50,7 @@ function App() {
         <Route path="/admin/semester" element={<AuthProvider><AdminManageSemester/></AuthProvider>}></Route>
         <Route path="/admin/course" element={<AuthProvider><AdminManageCourse/></AuthProvider>}></Route>
         <Route path="/admin/report" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
+        <Route path="/settings" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
        
       </Routes>
       </div>
