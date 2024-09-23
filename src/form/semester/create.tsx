@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { toast, Toaster } from "sonner";
 import { ISemester } from "../../interface/semester";
 import { SemesterDao } from "../../controller/semesterdao";
@@ -14,6 +14,7 @@ export const Createsemester: FC<ISemesterItem> = (prop) => {
         id: prop.semester.id,
         endDate: prop.semester.endDate,
         startingDate: prop.semester.startingDate,
+        semNumber:prop.semester.semNumber
     })
     const yearRegx = /^\d{4}-\d{4}$/;
     const savesemester = (e: any) => {
@@ -51,7 +52,22 @@ export const Createsemester: FC<ISemesterItem> = (prop) => {
             <form className="p-2" onSubmit={savesemester}>
                 <TextField required label='Semester year' value={semester.name}
                     onChange={handleYear} className="mb-5" fullWidth />
-
+                    <FormControl fullWidth className="mb-4">
+                    <InputLabel id="gender-simple-select-label">Select semester number</InputLabel>
+                    <Select
+                        labelId="gender-simple-select-label"
+                        id="gender-simple-select"
+                        value={semester.semNumber}
+                        label="Select semester number"
+                        onChange={(e) => setsemester({ ...semester, semNumber: Number(e.target.value)})}
+                    >
+                        <MenuItem value={1}>I</MenuItem>
+                        <MenuItem value={2}>II</MenuItem>
+                        <MenuItem value={3}>III</MenuItem>
+                        <MenuItem value={4}>IV</MenuItem>
+                    </Select>
+                </FormControl>
+                
                 <TextField type="date" InputLabelProps={{ shrink: true }} required label='Starting Date' value={semester.startingDate}
                     onChange={e => setsemester({ ...semester, startingDate: e.target.value })} className="mb-5" fullWidth />
 

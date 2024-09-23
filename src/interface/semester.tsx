@@ -3,4 +3,5 @@ export interface ISemester {
     name: string
     startingDate: string
     endDate: string
+    semNumber:number
 }
