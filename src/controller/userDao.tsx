@@ -33,6 +33,9 @@ export class UserDao {
     public login=(username:string,password:string)=>{
         return axios.post(`http://localhost:8080/login?username=${username}&password=${password}`,{},{withCredentials:true});
     }
+    public async logout(){
+        return axios.get('http://localhost:8080/logout',{withCredentials:true});
+    }
     public getAllUserPage=(page:IPage,role:Role,status:UserStatus)=>{
         return Axios().post(`/user/get/all?role=${role}&status=${status}`,page,{withCredentials:true});
     }
