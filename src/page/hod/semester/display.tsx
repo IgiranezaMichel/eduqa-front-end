@@ -16,6 +16,7 @@ export const HodDisplaySemester = () => {
         id:'',
         name:'',
         startingDate:'',
+        semNumber:1
     })
     useEffect(
         ()=>{

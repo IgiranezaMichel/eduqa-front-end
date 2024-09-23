@@ -27,7 +27,8 @@ import { Role } from "../../../../../enum/role";
         <div className="flex gap-2 items-center">        
             <RegistrationStatusPieChart role={Role.ROLE_STUDENT} semesterId={prop.semester.id}/>
 <div>
-<h1><b>semester </b> {prop.semester.semesterName}</h1>
+<h1><b>Semester {prop.semester.semNumber=1?'I':prop.semester.semNumber=2?'II':prop.semester.semNumber=3?'III':prop.semester.semNumber=4?'IV':prop.semester.semNumber=5?'V':prop.semester.semNumber=6?'VI':prop.semester.semNumber=7?'VII':prop.semester.semNumber=8?'VIII':''}
+</b> : {prop.semester.semesterName}</h1>
         <h1><b>starting date </b> {prop.semester.startingDate}</h1>
         <h1><b>ending date </b> {prop.semester.endDate}</h1>
 </div>
