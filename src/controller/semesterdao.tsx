@@ -11,6 +11,7 @@ export class SemesterDao {
         form.append("name",Semester.name);
         form.append("endDate",Semester.endDate);
         form.append("startingDate",Semester.startingDate);
+        form.append("semNumber",Semester.semNumber as any);
         if(Semester.id){
             form.append("id",Semester.id);
         }
