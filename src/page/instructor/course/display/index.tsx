@@ -1,4 +1,4 @@
-import { Download, FileCopy } from "@mui/icons-material";
+import { FileCopy } from "@mui/icons-material";
 import { useLectureCourseContext } from "../../../../context/lecturecourse"
 import { ReactNode, useEffect, useState } from "react";
 import { IPage } from "../../../../interface/page";

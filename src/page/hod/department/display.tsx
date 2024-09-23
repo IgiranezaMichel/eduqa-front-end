@@ -103,9 +103,9 @@ export const HodDisplayDepartment = () => {
                                                     delete
                                                 </button>
 
-                                                {/* <button onClick={() => { setStudent(data); setOpenDialog({ type: 'update', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                <button onClick={() => { setDepartment(departmentName); setOpenDialog({ type: 'update', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                     Edit
-                                                </button> *  */}
+                                                </button> 
                                             </div>
                                         </td>
                                     </tr>

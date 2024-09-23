@@ -22,10 +22,10 @@ export const RecentCourse = () => {
         () => {
             new LectureCourseDao().getAllLectureCoursePage(page,currentSemester.id)
                 .then(data => {
-                    setCourses(data.data); console.log(data.data);
+                    setCourses(data.data); setIsLoading(false);
                 })
                 .catch(err => {
-                    toast.error(err.message); console.log(err);
+                    toast.error(err.message);setIsLoading(false);
                 });
         }, []
 

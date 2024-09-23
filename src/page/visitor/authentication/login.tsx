@@ -3,7 +3,6 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import {toast, Toaster} from 'sonner'
 import { UserDao } from "../../../controller/userDao";
-import { AuthProvider } from "../../../context/authentication";
 import { SuccessAuthenticationPage } from "./successPage";
 export const Login=()=>{
     const [userName,setUserName]=useState('');

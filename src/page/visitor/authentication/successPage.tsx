@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { UserDao } from "../../../controller/userDao"
 import { AuthProvider } from "../../../context/authentication";
 import { LinearProgress } from "@mui/material";
@@ -37,9 +37,9 @@ export const SuccessAuthenticationPage=()=>{
         ()=>{
             const userData=new UserDao().successLogin();
             userData.then(
-                data=>data.data
+                data=>{data.data;setIsLoading(false)}
             )
-            .catch(err=>console.log(err))
+            .catch(err=>{console.log(err);setIsLoading(false)})
         }
     );
     

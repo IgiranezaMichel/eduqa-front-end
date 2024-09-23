@@ -1,4 +1,4 @@
-import { ArrowRight, Book, BookOutlined} from "@mui/icons-material"
+import { ArrowRight, BookOutlined} from "@mui/icons-material"
 import { LinearProgress } from "@mui/material"
 export const CourseOnTrack = () => {
     return <div className="border rounded p-2 w-full">

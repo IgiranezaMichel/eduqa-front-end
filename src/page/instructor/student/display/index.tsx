@@ -10,6 +10,7 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
     const [currentSemester,setCurrentSemester] = useState<any>({})
     const [page,setPage] = useState<IPage>({pageNumber:0,pageSize:10,search:'',sortBy:'id'})
     const [studentList,setStudentList] = useState<any>([]);
+    studentList;
   useEffect(    
     () => {
         new SemesterDao().getCurrentSemester()

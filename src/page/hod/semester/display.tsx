@@ -11,7 +11,7 @@ import { ISemester } from "../../../interface/semester"
 
 export const HodDisplaySemester = () => {
     const [semesterList, setSemesterList] = useState([])
-    const [semester, setSemester] = useState<ISemester>({
+    const [semester] = useState<ISemester>({
         endDate:'',
         id:'',
         name:'',
