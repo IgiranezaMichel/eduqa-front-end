@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import { useStudentRegistrationHistoryContext } from "../../../../context/studentregistrationhistory";
 import { toast } from "sonner";
 import { SemesterDao } from "../../../../controller/semesterdao";
-import { Tooltip } from "@mui/material";
+import { Skeleton, Tooltip } from "@mui/material";
 
 export const DisplaySemester = () => {
     const { content } = useStudentRegistrationHistoryContext();
     const [semester,setSemester]=useState<any>({})
+    const [isLoading,setIsLoading]=useState(true)
     useEffect(
         ()=>{
             new SemesterDao().getCurrentSemester().then((res) => {
-                setSemester(res.data)
+                setSemester(res.data);setTimeout(() => {
+                    setIsLoading(false)
+                }, 1000);
             }).catch((err) => {
-                toast.error(err.message);
+                toast.error(err.message);setIsLoading(false)
             })
         },[]
     )
@@ -34,9 +37,9 @@ export const DisplaySemester = () => {
             </div>
             </Tooltip>
           </section>
-         
+          <div className="grid grid-cols-6 gap-2">{isLoading&&[...new Array(12)].map((_,index:number)=><Skeleton key={index} className="h-40 w-full bg-blue-950"/>)}</div>
            <div className="grid grid-cols-6 gap-3">
-            {content!=undefined&&content.data!=undefined&&content.data.map((item:any, index:number) => {
+            {!isLoading&&content!=undefined&&content.data!=undefined&&content.data.map((item:any, index:number) => {
                 return <section key={item.id+index} className="border py-4 text-center shadow-md shadow-blue-950 cursor-pointer hover:bg-blue-900 hover:text-white">
                 <div className="text-xl font-bold">{item.semester.semesterName}</div>
                 <div className="text-sm mt-5">{item.semester.timeStamp}</div>
