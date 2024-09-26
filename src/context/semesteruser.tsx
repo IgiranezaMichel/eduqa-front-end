@@ -21,9 +21,11 @@ export const SemesterUserProvider = (prop:{children:ReactNode,semesterId:string,
     const [content, setContent] = useState<any>([]);
     useEffect(
         ()=>{
-            new RegistrationDao().getAvailabelUserRegisteredForASemesterPage(page,prop.semesterId,prop.role).then((data)=>{
+        //    {prop.semesterId!=undefined&&
+             new RegistrationDao().getAvailabelUserRegisteredForASemesterPage(page,prop.semesterId,prop.role).then((data)=>{
                 setContent(data.data);
-            });
+            })
+        // };
         },[page,refresh,prop.semesterId,prop.role]
     );
     const contextDate:IState={
