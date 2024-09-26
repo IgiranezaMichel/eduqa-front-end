@@ -23,18 +23,22 @@ import { Role } from "../../../../../enum/role";
 </section>
         <section>
          <div>
-    <div className="flex justify-between items-center py-2">
+    {Object.keys(prop.semester).length!=0?<div className="flex justify-between items-center py-2">
         <div className="flex gap-2 items-center">        
             <RegistrationStatusPieChart role={Role.ROLE_STUDENT} semesterId={prop.semester.id}/>
 <div>
-<h1><b>Semester {prop.semester.semNumber=1?'I':prop.semester.semNumber=2?'II':prop.semester.semNumber=3?'III':prop.semester.semNumber=4?'IV':prop.semester.semNumber=5?'V':prop.semester.semNumber=6?'VI':prop.semester.semNumber=7?'VII':prop.semester.semNumber=8?'VIII':''}
-</b> : {prop.semester.semesterName}</h1>
+<h1>
+    <div>
+    <b>Semester {prop.semester.semNumber=1?'I':prop.semester.semNumber=2?'II':prop.semester.semNumber=3?'III':prop.semester.semNumber=4?'IV':prop.semester.semNumber=5?'V':prop.semester.semNumber=6?'VI':prop.semester.semNumber=7?'VII':prop.semester.semNumber=8?'VIII':''}
+    </b>
+    </div>
+: {prop.semester.semesterName}</h1>
         <h1><b>starting date </b> {prop.semester.startingDate}</h1>
         <h1><b>ending date </b> {prop.semester.endDate}</h1>
 </div>
         </div>
         <img className="w-20" src="../../auca.png" alt="" />
-    </div>
+    </div>:<div>No semester found</div>}
 
     <section className="container  mx-auto overflow-hidden">
 {content!=undefined&&content.data!=undefined&&<div className="flex flex-col">
