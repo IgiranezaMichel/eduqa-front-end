@@ -57,7 +57,7 @@ export const AdminManageSemester = () => {
            </div>
             <select onChange={handleSemesterChange} name="" id="" className="p-1 mx-1 rounded border border-gray-300">
                     <option value="">Semester filtering</option>
-                    {semesterList.map((item: any, index: number) => <option key={item.id + index} value={item.id}>{item.semesterName}</option>)
+                    {semesterList!=undefined&&semesterList.length!=0&&semesterList.map((item: any, index: number) => <option key={item.id + index} value={item.id}>{item.semesterName}</option>)
                     }
                 </select>
         </section>
