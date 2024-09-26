@@ -20,6 +20,7 @@ import { InstructorManageStudent } from "./page/instructor/student"
 import { StudentIndex } from "./page/student/index"
 import { StudentSemester } from "./page/student/semester"
 import { StudentCourse } from "./page/student/course"
+import { StudentSurvey } from "./page/student/survey/display"
 function App() {
 
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/student" element={<AuthProvider><StudentIndex/></AuthProvider>}></Route>
         <Route path="/student/semesters" element={<AuthProvider><StudentSemester/></AuthProvider>}></Route>
         <Route path="/student/course" element={<AuthProvider><StudentCourse/></AuthProvider>}></Route>
+        <Route path="/student/survey" element={<AuthProvider><StudentSurvey/></AuthProvider>}></Route>
         
         <Route path="/admin" element={<AuthProvider><Admin/></AuthProvider>}></Route>
         <Route path="/admin/user" element={<AuthProvider><AdminManageUser/></AuthProvider>}></Route>
