@@ -45,4 +45,7 @@ export class UserDao {
     public   getAllUserByRoleAndStatus=async(role:Role,status:UserStatus)=>{
         return Axios().get(`/user/get/all/by-role-and-status?role=${role}&status=${status}`,{withCredentials:true});
     }
+    public async resetUserPassword(userId:string){
+        return Axios().post(`/user/reset/password/${userId}`)
+    }
 }
