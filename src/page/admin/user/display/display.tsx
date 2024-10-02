@@ -12,7 +12,7 @@ import { ViewLectureCourse } from "../../../../form/lecturecourse/view";
 import { ChangeUserStatusForm } from "../../../../form/userstatus/create";
 
 
-export const DisplayUserByRole = (prop: { content: ReactNode,role:Role }) => {
+export const DisplayUserByRole = (prop: { content: ReactNode, role: Role }) => {
     const { content, update, refresh } = useUserContext();
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const [student, setStudent] = useState<IUser>(
@@ -49,9 +49,17 @@ export const DisplayUserByRole = (prop: { content: ReactNode,role:Role }) => {
                             </InputAdornment>),
                     }} />
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 p-2">
                 {prop.content}
-                <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Student</button>
+                {prop.role == Role.ROLE_STUDENT ? <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600">
+                    <Add /> Add Student
+                </button> : prop.role == Role.ROLE_INSTRACTOR ?
+                    <button onClick={() => { setStudent({ ...student, role: Role.ROLE_INSTRACTOR }); setOpenDialog({ type: 'create', open: true }) }} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600">
+                        Add Instructor
+                    </button>
+                    : <button onClick={() => { setStudent({ ...student, role: Role.ROLE_HOD }); setOpenDialog({ type: 'create', open: true }) }} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600">
+                        Add Hod
+                    </button>}
             </div>
         </div>
         <section className="container  mx-auto">
@@ -125,34 +133,34 @@ export const DisplayUserByRole = (prop: { content: ReactNode,role:Role }) => {
                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                             <div className="flex items-center gap-x-6">
                                                 <Tooltip arrow placement="top" title="Change user status">
-                                                <button
-                                                onClick={() => { setStudent(data); setOpenDialog({ type: 'delete', open: true }) }}
-                                                className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                    <AppRegistrationOutlined/>
-                                                </button>
+                                                    <button
+                                                        onClick={() => { setStudent(data); setOpenDialog({ type: 'delete', open: true }) }}
+                                                        className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                        <AppRegistrationOutlined />
+                                                    </button>
                                                 </Tooltip>
-                                               {prop.role==Role.ROLE_INSTRACTOR&&<>
-                                                <Tooltip arrow placement="top" title="Assign lecture course">
-                                               <button onClick={() => { setStudent(data); setOpenDialog({ type: 'edit', open: true }) }} className="text-white">
-                                                    <AddBox/>
-                                                </button>
-                                               </Tooltip>
-                                               <Tooltip arrow placement="top" title="View lecture course">
-                                               <button onClick={() => { setStudent(data); setOpenDialog({ type: 'view', open: true }) }} className="text-white">
-                                                    <Visibility/>
-                                                </button>
-                                               </Tooltip>
-                                               </>}
+                                                {prop.role == Role.ROLE_INSTRACTOR && <>
+                                                    <Tooltip arrow placement="top" title="Assign lecture course">
+                                                        <button onClick={() => { setStudent(data); setOpenDialog({ type: 'edit', open: true }) }} className="text-white">
+                                                            <AddBox />
+                                                        </button>
+                                                    </Tooltip>
+                                                    <Tooltip arrow placement="top" title="View lecture course">
+                                                        <button onClick={() => { setStudent(data); setOpenDialog({ type: 'view', open: true }) }} className="text-white">
+                                                            <Visibility />
+                                                        </button>
+                                                    </Tooltip>
+                                                </>}
                                             </div>
                                         </td>
                                     </tr>
                                     )}
                                 </tbody>}
                                 {content != undefined && content.data != undefined && content.data.length == 0 &&
-                                        <tr>
-                                            <td colSpan={6} className="text-center p-2">No data found!</td>
-                                        </tr>
-                                        }
+                                    <tr>
+                                        <td colSpan={6} className="text-center p-2">No data found!</td>
+                                    </tr>
+                                }
                             </table>
                         </div>
                     </div>
@@ -177,18 +185,23 @@ export const DisplayUserByRole = (prop: { content: ReactNode,role:Role }) => {
                 </div>
             </div>
         </td>}
-        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full', style: { maxHeight: '90dvh', overflow: 'auto' } }} 
-        open={openDialog.open&&openDialog.type=='create'} onClose={() => setOpenDialog({ ...openDialog, open: false })} disablePortal>
-            <CreateStudent refereEntity="student" student={student}>
+        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full', style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            open={openDialog.open && openDialog.type == 'create'} onClose={() => setOpenDialog({ ...openDialog, open: false })} disablePortal>
+            <CreateStudent refereEntity={prop.role==Role.ROLE_HOD?'Hod':prop.role==Role.ROLE_INSTRACTOR?'instractor':'student'} student={student}>
                 <section className="flex justify-between p-2 items-center mb-4">
                     <div>
                         {openDialog.type == 'create' ? <>
-                            <div className="text-blue-900/80 font-bold text-lg">Add new Course</div>
+                            <div className="text-blue-900/80 font-bold text-lg">{prop.role==Role.ROLE_STUDENT?'Add new Student':
+                            prop.role==Role.ROLE_INSTRACTOR?'Add new Instructor':'Add new Hod'}</div>
                             <div className="text-sm text-slate-600">
-                                Add new student to the list of student fill the form below
+                                {
+                                prop.role==Role.ROLE_INSTRACTOR?'Add new instructor to the list of instructor fill the form below'
+                                :prop.role==Role.ROLE_HOD?'Add new hod to the list of hod fill the form below':
+                                'Add new student to the list of student fill the form below'
+                                }
 
                             </div>
-                        </> : <>Update Course</>}
+                        </> : <>Update User</>}
                     </div>
                     <IconButton className="bg-blue-200/50" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
 
@@ -196,27 +209,27 @@ export const DisplayUserByRole = (prop: { content: ReactNode,role:Role }) => {
             </CreateStudent>
         </Dialog>
 
-        <Dialog open={openDialog.open&&openDialog.type=='edit'} onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+        <Dialog open={openDialog.open && openDialog.type == 'edit'} onClose={() => setOpenDialog({ ...openDialog, open: false })}>
             <LectureCourseCreateForm lecture={student}>
-          <div className="flex justify-between gap-2">
-          <div>
-          <div className="text-blue-900/80 font-bold text-lg">Assign Lecture Course</div>
-          <div className="text-sm text-slate-600">To Assign lecture course fill the form below </div>
-          </div>
-          <IconButton className="bg-blue-200/50 rounded-none" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
-          </div>
+                <div className="flex justify-between gap-2">
+                    <div>
+                        <div className="text-blue-900/80 font-bold text-lg">Assign Lecture Course</div>
+                        <div className="text-sm text-slate-600">To Assign lecture course fill the form below </div>
+                    </div>
+                    <IconButton className="bg-blue-200/50 rounded-none" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
+                </div>
             </LectureCourseCreateForm>
         </Dialog>
 
-        <Dialog open={openDialog.open&&openDialog.type=='view'}
-        PaperProps={{  style: { maxHeight: '90dvh', overflow: 'auto' } }}
-        onClose={() => setOpenDialog({ ...openDialog, open: false })}>
-            <ViewLectureCourse lecture={student}/>
+        <Dialog open={openDialog.open && openDialog.type == 'view'}
+            PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ViewLectureCourse lecture={student} />
         </Dialog>
-        <Dialog maxWidth='xs' open={openDialog.open&&openDialog.type=='delete'}
-        PaperProps={{  style: { maxHeight: '90dvh', overflow: 'auto' } }}
-        onClose={() => setOpenDialog({ ...openDialog, open: false })}>
-        <ChangeUserStatusForm user={student}/>
-        </Dialog>                    
+        <Dialog maxWidth='xs' open={openDialog.open && openDialog.type == 'delete'}
+            PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ChangeUserStatusForm user={student} />
+        </Dialog>
     </section>
 }
