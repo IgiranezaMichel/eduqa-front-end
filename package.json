@@ -20,6 +20,7 @@
     "eduqa": "file:",
     "framer-motion": "^11.5.4",
     "i": "^0.3.7",
+    "jodit-react": "^4.1.2",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.3",
     "npm": "^10.8.3",
