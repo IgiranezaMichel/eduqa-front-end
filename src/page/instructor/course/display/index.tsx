@@ -1,13 +1,19 @@
-import { FileCopy } from "@mui/icons-material";
+import { Close, FileCopy, Visibility } from "@mui/icons-material";
 import { useLectureCourseContext } from "../../../../context/lecturecourse"
 import { ReactNode, useEffect, useState } from "react";
 import { IPage } from "../../../../interface/page";
+import { Dialog, IconButton } from "@mui/material";
+import { CourseAction } from "../crud";
+import { LectureCourseContentProvider } from "../../../../context/lecturecoursecontent";
 
-export const DisplayCourse = (prop:{content:ReactNode}) => {
+export const DisplayCourse = (prop: { content: ReactNode }) => {
     const { content, update } = useLectureCourseContext();
     const [page, setPage] = useState<IPage>({
         pageNumber: 0, pageSize: 10, search: '', sortBy: 'id'
     });
+    console.log(content);
+    const [lectureCourseContent, setLectureCourseContent] = useState<any>({});
+    const [openDialog, setOpenDialog] = useState(false)
     useEffect(() => {
         update(page);
     }, [page])
@@ -19,7 +25,7 @@ export const DisplayCourse = (prop:{content:ReactNode}) => {
             </div>
             <div className="flex gap-4 ">
                 {prop.content}
-                
+
             </div>
         </section>
 
@@ -49,10 +55,13 @@ export const DisplayCourse = (prop:{content:ReactNode}) => {
                                         Duration
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                        Status
+                                        Group
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                         registered date
+                                    </th>
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
+                                        Total student
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                         Suggestion
@@ -73,31 +82,33 @@ export const DisplayCourse = (prop:{content:ReactNode}) => {
                                                 <FileCopy />
                                             </div>
                                             <div>
-                                                <h2 className="text-sm font-medium   ">{data.code}</h2>
-                                                <p className="text-xs font-normal text-gray-600">{data.name}</p>
+                                                <h2 className="text-sm font-medium   ">{data.lectureCourseCode
+                                                }</h2>
+                                                <p className="text-xs font-normal text-gray-600">{data.lectureCourseName}</p>
                                             </div>
                                         </div>
                                     </td>
 
 
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.credit}</h2>
+                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.lectureCourseCredit}</h2>
                                     </td>
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.duration} hr</h2>
+                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.lectureCourseDuration} hr</h2>
                                     </td>
-                                    <td className="px-4 py-4 text-sm whitespace-nowrap">Monthly subscription</td>
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap">{data.lectureCourseGroup}</td>
                                     <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60">
                                             <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                         </div>
                                     </td>
+                                    <td className="text-center"><div className="flex gap-2 items-center justify-center">{data.totalStudent} <Visibility className="text-md bg-green-800 text-white rounded-full p-1" /></div></td>
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button className="border border-gray-300 text-gray-600 rounded-md px-3 py-1 hover:bg-gray-100">view suggestion</button>
+                                        <button onClick={() => { setLectureCourseContent(data); setOpenDialog(true) }} className="border border-gray-300 text-gray-600 rounded-md px-3 py-1 hover:bg-gray-100">view suggestion</button>
                                     </td>
 
                                 </tr>)}
-                                {content != undefined && content.data != undefined&&content.data.length==0 &&<tr>
+                                {content != undefined && content.data != undefined && content.data.length == 0 && <tr>
                                     <td colSpan={7} className="text-center p-4">No data found !!</td>
                                 </tr>}
                                 <tr>
@@ -128,5 +139,12 @@ export const DisplayCourse = (prop:{content:ReactNode}) => {
                 </div>
             </div>
         </div>
+        <Dialog open={openDialog} maxWidth='md' PaperProps={{ className: 'w-full', sx: { maxHeight: '90dvh', overflow: 'auto' } }}>
+            <LectureCourseContentProvider>
+                <CourseAction lectureCourseContent={lectureCourseContent}>
+                    <IconButton onClick={() => setOpenDialog(false)}><Close /></IconButton>
+                </CourseAction>
+            </LectureCourseContentProvider>
+        </Dialog>
     </>
 }
