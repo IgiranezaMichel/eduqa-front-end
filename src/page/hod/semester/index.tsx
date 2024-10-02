@@ -1,10 +1,10 @@
 import { Navigation } from "../../../component/navigation"
-import { HodMenu } from "../../../util/hodMenu"
+import { AdminMenu } from "../../../util/admin"
 import { HodDisplaySemester } from "./display"
 
 
 export const HodManageSemester = () => {
-    return <Navigation items={HodMenu}>
+    return <Navigation items={AdminMenu}>
         <HodDisplaySemester/>
     </Navigation>
 }
