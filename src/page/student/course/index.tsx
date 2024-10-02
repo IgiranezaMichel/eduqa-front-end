@@ -31,18 +31,14 @@ export  const StudentCourse = () => {
              
              <div className="flex gap-4 mb-2 py-1 border-b-2 border-b-blue-950">
                 <button onClick={()=>setActive("all")} className={active=='all'?activeClass:inactiveClass}>All</button>
-                <button onClick={()=>setActive("queue")} className={active=='queue'?activeClass:inactiveClass}>Course on queue</button>
+                <button onClick={()=>setActive("queue")} className={active=='queue'?activeClass:inactiveClass}>Completed Courses</button>
                 <button onClick={()=>setActive("sem")} className={active=='sem'?activeClass:inactiveClass}>
                 <i className="text-sm">{semester.semesterName}</i> 
             {' '}{semester.semNumber=1?'I':semester.semNumber=2?'II':semester.semNumber=3?'III':semester.semNumber=4?'IV':semester.semNumber=5?'V':semester.semNumber=6?'VI':semester.semNumber=7?'VII':semester.semNumber=8?'VIII':''} courses        
 
                 </button>
              </div>
-             <div className="flex items-center justify-between mb-1 pb-2">
-                <TextField 
-                sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
-                    placeholder="Search"/>
-             </div>
+             
              {active=='all'&&<DisplayCourse/>}
              {active=='queue'&&<OnQueueCourses/>}
              {active=='sem'&&<DisplaySemesterCourses semesterId={semester.id}/>}
