@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import { Role } from "../../../enum/role";
 import { IPage } from "../../../interface/page";
 import { UserStatus } from "../../../enum/userStatus";
+import { ResettingUserPasswordForm } from "../../../form/student/resetpassword";
+import { ViewLectureCourse } from "../../../form/lecturecourse/view";
+import { ChangeUserStatusForm } from "../../../form/userstatus/create";
 
 export const DisplayStudent = () => {
     const { content, update,refresh } = useUserContext();
@@ -146,12 +149,17 @@ export const DisplayStudent = () => {
 
                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                             <div className="flex items-center gap-x-6">
-                                                <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                    delete
+                                            <button onClick={() => { setStudent(data); setOpenDialog({ type: 'delete', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                    Delete
                                                 </button>
-
+                                                <button onClick={() => { setStudent(data); setOpenDialog({ type: 'reset', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                    Reset
+                                                </button>
                                                 <button onClick={() => { setStudent(data); setOpenDialog({ type: 'update', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                     Edit
+                                                </button>
+                                                <button onClick={() => { setStudent(data); setOpenDialog({ type: 'view', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
+                                                    View
                                                 </button>
                                             </div>
                                         </td>
@@ -199,6 +207,22 @@ export const DisplayStudent = () => {
 
                 </section>
             </CreateStudent>
+        </Dialog>
+
+        <Dialog open={openDialog.open && openDialog.type == 'reset'} onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ResettingUserPasswordForm user={student} />
+        </Dialog>
+
+        <Dialog open={openDialog.open && openDialog.type == 'view'}
+            PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ViewLectureCourse lecture={student} />
+        </Dialog>
+
+        <Dialog maxWidth='xs' open={openDialog.open && openDialog.type == 'delete'}
+            PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ChangeUserStatusForm user={student} />
         </Dialog>
     </section>
 }
