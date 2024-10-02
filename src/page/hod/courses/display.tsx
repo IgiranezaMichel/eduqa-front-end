@@ -144,10 +144,6 @@ export const DisplayCourse=()=>{
 
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                     <div className="flex items-center gap-x-6">
-                                        <button className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                            delete
-                                        </button>
-
                                         <button onClick={()=>{setCourse(data);setOpenDialog({ type: 'update', open: true })}} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                             Edit
                                         </button>
