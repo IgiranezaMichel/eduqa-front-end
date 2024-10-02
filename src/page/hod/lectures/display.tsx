@@ -1,15 +1,18 @@
-import { Add, BookmarkAdd, Close, ContactEmergency, Delete, Edit, People, Search } from "@mui/icons-material";
+import { Add, BookmarkAdd, Close, ContactEmergency, Delete, Edit, People, RemoveRedEye, Search } from "@mui/icons-material";
 import { useUserContext } from "../../../context/user"
 import { CreateStudent } from "../../../form/student/create";
-import { Dialog, IconButton, InputAdornment, TextField } from "@mui/material";
+import { Dialog, IconButton, InputAdornment, TextField, Tooltip } from "@mui/material";
 import { IUser } from "../../../interface/user";
 import { ReactNode, useEffect, useState } from "react";
 import { Role } from "../../../enum/role";
 import { IPage } from "../../../interface/page";
 import { UserStatus } from "../../../enum/userStatus";
 import { LectureCourseCreateForm } from "../../../form/lecturecourse/create";
+import { ResettingUserPasswordForm } from "../../../form/student/resetpassword";
+import { ViewLectureCourse } from "../../../form/lecturecourse/view";
+import { ChangeUserStatusForm } from "../../../form/userstatus/create";
 
-export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
+export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
     const { content, update } = useUserContext();
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const [student, setStudent] = useState<IUser>(
@@ -33,7 +36,7 @@ export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
         }, [page]
     )
     return <section className=" overflow-hidden h-full">
-    
+
         <div className="flex items-center justify-between clear-both py-1">
             <section className="flex items-center">
                 <div className="items-center p-2 bg-green-800/10 text-black font-bold mx-2 hover:bg-blue-600">
@@ -48,7 +51,7 @@ export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
                     </div>
                 </section>
             </section>
-            
+
         </div>
         <div className="flex justify-between items-center py-2">
             <div>
@@ -65,7 +68,7 @@ export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
             </div>
             <section className="flex gap-2">
                 {prop.selectStatus}
-                 <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Lecture</button>
+                <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Lecture</button>
                 <button className="p-1 bg-green-800/80">Export</button>
             </section>
         </div>
@@ -145,12 +148,14 @@ export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
                                                     <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                                 </div>
                                             </td>
-                                            <td className="text-center"><span className="p-1 rounded-md bg-gray-100 text-gray-600">{data.totalCourse}</span></td>
+                                            <td className="text-center"><span className="px-2 rounded-full bg-gray-100 text-gray-600 text-sm font-bold mx-3">
+                                                {data.totalCourse}</span></td>
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                 <div className="flex items-center gap-x-6">
                                                     <div className=""><BookmarkAdd onClick={() => { setStudent(data); setOpenDialog({ type: 'edit', open: true }) }} className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
-                                                    <div className=""><Delete className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
-                                                    <div className="" onClick={() => { setStudent(data); setOpenDialog({ type: 'update', open: true }) }}><Edit className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
+                                                    <div className=""><Delete onClick={() => { setStudent(data); setOpenDialog({ type: 'delete', open: true }) }} className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
+                                                    <div className="" onClick={() => { setStudent(data); setOpenDialog({ type: 'view', open: true }) }}><RemoveRedEye className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></div>
+                                                    <Tooltip title='Reset lecture password' placement="top" className="" onClick={() => { setStudent(data); setOpenDialog({ type: 'reset', open: true }) }}><Edit className="bg-white rounded-full p-1 text-black transition-colors duration-200 dark:hover:text-indigo-500 hover:text-indigo-500 focus:outline-none" /></Tooltip>
                                                 </div>
                                             </td>
                                         </tr>)
@@ -168,32 +173,36 @@ export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
                 </div>
             </div>
         </section>
+
+
         <div>
-        {content!=undefined&&content.data!=undefined&&content.data.length != 0 && 
-        <tr>
-                                            <td colSpan={9}>
-                                                <div className="flex  gap-4 items-center border-gray-200 bg-white px-4">
-                                                    <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
-                                                    <div className="flex gap-3">
-                                                        <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
-                                                            <option value="10">10</option>
-                                                            <option value="20">20</option>
-                                                            <option value="30">30</option>
-                                                        </select>
-                                                        <div>
-                                                            <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
-                                                                disabled={content.pageNumber == 0}
-                                                                className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
-                                                        </div>
-                                                        <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        }
+            {content != undefined && content.data != undefined && content.data.length != 0 &&
+                <tr>
+                    <td colSpan={9}>
+                        <div className="flex  gap-4 items-center border-gray-200 bg-white px-4">
+                            <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
+                            <div className="flex gap-3">
+                                <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                </select>
+                                <div>
+                                    <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
+                                        disabled={content.pageNumber == 0}
+                                        className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
+                                </div>
+                                <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
         </div>
-        <Dialog maxWidth='xs' PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }} 
-        open={openDialog.open&&openDialog.type=='create'}>
+
+
+        <Dialog maxWidth='xs' PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            open={openDialog.open && openDialog.type == 'create'}>
 
             <CreateStudent refereEntity="lecture" student={student}>
                 <section className="flex justify-between p-2 items-center mb-4 sticky top-0 bg-black/10">
@@ -214,16 +223,33 @@ export const DisplayLecture = (prop:{selectStatus:ReactNode}) => {
                 </section>
             </CreateStudent>
         </Dialog>
-        <Dialog open={openDialog.open&&openDialog.type=='edit'}>
+
+        <Dialog open={openDialog.open && openDialog.type == 'edit'}>
             <LectureCourseCreateForm lecture={student}>
-          <div className="flex justify-between gap-2">
-          <div>
-          <div className="text-blue-900/80 font-bold text-lg">Assign Lecture Course</div>
-          <div className="text-sm text-slate-600">To Assign lecture course fill the form below </div>
-          </div>
-          <IconButton className="bg-blue-200/50 rounded-none" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
-          </div>
+                <div className="flex justify-between gap-2">
+                    <div>
+                        <div className="text-blue-900/80 font-bold text-lg">Assign Lecture Course</div>
+                        <div className="text-sm text-slate-600">To Assign lecture course fill the form below </div>
+                    </div>
+                    <IconButton className="bg-blue-200/50 rounded-none" onClick={() => setOpenDialog({ ...openDialog, open: false })}><Close /></IconButton>
+                </div>
             </LectureCourseCreateForm>
+        </Dialog>
+
+        <Dialog open={openDialog.open && openDialog.type == 'reset'} onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ResettingUserPasswordForm user={student} />
+        </Dialog>
+
+        <Dialog open={openDialog.open && openDialog.type == 'view'}
+            PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ViewLectureCourse lecture={student} />
+        </Dialog>
+
+        <Dialog maxWidth='xs' open={openDialog.open && openDialog.type == 'delete'}
+            PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+            onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+            <ChangeUserStatusForm user={student} />
         </Dialog>
     </section>
 }
