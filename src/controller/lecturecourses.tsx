@@ -10,7 +10,7 @@ export class LectureCourseDao {
         return Axios().post('/lecture-course/register', lectureCourses)
     }
     public async getAllLectureCoursePage(page: IPage, semesterId: string) {
-        return Axios().post(`/lecture-course/all/courses/${semesterId}`, page, { withCredentials: true })
+        return Axios().post(`/lecture-course/detail/${semesterId}`, page, { withCredentials: true })
     }
 
     public async countCourse() {

@@ -20,7 +20,7 @@ export const LectureCourseProvider = (prop:{children:ReactNode,semesterId:string
     useEffect(
         () => {
             new LectureCourseDao().getAllLectureCoursePage(page,prop.semesterId).then((data) => {
-                setContent(data.data);
+                setContent(data.data);                
             });
         }, [page, refresh,prop.semesterId]
     );
