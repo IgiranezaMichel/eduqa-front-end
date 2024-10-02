@@ -18,9 +18,9 @@ export const ViewLectureCourse = (prop: { lecture: any }) => {
         <div className="text-lg font-bold">{prop.lecture.name}</div>
         <small>{prop.lecture.departmentName}</small>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <img src={prop.lecture.picture} alt="" />
-        <div className="border-l-4 border-l-blue-900 p-4">
+      <div className="flex">
+        <img className="max-h-60" src={prop.lecture.picture} alt="" />
+        <div className="border-l-1 border-l-blue-900 mt-2">
           <p className="mb-1"><PermIdentity className="bg-blue-900 text-white p-1 rounded-md mb-1" /> {prop.lecture.code}</p>
           <p className="mb-1"><Email className="bg-blue-900 text-white p-1 rounded-md mb-1" /> {prop.lecture.email}</p>
           <p className="mb-1"><Wc className="bg-blue-900 text-white p-1 rounded-md mb-1" /> {prop.lecture.gender}</p>
