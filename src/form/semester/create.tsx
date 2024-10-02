@@ -41,8 +41,7 @@ export const Createsemester: FC<ISemesterItem> = (prop) => {
             }
             setsemester({ ...semester, name: inputValue });
         }
-    };
-
+    };    
     return <>
 
         <div>
