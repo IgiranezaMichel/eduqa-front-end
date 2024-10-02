@@ -16,4 +16,7 @@ export class RegistrationDao{
     public async getUserRegistrationHistory(page:IPage){
         return Axios().post(`/registration/get/registration/history`,page,{withCredentials:true});
     }
+    public async getStudentCurrentSemesterRegistration(){
+        return Axios().get(`/registration/student`);
+    }
 }
