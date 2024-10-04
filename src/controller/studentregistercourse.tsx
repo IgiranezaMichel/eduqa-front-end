@@ -1,7 +1,11 @@
 import { IPage } from "../interface/page";
+import { IStudentRegisterCourse } from "../interface/studentregistercourse";
 import { Axios } from "../util/axios";
 
 export class StudentRegisterCourseDao {
+     public  async addStudentCourse(courses:IStudentRegisterCourse) {
+        return Axios().post(`/registered-student/create`,courses);
+    }
     public  async getListregisteredStudentForLectureCourses(semesterId:string, page:IPage) {
         return Axios().post(`/registered-student/get/student/${semesterId}`,page);
     }
