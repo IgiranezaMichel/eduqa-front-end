@@ -1,18 +1,35 @@
 import { useEffect, useState } from "react"
 import { DocumentScannerRounded } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
+import { RegistrationDao } from "../../../../../controller/registrationdao"
+import { TextField } from "@mui/material"
 
 export const DisplaySemesterCourses = (prop:{semesterId:string}) => {
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [registration,setRegistration]=useState<any>({});
     useEffect(
         () => {
             new StudentRegisterCourseDao().getAllStudentRegisteredCourseWithInAsemester(prop.semesterId)
                 .then(data => { setAllCourse(data.data); setIsLoading(false) })
                 .catch(err => { console.log(err); setIsLoading(false) })
+            new RegistrationDao().getStudentCurrentSemesterRegistration()
+            .then(data=>{setRegistration(data.data);console.log(data.data);
+            })
+            // .catch(err=>toast.error(err.response.data))     
         }, []
     )
     return <>
+ <div className="flex justify-between mb-2">
+ <div className="flex items-center justify-between mb-1">
+                <TextField 
+                sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
+                    placeholder="Search"/>
+             </div>
+
+             {Object.keys(registration).length!=0?<button className="text-white font-bold border bg-blue-900">Add course</button>:
+             <div className="text-blue-900 font-bold">Contact School admin to register you in this semester</div>}
+ </div>
         <section className="container  mx-auto overflow-hidden">
             <div className="flex flex-col">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
