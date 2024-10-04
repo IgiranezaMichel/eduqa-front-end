@@ -3,30 +3,26 @@ import { useEffect, useState } from "react"
 import { LectureCourseDao } from "../../../controller/lecturecourses"
 import { IPage } from "../../../interface/page"
 import { toast } from "sonner"
-import { SemesterDao } from "../../../controller/semesterdao"
-
-export const RecentCourse = () => {
+export const RecentCourse = (prop:{semester:any}) => {
     const [page, setPage] = useState<IPage>({
         pageNumber: 0, pageSize: 10, search: '', sortBy: 'id'
     })
     const [courses, setCourses] = useState<any>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentSemester, setCurrentSemester] = useState<any>({});
-    useEffect(() => {
-        new SemesterDao().getCurrentSemester().then(data => {
-            setCurrentSemester(data.data);
-        }
-        )
-    },[])
+    const [currentSemester, setCurrentSemester] = useState<any>(prop.semester);
     useEffect(
         () => {
-            new LectureCourseDao().getAllLectureCoursePage(page,currentSemester.id)
+            if(currentSemester){new LectureCourseDao().getAllLectureCoursePage(page,currentSemester.id)
                 .then(data => {
+                    console.log('current semester loading');
+                    
                     setCourses(data.data); setIsLoading(false);
                 })
                 .catch(err => {
+                    console.log('current semester  error');
+
                     toast.error(err.message);setIsLoading(false);
-                });
+                });}
         }, []
 
     )
@@ -38,11 +34,11 @@ export const RecentCourse = () => {
         <div className="flex flex-col">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                    <div className="border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead className="bg-gray-50 dark:bg-gray-800">
+                    <div className="border  border-gray-700 md:rounded-lg">
+                        <table className="min-w-full divide-y  divide-gray-700">
+                            <thead className="bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         <div className="flex items-center gap-x-3">
                                             <button className="flex items-center gap-x-2">
                                                 <span>#</span>
@@ -50,65 +46,65 @@ export const RecentCourse = () => {
                                         </div>
                                     </th>
 
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Course
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Credit
                                     </th>
 
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Lecture
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Department
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Duration
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Status
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                         Suggestion
                                     </th>
 
                                 </tr>
                             </thead>
-                            {isLoading && <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                            {!isLoading && <tbody className="bg-white divide-y  divide-gray-700">
                                 {courses != undefined && courses.data != undefined && courses.data.map((data: any, index: number) => <tr>
-                                    <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                    <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div className="inline-flex items-center gap-x-3">
                                             <span>{index + 1}</span>
                                         </div>
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         <div className="flex items-center gap-x-2">
                                             <div className="object-cover w-8 h-8 rounded-full" >
                                                 <FileCopy />
                                             </div>
                                             <div>
-                                                <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.code}</h2>
-                                                <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.name}</p>
+                                                <h2 className="text-sm font-medium text-gray-800 ">{data.code}</h2>
+                                                <p className="text-xs font-normal text-gray-600">{data.name}</p>
                                             </div>
                                         </div>
                                     </td>
 
-                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 dark:text-white ">{data.credit}</h2>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <h2 className="text-sm text-center font-medium text-gray-800  ">{data.credit}</h2>
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 dark:text-white ">{data.credit}</h2>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.credit}</h2>
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 dark:text-white ">{data.credit}</h2>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <h2 className="text-sm text-center font-medium text-gray-800">{data.credit}</h2>
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 dark:text-white ">{data.credit}</h2>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.credit}</h2>
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Monthly subscription</td>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Monthly subscription</td>
                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 bg-gray-800">
                                             <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                         </div>
                                     </td>
