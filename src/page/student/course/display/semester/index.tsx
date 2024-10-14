@@ -1,35 +1,42 @@
 import { useEffect, useState } from "react"
-import { DocumentScannerRounded } from "@mui/icons-material"
+import { Close, DocumentScannerRounded } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
 import { RegistrationDao } from "../../../../../controller/registrationdao"
-import { TextField } from "@mui/material"
+import { Dialog, IconButton, TextField } from "@mui/material"
+import { CreateStudentStudentRegisterCourse } from "../../../../../form/course/createStudentCourses"
+import { StudentRegisterCourseWithInSemesterProvider } from "../../../../../context/studentregisteredcourseinsemester"
 
-export const DisplaySemesterCourses = (prop:{semesterId:string}) => {
+export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [registration,setRegistration]=useState<any>({});
+    const [registration, setRegistration] = useState<any>({});
+    const [studentRegistercourse, setStudentRegisterCourse] = useState<any>({
+
+    })
     useEffect(
         () => {
             new StudentRegisterCourseDao().getAllStudentRegisteredCourseWithInAsemester(prop.semesterId)
                 .then(data => { setAllCourse(data.data); setIsLoading(false) })
                 .catch(err => { console.log(err); setIsLoading(false) })
             new RegistrationDao().getStudentCurrentSemesterRegistration()
-            .then(data=>{setRegistration(data.data);console.log(data.data);
-            })
+                .then(data => {
+                    setRegistration(data.data); console.log(data.data);
+                })
             // .catch(err=>toast.error(err.response.data))     
         }, []
     )
     return <>
- <div className="flex justify-between mb-2">
- <div className="flex items-center justify-between mb-1">
-                <TextField 
-                sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
-                    placeholder="Search"/>
-             </div>
+        <div className="flex justify-between mb-2">
+            <div className="flex items-center justify-between mb-1">
+                <TextField
+                    sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
+                    placeholder="Search" />
+            </div>
 
-             {Object.keys(registration).length!=0?<button className="text-white font-bold border bg-blue-900">Add course</button>:
-             <div className="text-blue-900 font-bold">Contact School admin to register you in this semester</div>}
- </div>
+            {Object.keys(registration).length != 0 ?
+                <button className="text-white font-bold border bg-blue-900">Add course</button> :
+                <div className="text-blue-900 font-bold">Contact School admin to register you in this semester</div>}
+        </div>
         <section className="container  mx-auto overflow-hidden">
             <div className="flex flex-col">
                 <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -74,7 +81,7 @@ export const DisplaySemesterCourses = (prop:{semesterId:string}) => {
                                             <div className="inline-flex items-center gap-x-3">
                                                 <input type="checkbox" className="text-blue-500 rounded bg-gray-900 ring-offset-gray-900 border-gray-700" />
 
-                                                <span>{index+1}</span>
+                                                <span>{index + 1}</span>
                                             </div>
                                         </td>
                                         <td className="px-4 py-4 text-sm  text-gray-300 whitespace-nowrap">
@@ -111,5 +118,12 @@ export const DisplaySemesterCourses = (prop:{semesterId:string}) => {
                 </div>
             </div>
         </section>
+        <Dialog open>
+            <StudentRegisterCourseWithInSemesterProvider semesterId={prop.semesterId}>
+                <CreateStudentStudentRegisterCourse semester={prop.semesterId} StudentRegistercourse={studentRegistercourse}>
+                    <div className="flex justify-between">CreateStudentStudentRegisterCourse<IconButton><Close /></IconButton></div>
+                </CreateStudentStudentRegisterCourse>
+            </StudentRegisterCourseWithInSemesterProvider>
+        </Dialog>
     </>
 }
