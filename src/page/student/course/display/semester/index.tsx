@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Close, DocumentScannerRounded } from "@mui/icons-material"
+import { Close, DocumentScannerRounded, History, HistoryEdu, RateReview } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
 import { RegistrationDao } from "../../../../../controller/registrationdao"
 import { Dialog, IconButton, TextField } from "@mui/material"
@@ -10,13 +10,12 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
     const [registration, setRegistration] = useState<any>({});
-    const [studentRegistercourse, setStudentRegisterCourse] = useState<any>({
-
-    })
+    const [studentRegistercourse, setStudentRegisterCourse] = useState<any>({})
+    const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     useEffect(
         () => {
             new StudentRegisterCourseDao().getAllStudentRegisteredCourseWithInAsemester(prop.semesterId)
-                .then(data => { setAllCourse(data.data); setIsLoading(false) })
+                .then(data => { setAllCourse(data.data); console.log(data.data); setIsLoading(false) })
                 .catch(err => { console.log(err); setIsLoading(false) })
             new RegistrationDao().getStudentCurrentSemesterRegistration()
                 .then(data => {
@@ -34,7 +33,7 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
             </div>
 
             {Object.keys(registration).length != 0 ?
-                <button className="text-white font-bold border bg-blue-900">Add course</button> :
+                <button onClick={() => { setOpenDialog({ open: true, type: 'create' }) }} className="text-white font-bold border bg-blue-900">Add course</button> :
                 <div className="text-blue-900 font-bold">Contact School admin to register you in this semester</div>}
         </div>
         <section className="container  mx-auto overflow-hidden">
@@ -88,27 +87,34 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                             <div className="flex items-center gap-x-2">
                                                 <DocumentScannerRounded />
                                                 <div>
-                                                    <h2 className="text-sm font-medium text-gray-800  ">{items.courseCode}</h2>
-                                                    <p className="text-xs font-normal text-gray-600">{items.courseName}</p>
+                                                    <h2 className="text-sm font-medium text-gray-800  ">{items.course.code}</h2>
+                                                    <p className="text-xs font-normal text-gray-600">{items.course.name}</p>
                                                 </div>
                                             </div>
                                         </td>
 
                                         <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                                             <div className="flex items-center gap-x-2">
-                                                <img className="object-cover w-8 h-8 rounded-full" src={items.lecturePicture} alt="" />
+                                                <img className="object-cover w-8 h-8 rounded-full" src={items.lecture.picture} alt="" />
                                                 <div>
-                                                    <h2 className="text-sm font-medium text-gray-800">{items.lectureName}</h2>
-                                                    <p className="text-xs font-normal text-gray-600">{items.lectureEmail}</p>
+                                                    <h2 className="text-sm font-medium text-gray-800">{items.lecture.name}</h2>
+                                                    <p className="text-xs font-normal text-gray-600">{items.lecture.email}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{items.courseDuration} hr</td>
+                                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{items.course.duration} hr</td>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <h2 className="text-sm font-normal">{items.courseCredit}</h2>
+                                            <h2 className="text-sm font-normal">{items.course.credit}</h2>
                                         </td>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <h2 className="text-sm font-normal">{items.status}</h2>
+                                            <h2 className="text-sm font-normal">
+                                                <IconButton>
+                                                    <RateReview />
+                                                </IconButton>
+                                                <IconButton>
+                                                    <HistoryEdu />
+                                                </IconButton>
+                                            </h2>
                                         </td>
                                     </tr>)}
                                 </tbody>
@@ -118,10 +124,15 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                 </div>
             </div>
         </section>
-        <Dialog open>
+        <Dialog sx={{ maxHeight: '90dvh', overflowY: 'auto' }} open={openDialog.open && openDialog.type == 'create'}>
             <StudentRegisterCourseWithInSemesterProvider semesterId={prop.semesterId}>
                 <CreateStudentStudentRegisterCourse semester={prop.semesterId} StudentRegistercourse={studentRegistercourse}>
-                    <div className="flex justify-between">CreateStudentStudentRegisterCourse<IconButton><Close /></IconButton></div>
+                    <div className="flex justify-between p-2 items-center text-blue-950 font-bold">
+                        Student course registration
+                        <IconButton onClick={() => { setOpenDialog({ open: false, type: 'create' }) }}>
+                            <Close />
+                        </IconButton>
+                    </div>
                 </CreateStudentStudentRegisterCourse>
             </StudentRegisterCourseWithInSemesterProvider>
         </Dialog>
