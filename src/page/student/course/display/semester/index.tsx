@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
-import { Close, DocumentScannerRounded, History, HistoryEdu, RateReview } from "@mui/icons-material"
+import { Close, DocumentScannerRounded, HistoryEdu, RateReview } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
 import { RegistrationDao } from "../../../../../controller/registrationdao"
 import { Dialog, IconButton, TextField } from "@mui/material"
 import { CreateStudentStudentRegisterCourse } from "../../../../../form/course/createStudentCourses"
 import { StudentRegisterCourseWithInSemesterProvider } from "../../../../../context/studentregisteredcourseinsemester"
+import { CourseDetail } from "../../../../../form/course/coursedetail"
 
 export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
     const [registration, setRegistration] = useState<any>({});
+    const [lectureCourseId,setLectureCouseId]=useState<any>('');
     const [studentRegistercourse, setStudentRegisterCourse] = useState<any>({})
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     useEffect(
@@ -111,7 +113,7 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                                 <IconButton>
                                                     <RateReview />
                                                 </IconButton>
-                                                <IconButton>
+                                                <IconButton onClick={()=>{setLectureCouseId(items.lectureCourseId);setOpenDialog({open:true,type:'view'})}}>
                                                     <HistoryEdu />
                                                 </IconButton>
                                             </h2>
@@ -135,6 +137,13 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                     </div>
                 </CreateStudentStudentRegisterCourse>
             </StudentRegisterCourseWithInSemesterProvider>
+        </Dialog>
+        <Dialog disablePortal sx={{overflowX:'hidden',overflowY:'auto',position:'fixed'}} open={openDialog.open&&openDialog.type=='view'}>
+            <CourseDetail lectureCourse={lectureCourseId}>
+                <div className="flex items-center justify-between p-2">
+                    School Details <IconButton><Close/></IconButton>
+                </div>
+            </CourseDetail>
         </Dialog>
     </>
 }

@@ -12,14 +12,16 @@ export class LectureCourseDao {
     public async getAllLectureCoursePage(page: IPage, semesterId: string) {
         return Axios().post(`/lecture-course/detail/${semesterId}`, page, { withCredentials: true })
     }
-public async getAllLectureCourseAvailableWitnInASemester(semesterId:string){
-    return Axios().get(`/lecture-course/semester/${semesterId}`)
-}
+    public async getAllLectureCourseAvailableWitnInASemester(semesterId: string) {
+        return Axios().get(`/lecture-course/semester/${semesterId}`)
+    }
     public async countCourse() {
         return Axios().get(`/lecture-course/total/courses`)
     }
-    public async getAllActiveCourseGroups(courseId:string,semesterId:string) {
+    public async getAllActiveCourseGroups(courseId: string, semesterId: string) {
         return Axios().get(`/lecture-course/find/groups/${courseId}?semesterId=${semesterId}`)
     }
-
+    public async getLectureCourseContent(lectureCourseId: string) {
+        return Axios().get(`/lecture-course-content/get/course-content/${lectureCourseId}`)
+    }
 }
