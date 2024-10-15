@@ -140,8 +140,8 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
         </Dialog>
         <Dialog disablePortal sx={{overflowX:'hidden',overflowY:'auto',position:'fixed'}} open={openDialog.open&&openDialog.type=='view'}>
             <CourseDetail lectureCourse={lectureCourseId}>
-                <div className="flex items-center justify-between p-2">
-                    School Details <IconButton><Close/></IconButton>
+                <div className="flex items-center justify-between p-2 sticky top-0">
+                    School Details <IconButton onClick={()=>setOpenDialog({open:false,type:'view'})}><Close/></IconButton>
                 </div>
             </CourseDetail>
         </Dialog>
