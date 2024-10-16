@@ -44,7 +44,7 @@ export const InstructureCourse = () => {
                         <div>
                             <h1 className="text-2xl font-bold">{semester.semesterName}</h1>
                             <div className="text-xs text-center">
-                                Semester  {semester.semNumber == 1 ? 'I' : semester.semNumber == 2 ? 'II' : semester.semNumber = 3 ? 'III' : semester.semNumber == 4 ? 'IV' : semester.semNumber = 5 ? 'V' : semester.semNumber == 6 ? 'VI' : semester.semNumber = 7 ? 'VII' : semester.semNumber == 8 ? 'VIII' : ''}
+                                Semester  {semester.semNumber == 1 ? 'I' : semester.semNumber == 2 ? 'II' : semester.semNumber == 3 ? 'III' : semester.semNumber == 4 ? 'IV' : semester.semNumber == 5 ? 'V' : semester.semNumber == 6 ? 'VI' : semester.semNumber == 7 ? 'VII' : semester.semNumber == 8 ? 'VIII' : ''}
                             </div>
                         </div>
                         <div>
@@ -55,7 +55,7 @@ export const InstructureCourse = () => {
                     <select onChange={changeSemester} className="border border-gray-300 rounded-md px-2 py-1">
                         <option value="">Select semester </option>
                         {semesterList.map((item: any) => {
-                            return <option value={item.id} key={item.id}>{item.semesterName} <small className="text-xs">Semester  {item.semNumber == 1 ? 'I' : item.semNumber == 2 ? 'II' : item.semNumber = 3 ? 'III' : item.semNumber == 4 ? 'IV' : item.semNumber = 5 ? 'V' : item.semNumber == 6 ? 'VI' : item.semNumber = 7 ? 'VII' : item.semNumber == 8 ? 'VIII' : ''}
+                            return <option value={item.id} key={item.id}>{item.semesterName} <small className="text-xs">Semester  {item.semNumber == 1 ? 'I' : item.semNumber == 2 ? 'II' : item.semNumber == 3 ? 'III' : item.semNumber == 4 ? 'IV' : item.semNumber == 5 ? 'V' : item.semNumber == 6 ? 'VI' : item.semNumber == 7 ? 'VII' : item.semNumber == 8 ? 'VIII' : ''}
                             </small></option>
                         })
                         }

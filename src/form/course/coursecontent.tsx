@@ -38,7 +38,6 @@ export const CourseContentForm = (prop: { lectureCourseContent: any, className?:
             Course Content
         </div>
         <JoditEditor value={courseContent.description} onChange={e => setCourseContent({ ...courseContent, description: e })} />
-
         <Button type="submit" className="bg-blue-950/90 w-full normal-case text-white p-3 font-bold text-xl">Add new course</Button>
         <Toaster />
     </form>

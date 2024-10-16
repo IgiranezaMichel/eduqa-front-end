@@ -18,10 +18,7 @@ export const CourseAction = (prop: { lectureCourseContent: any, children: ReactN
             </div>
             {prop.children}
         </div>
-        <div className="flex gap-3 border-b mb-3 pb-1">
-            <button className="border p-1">Content</button>
-            <button className="border p-1">Suggestions</button>
-        </div>
+ 
        {prop.lectureCourseContent.lectureCourseId!=undefined&& <LectureCourseContent lectureCourseContent={prop.lectureCourseContent} />}
     </>
 }
