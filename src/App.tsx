@@ -21,6 +21,8 @@ import { StudentSemester } from "./page/student/semester"
 import { StudentCourse } from "./page/student/course"
 import { StudentSurvey } from "./page/student/survey/display"
 import { AdminManageDepartment } from "./page/admin/department"
+import { AdminManageLecturers } from "./page/admin/lectures"
+import { AdminManageStudent } from "./page/admin/student"
 function App() {
 
   return (
@@ -51,9 +53,10 @@ function App() {
         <Route path="/admin/semester" element={<AuthProvider><AdminManageSemester/></AuthProvider>}></Route>
         <Route path="/admin/course" element={<AuthProvider><AdminManageCourse/></AuthProvider>}></Route>
         <Route path="/admin/report" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
-        {/* <Route path="/admin/semesters" element={<AuthProvider><HodManageSemester/></AuthProvider>}></Route> */}
+        <Route path="/admin/lecture" element={<AuthProvider><AdminManageLecturers/></AuthProvider>}></Route>
+        <Route path="/admin/student" element={<AuthProvider><AdminManageStudent/></AuthProvider>}></Route>
         <Route path="/settings" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
-       
+        
       </Routes>
       </div>
     </Router>

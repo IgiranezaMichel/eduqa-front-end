@@ -10,6 +10,7 @@ import { Role } from "../../../enum/role"
 import { Dialog, IconButton } from "@mui/material"
 import { Createsemester } from "../../../form/semester/create"
 import { Add, Close } from "@mui/icons-material"
+import { DisplayLectureIndex } from "./lecture"
 export const AdminManageSemester = () => {
     const [semesterList, setSemesterList] = useState([]);
     const [currentSemester, setCurrentSemester] = useState<any>({});
@@ -62,8 +63,8 @@ export const AdminManageSemester = () => {
             </select>
         </section>
         {activeBtn == 'student' && <DisplayStudent semester={currentSemester} role={Role.ROLE_STUDENT} />}
-        {activeBtn == 'lecture' && <DisplayStudent semester={currentSemester} role={Role.ROLE_INSTRACTOR} />}
-        {activeBtn == 'course' && <DisplaySemesterCourses />}
+        {activeBtn == 'lecture' && <DisplayLectureIndex  semester={currentSemester}/>}
+        {activeBtn == 'course' && <DisplaySemesterCourses  semester={currentSemester} />}
         <Dialog maxWidth='xs' PaperProps={{ className: 'w-full' }} open={openDialog.open}>
             <Createsemester semester={currentSemester}>
                 <section className="flex justify-between p-2 items-center mb-4">

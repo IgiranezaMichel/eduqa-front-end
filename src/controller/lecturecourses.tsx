@@ -3,6 +3,12 @@ import { IPage } from "../interface/page";
 import { Axios } from "../util/axios";
 
 export class LectureCourseDao {
+    public async getLectureCoursesBySemesterId(semesterId: any) {
+      return Axios().get(`/lecture-course/semester/course/${semesterId}`);
+    }
+    public async getAllLectureAvailableInSemester(semesterId: any) {
+        return Axios().get(`/lecture-course/semester/course/${semesterId}`);
+      }
     public async getLectureCourses(id: any) {
         return Axios().get(`/lecture-course/all/${id}`);
     }

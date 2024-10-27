@@ -5,13 +5,14 @@ import { RegistrationDao } from "../../../../../controller/registrationdao"
 import { Dialog, IconButton, TextField } from "@mui/material"
 import { CreateStudentStudentRegisterCourse } from "../../../../../form/course/createStudentCourses"
 import { StudentRegisterCourseWithInSemesterProvider } from "../../../../../context/studentregisteredcourseinsemester"
-import { CourseDetail } from "../../../../../form/course/coursedetail"
+import { LectureCourseProgressReportProvider } from "../../../../../context/lecturecourseprogressreport"
+import { StudentCourseDetail } from "../../../../../form/course/studentcoursedetail"
 
 export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
     const [registration, setRegistration] = useState<any>({});
-    const [lectureCourseId,setLectureCouseId]=useState<any>('');
+    const [lectureCourse, setLectureCouse] = useState<any>({});
     const [studentRegistercourse, setStudentRegisterCourse] = useState<any>({})
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     useEffect(
@@ -26,6 +27,8 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
             // .catch(err=>toast.error(err.response.data))     
         }, []
     )
+    console.log(lectureCourse);
+
     return <>
         <div className="flex justify-between mb-2">
             <div className="flex items-center justify-between mb-1">
@@ -113,7 +116,7 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                                 <IconButton>
                                                     <RateReview />
                                                 </IconButton>
-                                                <IconButton onClick={()=>{setLectureCouseId(items.lectureCourseId);setOpenDialog({open:true,type:'view'})}}>
+                                                <IconButton onClick={() => { setLectureCouse(items); setOpenDialog({ open: true, type: 'view' }) }}>
                                                     <HistoryEdu />
                                                 </IconButton>
                                             </h2>
@@ -138,12 +141,18 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                 </CreateStudentStudentRegisterCourse>
             </StudentRegisterCourseWithInSemesterProvider>
         </Dialog>
-        <Dialog disablePortal sx={{overflowX:'hidden',overflowY:'auto',position:'fixed'}} open={openDialog.open&&openDialog.type=='view'}>
-            <CourseDetail lectureCourse={lectureCourseId}>
-                <div className="flex items-center justify-between p-2 sticky top-0">
-                    School Details <IconButton onClick={()=>setOpenDialog({open:false,type:'view'})}><Close/></IconButton>
-                </div>
-            </CourseDetail>
+        <Dialog disablePortal maxWidth='md' sx={{ overflowX: 'hidden', overflowY: 'auto', position: 'fixed' }} open={openDialog.open && openDialog.type == 'view'}>
+            <LectureCourseProgressReportProvider lectureCourseId={lectureCourse.lectureCourseId}>
+                <StudentCourseDetail lectureCourse={lectureCourse}>
+                    <div className="flex items-center justify-between p-2 bg-blue-950 text-white  sticky top-0">
+                        <div>
+                            <div className="text-xl">{lectureCourse.course != undefined ? lectureCourse.course.code : ''}</div>
+                            <div>{lectureCourse.course != undefined && lectureCourse.course.name}</div>
+                        </div>
+                        <IconButton onClick={() => setOpenDialog({ open: false, type: 'view' })}><Close /></IconButton>
+                    </div>
+                </StudentCourseDetail>
+            </LectureCourseProgressReportProvider>
         </Dialog>
     </>
 }

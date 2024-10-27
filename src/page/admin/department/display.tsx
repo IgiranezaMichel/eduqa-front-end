@@ -1,4 +1,4 @@
-import { Add, Close, ContactEmergency } from "@mui/icons-material"
+import { Add, Close, People } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { Dialog, IconButton } from "@mui/material"
@@ -11,20 +11,20 @@ import { HodOverview } from "../../hod/index/component/overview"
 export const AdminDisplayDepartment = () => {
     const [departmentList, setdepartmentList] = useState([])
     const [department, setDepartment] = useState<IDepartment>({
-        id:'',
-        name:''
+        id: '',
+        name: ''
     })
     useEffect(
-        ()=>{
+        () => {
             new DepartmentDao().getAlldepartment().then((res) => {
                 setdepartmentList(res.data)
             }).catch((err) => {
                 toast.error(err.message);
             })
-        },[]
+        }, []
     )
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
-    const {content}=useDepartmentContext();
+    const { content } = useDepartmentContext();
     console.log(content)
     return <div >
 
@@ -37,22 +37,22 @@ export const AdminDisplayDepartment = () => {
             <section className="flex items-center gap-3">
                 <select name="" id="" className="p-2 rounded border border-gray-300">
                     <option value="">Department filtering</option>
-                    {departmentList.map((item:any, index:number) => <option key={item.id+index} value={item.id}>{item.departmentName}</option>)
+                    {departmentList.map((item: any, index: number) => <option key={item.id + index} value={item.id}>{item.departmentName}</option>)
                     }
                 </select>
-                <button onClick={() => setOpenDialog({ open: true, type: 'create'})} className="bg-blue-900 text-white p-2 rounded-md"><Add/></button>
+                <button onClick={() => setOpenDialog({ open: true, type: 'create' })} className="bg-blue-900 text-white p-2 rounded-md"><Add /></button>
             </section>
         </div>
-        <HodOverview/>
-        <section className="container  mx-auto">
+        <HodOverview />
+        <section className="container  mx-auto mt-2 ">
             <div className="flex flex-col ">
                 <div className="-mx-4 -my-2 overflow-x-auto  overflow-auto h-80 mb-20 sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden border border-gray-700 md:rounded-lg">
                             <table className="min-w-full divide-y   divide-gray-700 ">
-                                <thead className="bg-gray-50 sticky top-0 ">
+                                <thead className="sticky top-0 bg-blue-200">
                                     <tr>
-                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
+                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500">
                                             <div className="flex items-center gap-x-3">
                                                 <button className="flex items-center gap-x-2">
                                                     <span>#</span>
@@ -60,52 +60,50 @@ export const AdminDisplayDepartment = () => {
                                             </div>
                                         </th>
 
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right text-gray-500">
                                             Department
                                         </th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 text-gray-400">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-bold text-left rtl:text-right text-gray-500 ">
                                             Total student
                                         </th>
-                                    
-                                         
                                     </tr>
                                 </thead>
-                                {content != undefined &&  <tbody className="bg-white divide-y  divide-gray-700">
-                                    {content.map(([departmentName, numberOfStudents]:any,index:number) => 
-                                    <>
-                                    <tr>
-                                        <td key={departmentName} className="px-4 py-4 text-sm font-medium text-gray-700whitespace-nowrap">
-                                            <div className="inline-flex items-center gap-x-3">
-                                                <span>{index+1}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                            <div className="flex items-center gap-x-2">
-                                                <div>
-                                                    <h2 className="text-sm font-medium text-gray-800  ">{departmentName}</h2>
-                                                </div>
-                                            </div>
-                                        </td>
+                                {content != undefined && <tbody className="bg-white divide-y  divide-gray-700">
+                                    {content.map(([departmentName, numberOfStudents]: any, index: number) =>
+                                        <>
+                                            <tr>
+                                                <td key={departmentName} className="px-4 py-4 text-sm font-medium text-gray-700whitespace-nowrap">
+                                                    <div className="inline-flex items-center gap-x-3">
+                                                        <span>{index + 1}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2">
+                                                        <div>
+                                                            <h2 className="text-sm font-medium text-gray-800  ">{departmentName}</h2>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                                            <div className="flex items-center gap-x-2">
-                                                <ContactEmergency />
-                                                <div>
-                                                    <h2 className="text-sm font-medium text-gray-800">{numberOfStudents}</h2>
-                                                </div>
-                                            </div>
-                                        </td>
-                    
-                                    </tr>
-                                     <tr>
-                                 </tr>
-                                 </>
+                                                <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2">
+                                                        <People />
+                                                        <div>
+                                                            <h2 className="text-sm font-medium text-gray-800">{numberOfStudents}</h2>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                        </>
                                     )}
-                                {content.length==0&&<tr>
-                                    <td colSpan={4} className="text-center ">No data found</td>
-                                </tr>}
+                                    {content.length == 0 && <tr>
+                                        <td colSpan={4} className="text-center ">No data found</td>
+                                    </tr>}
                                 </tbody>}
-                                
+
                             </table>
                         </div>
                     </div>

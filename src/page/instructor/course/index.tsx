@@ -39,7 +39,7 @@ export const InstructureCourse = () => {
     return <Navigation items={InstructorMenu}>
         <LectureCourseProvider semesterId={semester.id}>
             <div className="w-full h-full overflow-x-hidden">
-                <DisplayCourse content={<>
+                <DisplayCourse semester={semester} content={<>
                     <div className="flex gap-3 items-center">
                         <div>
                             <h1 className="text-2xl font-bold">{semester.semesterName}</h1>

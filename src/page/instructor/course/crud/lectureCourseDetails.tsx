@@ -18,7 +18,7 @@ export const LectureCourseContent = (prop: { lectureCourseContent: any }) => {
     )
     useEffect(
         ()=>{
-            new LectureCourseProgressReportDao().getCurrentChapter()
+            new LectureCourseProgressReportDao().getCurrentChapter(prop.lectureCourseContent)
             .then(data=>setCurrentChapter(data.data)).catch(err=>console.log(err));
         }
     )   

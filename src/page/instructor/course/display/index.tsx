@@ -5,15 +5,15 @@ import { IPage } from "../../../../interface/page";
 import { Dialog, IconButton } from "@mui/material";
 import { CourseAction } from "../crud";
 import { LectureCourseContentProvider } from "../../../../context/lecturecoursecontent";
+import { StudentList } from "./studentlist";
 
-export const DisplayCourse = (prop: { content: ReactNode }) => {
+export const DisplayCourse = (prop: { content: ReactNode,semester:any }) => {
     const { content, update } = useLectureCourseContext();
     const [page, setPage] = useState<IPage>({
         pageNumber: 0, pageSize: 10, search: '', sortBy: 'id'
     });
-    console.log(content);
     const [lectureCourseContent, setLectureCourseContent] = useState<any>({});
-    const [openDialog, setOpenDialog] = useState(false)
+    const [openDialog, setOpenDialog] = useState({ open: false, type: '' });
     useEffect(() => {
         update(page);
     }, [page])
@@ -25,7 +25,6 @@ export const DisplayCourse = (prop: { content: ReactNode }) => {
             </div>
             <div className="flex gap-4 ">
                 {prop.content}
-
             </div>
         </section>
 
@@ -58,7 +57,7 @@ export const DisplayCourse = (prop: { content: ReactNode }) => {
                                         Group
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                        registered date
+                                        Review
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                         Total student
@@ -102,9 +101,13 @@ export const DisplayCourse = (prop: { content: ReactNode }) => {
                                             <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                         </div>
                                     </td>
-                                    <td className="text-center"><div className="flex gap-2 items-center justify-center">{data.totalStudent} <Visibility className="text-md bg-green-800 text-white rounded-full p-1" /></div></td>
+                                    <td className="text-center"><div className="flex gap-2 items-center justify-center">{data.totalStudent}
+                                        <Visibility onClick={() => { setLectureCourseContent(data); setOpenDialog({ open: true, type: 'view-student' }) }}
+                                            className="text-md bg-green-800 text-white rounded-full p-1" />
+                                    </div>
+                                    </td>
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button onClick={() => { setLectureCourseContent(data); setOpenDialog(true) }} className="border border-gray-300 text-gray-600 rounded-md px-3 py-1 hover:bg-gray-100">view suggestion</button>
+                                        <button onClick={() => { setLectureCourseContent(data); setOpenDialog({ open: true, type: 'suggestion' }) }} className="border border-gray-300 text-gray-600 rounded-md px-3 py-1 hover:bg-gray-100">view suggestion</button>
                                     </td>
 
                                 </tr>)}
@@ -139,10 +142,21 @@ export const DisplayCourse = (prop: { content: ReactNode }) => {
                 </div>
             </div>
         </div>
-        <Dialog open={openDialog} maxWidth='md' PaperProps={{ className: 'w-full', sx: { maxHeight: '90dvh', overflow: 'auto' } }}>
+        <Dialog open={openDialog.open && openDialog.type == 'view-student'} PaperProps={{className:'w-full overflow-x-hidden'}} onClose={() => setOpenDialog({ open: false, type: '' })}>
+            <StudentList semester={prop.semester}>
+                <div className="flex items-center justify-between bg-blue-950 w-full text-white rounded-none p-1">
+                    <div>
+                        <div className="text-xl font-bold">{lectureCourseContent.lectureCourseCode}</div>
+                        <div>{lectureCourseContent.lectureCourseName}</div>
+                    </div>
+                    <IconButton className="text-white" onClick={()=>setOpenDialog({ open: false, type: '' })}><Close /></IconButton>
+                </div>
+            </StudentList>
+        </Dialog>
+        <Dialog open={openDialog.open && openDialog.type == 'suggestion'} onClose={() => setOpenDialog({ open: false, type: '' })}>
             <LectureCourseContentProvider>
                 <CourseAction lectureCourseContent={lectureCourseContent}>
-                    <IconButton onClick={() => setOpenDialog(false)}><Close /></IconButton>
+                    <IconButton onClick={() => setOpenDialog({ open: false, type: '' })}><Close /></IconButton>
                 </CourseAction>
             </LectureCourseContentProvider>
         </Dialog>

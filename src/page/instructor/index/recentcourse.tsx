@@ -1,35 +1,41 @@
-import { ArrowRight, FileCopy } from "@mui/icons-material"
-import { useEffect, useState } from "react"
+import { ArrowRight, Close, FileCopy, People } from "@mui/icons-material"
+import { ReactNode, useEffect, useState } from "react"
 import { LectureCourseDao } from "../../../controller/lecturecourses"
 import { IPage } from "../../../interface/page"
 import { toast } from "sonner"
-export const RecentCourse = (prop:{semester:any}) => {
+import { Dialog, IconButton, LinearProgress } from "@mui/material"
+import { CourseDetail } from "../../../form/course/coursedetail"
+import { LectureCourseProgressReportProvider } from "../../../context/lecturecourseprogressreport"
+export const RecentCourse = (prop: { semester: any, child: ReactNode }) => {
     const [page, setPage] = useState<IPage>({
         pageNumber: 0, pageSize: 10, search: '', sortBy: 'id'
     })
     const [courses, setCourses] = useState<any>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentSemester, setCurrentSemester] = useState<any>(prop.semester);
+    const [lectureCourse, setLectureCourse] = useState<any>({});
+    const [showDiialog, setShowDialog] = useState(false);
     useEffect(
         () => {
-            if(currentSemester){new LectureCourseDao().getAllLectureCoursePage(page,currentSemester.id)
-                .then(data => {
-                    console.log('current semester loading');
-                    
-                    setCourses(data.data); setIsLoading(false);
-                })
-                .catch(err => {
-                    console.log('current semester  error');
+            if (prop.semester) {
+                new LectureCourseDao().getAllLectureCoursePage(page, prop.semester.id)
+                    .then(data => {
+                        setCourses(data.data);;
+                        setIsLoading(false);
+                    })
+                    .catch(err => {
+                        toast.error(err.message); setIsLoading(false);
+                    });
+            }
+        }, [prop.semester]
 
-                    toast.error(err.message);setIsLoading(false);
-                });}
-        }, []
-
-    )
+    );
     return <>
         <div className="flex justify-between my-3">
             <div className="font-bold text-xl">Your Recent Course </div>
-            <button className="rounded-md p-2 font-bold border border-blue-950 hover:bg-blue-600">View all <ArrowRight /></button>
+            <div className="flex gap-2">
+                {prop.child}
+                <button className="rounded-md p-2 font-bold border border-blue-950 hover:bg-blue-600">View all <ArrowRight /></button>
+            </div>
         </div>
         <div className="flex flex-col">
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -50,25 +56,17 @@ export const RecentCourse = (prop:{semester:any}) => {
                                         Course
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                        Credit
-                                    </th>
-
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                        Lecture
+                                        Detail
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                        Department
+                                        Student
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                        Duration
+                                        Group
                                     </th>
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                        Status
+                                        Progress
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                                        Suggestion
-                                    </th>
-
                                 </tr>
                             </thead>
                             {!isLoading && <tbody className="bg-white divide-y  divide-gray-700">
@@ -84,28 +82,33 @@ export const RecentCourse = (prop:{semester:any}) => {
                                                 <FileCopy />
                                             </div>
                                             <div>
-                                                <h2 className="text-sm font-medium text-gray-800 ">{data.code}</h2>
-                                                <p className="text-xs font-normal text-gray-600">{data.name}</p>
+                                                <h2 className="text-sm font-medium text-gray-800 ">{data.lectureCourseCode}</h2>
+                                                <p className="text-xs font-normal text-gray-600">{data.lectureCourseName}</p>
                                             </div>
                                         </div>
                                     </td>
 
                                     <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800  ">{data.credit}</h2>
+                                        <h2 className="text-sm font-medium text-gray-800  ">Credit : {data.lectureCourseCredit}</h2>
+                                        <h2 className="text-sm font-medium text-gray-800  ">Duration : {data.lectureCourseDuration} hrs</h2>
+                                    </td>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap tec">
+                                        <People /> {data.totalStudent}
+                                    </td>
+                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap tec">
+                                        {data.lectureCourseGroup}
                                     </td>
                                     <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.credit}</h2>
+                                        <div className="float-end">
+                                            {data.currentChapter != null ? (data.currentChapter) : 0}/{data.totalChapter}
+                                        </div>
+                                        <div className="clear-both">
+                                            {data.totalChapter == null ? 'No content' : <LinearProgress variant="determinate" value={data.currentChapter != null ? ((data.currentChapter / data.totalChapter) * 100) : 0} />}
+                                        </div>
                                     </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800">{data.credit}</h2>
-                                    </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <h2 className="text-sm text-center font-medium text-gray-800 ">{data.credit}</h2>
-                                    </td>
-                                    <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">Monthly subscription</td>
                                     <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 bg-gray-800">
-                                            <h2 className="text-sm font-normal">{data.timeStamp}</h2>
+                                            <h2 className="text-sm font-normal hover:cursor-pointer" onClick={() => { setLectureCourse(data); setShowDialog(true) }}>view</h2>
                                         </div>
                                     </td>
 
@@ -137,5 +140,24 @@ export const RecentCourse = (prop:{semester:any}) => {
                 </div>
             </div>
         </div>
+        <Dialog open={showDiialog}>
+            <LectureCourseProgressReportProvider lectureCourseId={lectureCourse.lectureCourseId}>
+                <CourseDetail lectureCourse={lectureCourse.lectureCourseId}>
+                    <div className="flex justify-between items-center bg-blue-950 p-1">
+                        <div>
+                            <h2 className="text-lg font-medium  text-white">
+                                {lectureCourse.lectureCourseCode}
+                            </h2>
+                            <h2 className="text-sm text-white">
+                                {lectureCourse.lectureCourseName}
+                            </h2>
+                        </div>
+                        <IconButton onClick={() => setShowDialog(false)} className="text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            <Close />
+                        </IconButton>
+                    </div>
+                </CourseDetail>
+            </LectureCourseProgressReportProvider>
+        </Dialog>
     </>
 }

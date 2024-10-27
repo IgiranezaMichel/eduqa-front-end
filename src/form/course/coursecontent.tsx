@@ -13,13 +13,20 @@ export const CourseContentForm = (prop: { lectureCourseContent: any, className?:
         totalChapter: prop.lectureCourseContent.totalChapter
     })
     const { refresh, content } = useLectureCourseContentContext()
-   useEffect(
-    ()=>{
-        if (Object.keys(content).length != 0) {
-            setCourseContent({ ...courseContent, id: content.id })
-        }
-    },[content]
-   )
+    useEffect(
+        () => {
+            if (Object.keys(content).length != 0) {
+                setCourseContent({ ...courseContent, id: content.id })
+            }
+        }, [content]
+    )
+    useEffect(
+        () => {
+            setCourseContent({ ...courseContent, lectureCourseId: prop.lectureCourseContent.lectureCourseId })
+        }, []
+    )
+    console.log(prop.lectureCourseContent);
+
     const submitFormHandler = (e: any) => {
         e.preventDefault();
 
