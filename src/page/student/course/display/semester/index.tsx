@@ -7,6 +7,7 @@ import { CreateStudentStudentRegisterCourse } from "../../../../../form/course/c
 import { StudentRegisterCourseWithInSemesterProvider } from "../../../../../context/studentregisteredcourseinsemester"
 import { LectureCourseProgressReportProvider } from "../../../../../context/lecturecourseprogressreport"
 import { StudentCourseDetail } from "../../../../../form/course/studentcoursedetail"
+import { ReviewForm } from "../../../../../form/review/create"
 
 export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     const [allCourse, setAllCourse] = useState<any>([])
@@ -113,7 +114,7 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                         </td>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <h2 className="text-sm font-normal">
-                                                <IconButton>
+                                                <IconButton onClick={() => { setLectureCouse(items); setOpenDialog({ open: true, type: 'review' }) }}>
                                                     <RateReview />
                                                 </IconButton>
                                                 <IconButton onClick={() => { setLectureCouse(items); setOpenDialog({ open: true, type: 'view' }) }}>
@@ -154,5 +155,17 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                 </StudentCourseDetail>
             </LectureCourseProgressReportProvider>
         </Dialog>
+        <Dialog disablePortal maxWidth='md' sx={{ overflowX: 'hidden', overflowY: 'auto', position: 'fixed' }} open={openDialog.open && openDialog.type == 'review'}>
+                 <ReviewForm lectureCourse={lectureCourse}>
+                    <div className="flex items-center justify-between p-2 bg-blue-950 text-white  sticky top-0">
+                        <div>
+                            <div className="text-xl">{lectureCourse.course != undefined ? lectureCourse.course.code : ''}</div>
+                            <div>{lectureCourse.course != undefined && lectureCourse.course.name}</div>
+                        </div>
+                        <IconButton onClick={() => setOpenDialog({ open: false, type: 'view' })} className="text-white"><Close /></IconButton>
+                    </div>
+                </ReviewForm>
+         </Dialog>
+        
     </>
 }
