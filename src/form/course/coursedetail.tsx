@@ -81,9 +81,9 @@ export const CourseDetail = (prop: { lectureCourse: any, children: ReactNode }) 
       <CourseContentComment lectureCourseProgress={courseProgress}>
         <div className="flex justify-between items-center gap-10 bg-blue-900 text-white font-bold">
           <section>
-            <div>Course: {prop.lectureCourse.course.name}</div>
-            <div>Course code: {prop.lectureCourse.course.code}</div>
-            <div>Lecture : {prop.lectureCourse.lecture.name}</div>
+            {/* <div>Course: {prop.lectureCourse.course.name}</div> */}
+            {/* <div>Course code: {prop.lectureCourse.course.code}</div> */}
+            {/* <div>Lecture : {prop.lectureCourse.lecture.name}</div> */}
           </section>
           <IconButton className="text-white" onClick={() => setOpenDialog({ ...openDialog, open: false })}>
             <Close />
