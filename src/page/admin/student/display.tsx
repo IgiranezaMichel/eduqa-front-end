@@ -167,9 +167,6 @@ export const DisplayStudent = () => {
                                                 <button onClick={() => { setStudent(data); setOpenDialog({ type: 'reset', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                     Reset
                                                 </button>
-                                                <button onClick={() => { setStudent(data); setOpenDialog({ type: 'update', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                    Edit
-                                                </button>
                                                 <button onClick={() => { setStudent(data); setOpenDialog({ type: 'view', open: true }) }} className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
                                                     View
                                                 </button>

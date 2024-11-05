@@ -66,11 +66,11 @@ export const DisplayUserByRole = (prop: { content: ReactNode, role: Role }) => {
             <div className="flex flex-col ">
                 <div className="-mx-4 -my-2 overflow-x-auto overflow-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 ">
-                                <thead className="bg-gray-50 dark:bg-gray-800 sticky top-0">
+                        <div className="overflow-hidden border border-gray-200 :border-gray-700 md:rounded-lg">
+                            <table className="min-w-full divide-y divide-gray-200 :divide-gray-700 ">
+                                <thead className="bg-gray-50 :bg-gray-800 sticky top-0">
                                     <tr>
-                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             <div className="flex items-center gap-x-3">
                                                 <button className="flex items-center gap-x-2">
                                                     <span>Id</span>
@@ -78,17 +78,17 @@ export const DisplayUserByRole = (prop: { content: ReactNode, role: Role }) => {
                                             </div>
                                         </th>
 
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             Student
                                         </th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             Contacts
                                         </th>
 
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             Department
                                         </th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             Registration period
                                         </th>
 
@@ -97,35 +97,35 @@ export const DisplayUserByRole = (prop: { content: ReactNode, role: Role }) => {
                                         </th>
                                     </tr>
                                 </thead>
-                                {content != undefined && content.data != undefined && content.data.length != 0 && <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                {content != undefined && content.data != undefined && content.data.length != 0 && <tbody className="bg-white divide-y divide-gray-200 :divide-gray-700 :bg-gray-900">
                                     {content.data.map((data: any, index: number) => <tr>
-                                        <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
+                                        <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 :text-gray-200 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
                                                 <span>{data.code}</span>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td className="px-4 py-4 text-sm text-gray-500 :text-gray-300 whitespace-nowrap">
                                             <div className="flex items-center gap-x-2">
                                                 <img className="object-cover w-8 h-8 rounded-full" src={data.picture} alt="" />
                                                 <div>
-                                                    <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.name}</h2>
-                                                    <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.gender}</p>
+                                                    <h2 className="text-sm font-medium text-gray-800 :text-white ">{data.name}</h2>
+                                                    <p className="text-xs font-normal text-gray-600 :text-gray-400">{data.gender}</p>
                                                 </div>
                                             </div>
                                         </td>
 
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                        <td className="px-4 py-4 text-sm text-gray-500 :text-gray-300 whitespace-nowrap">
                                             <div className="flex items-center gap-x-2">
                                                 <ContactEmergency />
                                                 <div>
-                                                    <h2 className="text-sm font-medium text-gray-800 dark:text-white ">{data.email}</h2>
-                                                    <p className="text-xs font-normal text-gray-600 dark:text-gray-400">{data.phoneNumber}</p>
+                                                    <h2 className="text-sm font-medium text-gray-800 :text-white ">{data.email}</h2>
+                                                    <p className="text-xs font-normal text-gray-600 :text-gray-400">{data.phoneNumber}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{data.departmentName}</td>
+                                        <td className="px-4 py-4 text-sm text-gray-500 :text-gray-300 whitespace-nowrap">{data.departmentName}</td>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
+                                            <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 :bg-gray-800">
                                                 <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                             </div>
                                         </td>
@@ -135,7 +135,7 @@ export const DisplayUserByRole = (prop: { content: ReactNode, role: Role }) => {
                                                 <Tooltip arrow placement="top" title="Change user status">
                                                     <button
                                                         onClick={() => { setStudent(data); setOpenDialog({ type: 'delete', open: true }) }}
-                                                        className="text-gray-500 transition-colors duration-200 dark:hover:text-indigo-500 dark:text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                        className="text-gray-500 transition-colors duration-200 :hover:text-indigo-500 :text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                         <AppRegistrationOutlined />
                                                     </button>
                                                 </Tooltip>

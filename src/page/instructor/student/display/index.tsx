@@ -22,12 +22,12 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
   useEffect(
     () => {
         if(currentSemester.id!=undefined){ 
-            console.log(currentSemester);
             new StudentRegisterCourseDao()
                 .getListregisteredStudentForLectureCourses(currentSemester.id,page)
             .then(data=>{setStudentList(data.data);console.log(data.data);
+            
             })}
-    },[]
+    },[currentSemester.id]
   )
   const { content, update } = useStudentRegisterCourseContext();
     useEffect(
@@ -98,41 +98,38 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
                                         </th>
 
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                            Contact
+                                        Department
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                            Gender
-                                        </th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                            Department
+                                        Added timee  
                                         </th>
                                     </tr>
                                 </thead>
-                                {content != undefined && content.data != undefined && <tbody className="bg-white divide-y divide-gray-200  bg-gray-900">
+                                {studentList != undefined && studentList.data != undefined && <tbody className="bg-white divide-y divide-gray-200">
 
                                     <>
-                                        {content.data.length != 0 && content.data.map((data: any, index: number) => <tr>
-                                            <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 text-gray-200 whitespace-nowrap">
+                                        {studentList.data.length != 0 && studentList.data.map((data: any, index: number) => <tr>
+                                            <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
                                                     <span> {data.code}</span>
                                                 </div>
                                             </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 text-gray-300 whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm text-gray-500whitespace-nowrap">
                                                 <div className="flex items-center gap-x-2">
                                                     <img className="object-cover w-8 h-8 rounded-full" src={data.picture} alt="" />
                                                     <div>
-                                                        <h2 className="text-sm font-medium text-gray-800 text-white ">{data.name}</h2>
-                                                        <p className="text-xs font-normal text-gray-600 text-gray-400">{data.gender}</p>
+                                                        <h2 className="text-sm font-medium text-gray-800 ">{data.name}</h2>
+                                                        <p className="text-xs font-normal text-gray-600">{data.gender}</p>
                                                     </div>
                                                 </div>
                                             </td>
 
-                                            <td className="px-4 py-4 text-sm text-gray-500 text-gray-300 whitespace-nowrap">
+                                            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                                                 <div className="flex items-center gap-x-2">
                                                     <ContactEmergency />
                                                     <div>
-                                                        <h2 className="text-sm font-medium text-gray-800 text-white ">{data.email}</h2>
-                                                        <p className="text-xs font-normal text-gray-600 text-gray-400">{data.phoneNumber}</p>
+                                                        <h2 className="text-sm font-medium text-gray-800">{data.email}</h2>
+                                                        <p className="text-xs font-normal text-gray-600">{data.phoneNumber}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -146,18 +143,16 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
                                                     <h2 className="text-sm font-normal">{data.timeStamp}</h2>
                                                 </div>
                                             </td>
-                                            <td className="text-center"><span className="p-1 rounded-md bg-gray-100 text-gray-600">{data.totalCourse}</span></td>
-                                            
                                         </tr>)
                                         }
                                         {
-                                            content!=undefined&&content.data!=undefined&&content.data.length==0&&<tr>
+                                            studentList!=undefined&&studentList.data!=undefined&&studentList.data.length==0&&<tr>
                                                 <td colSpan={7} className="text-center py-4 text-gray-500">No Data found</td>
                                             </tr>
                                         }
                                     </>
 
-                                    {content.data.length == 0 && <tr>
+                                    {studentList.data.length == 0 && <tr>
                                         <td colSpan={7} className="text-center py-4 text-gray-500">No data found</td>
                                     </tr>}
                                 </tbody>}
@@ -169,11 +164,11 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
             </div>
         </section>
         <div>
-        {content!=undefined&&content.data!=undefined&&content.data.length != 0 && 
+        {studentList!=undefined&&studentList.data!=undefined&&studentList.data.length != 0 && 
         <tr>
                                             <td colSpan={9}>
                                                 <div className="flex  gap-4 items-center border-gray-200 bg-white px-4">
-                                                    <div>{content.pageNumber + 1} page out of {content.totalPage} in {content.size} records</div>
+                                                    <div>{studentList.pageNumber + 1} page out of {studentList.totalPage} in {studentList.size} records</div>
                                                     <div className="flex gap-3">
                                                         <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
                                                             <option value="10">10</option>
