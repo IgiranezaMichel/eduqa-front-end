@@ -10,6 +10,8 @@ import { UserStatus } from "../../../enum/userStatus";
 import { ResettingUserPasswordForm } from "../../../form/student/resetpassword";
 import { ViewLectureCourse } from "../../../form/lecturecourse/view";
 import { ChangeUserStatusForm } from "../../../form/userstatus/create";
+import { generateReport } from "../../../component/generatereport";
+import { UserDao } from "../../../controller/userDao";
 
 export const DisplayStudent = () => {
     const { content, update, refresh } = useUserContext();
@@ -29,15 +31,28 @@ export const DisplayStudent = () => {
             code: ''
         }
     );
+    const [allStudent,setAllStudent]=useState([])
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
+    const [isProcessingReport,setIsProcessingReport]=useState(false)
     useEffect(
         () => {
             update(page);
         }, [page, refresh]
     )
+    const getAllUsers=()=>{
+        setIsProcessingReport(true);
+        return new UserDao().getAllUserByRoleAndStatus(Role.ROLE_STUDENT,UserStatus.ACTIVE).then(
+            data=>{setAllStudent(data.data);
+            ;setIsProcessingReport(false)}
+        );
+    }
+    const printReport = () => {
+        getAllUsers();
+        !isProcessingReport&&allStudent!=undefined&&allStudent.length!=0&&generateReport("student report", ["Name", "Email", "Phone Number", "Gender"], Array.from(allStudent,(data:any)=>[data.name,data.email,data.phoneNumber,data.gender]), "Michael ");
+    }
     return <section className=" overflow-hidden h-full">
         <div className="float-end py-1 flex gap-3">
-            <button className="p-1 bg-green-800/80 text-white">Export</button>
+            <button className="p-1 bg-green-800/80 text-white" onClick={() => printReport()}>Export</button>
             <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Student</button>
         </div>
         <div className="flex items-center justify-between clear-both py-1">
@@ -188,7 +203,7 @@ export const DisplayStudent = () => {
                 </div>
             </div>
         </td>
-        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full', style: { maxHeight: '90dvh', overflow: 'auto' } }} open={openDialog.open&&openDialog.type=='create'} disablePortal>
+        <Dialog maxWidth='xs' PaperProps={{ className: 'w-full', style: { maxHeight: '90dvh', overflow: 'auto' } }} open={openDialog.open && openDialog.type == 'create'} disablePortal>
             <CreateStudent refereEntity="student" student={student}>
                 <section className="flex justify-between p-2 items-center mb-4">
                     <div>

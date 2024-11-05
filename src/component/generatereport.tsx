@@ -1,13 +1,14 @@
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-
+import Image from '../../public/auca.png'
 export const generateReport =(head: string,colums:any[],rows: any[],printedBy:string) => {
+    
     const doc = new jsPDF();
-    doc.text(head, 20, 10);
-    doc.text(printedBy, 20, 20);
-    console.log(colums);
-console.log(rows);
-
+    doc.addImage(Image,'.png',15,20,20,20)
+    doc.setFontSize(12)
+    doc.text(head, 15, 50);
+    doc.text('Done at :: '+new Date().getDay()+'-'+(new Date().getMonth()+1)+'-'+new Date().getFullYear(), 15, 55);
+    doc.text('Printed by ::'+printedBy, 15, 60);
     // Table column titles
     // const columns = ['Semester Name', 'Start Date', 'End Date'];
 
@@ -19,11 +20,11 @@ console.log(rows);
     // ];
 
     // Generate the table
-    // doc.autoTable({
-    //   head: [colums],
-    //   body: rows,
-    //   startY: 20,
-    // });
+    doc.autoTable({
+      head: [colums],
+      body: rows,
+      startY: 65,
+    });
     doc.save(head+'.pdf');
   };
 

@@ -11,6 +11,8 @@ import { LectureCourseCreateForm } from "../../../form/lecturecourse/create";
 import { ResettingUserPasswordForm } from "../../../form/student/resetpassword";
 import { ViewLectureCourse } from "../../../form/lecturecourse/view";
 import { ChangeUserStatusForm } from "../../../form/userstatus/create";
+import { UserDao } from "../../../controller/userDao";
+import { generateReport } from "../../../component/generatereport";
 
 export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
     const { content, update } = useUserContext();
@@ -29,12 +31,25 @@ export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
             code: ''
         }
     );
+    const [allStudent,setAllStudent]=useState([])
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
+    const [isProcessingReport,setIsProcessingReport]=useState(false)
     useEffect(
         () => {
             update(page);
         }, [page]
     )
+    const getAllUsers=()=>{
+        setIsProcessingReport(true);
+        return new UserDao().getAllUserByRoleAndStatus(Role.ROLE_INSTRACTOR,UserStatus.ACTIVE).then(
+            data=>{setAllStudent(data.data);
+            ;setIsProcessingReport(false)}
+        );
+    }
+    const printReport = () => {
+        getAllUsers();
+        !isProcessingReport&&allStudent!=undefined&&allStudent.length!=0&&generateReport("Lecture report", ["Name", "Email", "Phone Number", "Gender"], Array.from(allStudent,(data:any)=>[data.name,data.email,data.phoneNumber,data.gender]), "Michael ");
+    }
     return <section className=" overflow-hidden h-full">
 
         <div className="flex items-center justify-between m-0 p-0 clear-both py-1">
@@ -73,7 +88,7 @@ export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
             <section className="flex gap-2">
                 {prop.selectStatus}
                 <button onClick={() => setOpenDialog({ type: 'create', open: true })} className="p-1 bg-blue-950/90 text-white  hover:bg-blue-600"><Add /> Add Lecture</button>
-                <button className="p-1 bg-green-800/80">Export</button>
+                <button className="p-1 bg-green-800/80" onClick={()=>printReport()}>Export</button>
             </section>
         </div>
         <section className="container  mx-auto">

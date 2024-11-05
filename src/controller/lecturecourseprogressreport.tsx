@@ -11,4 +11,7 @@ return Axios().get(`/lecture-course-progress-report/course/${lectureCourse}`)
     public async getCurrentChapter(lectureCourseContentId:string){
         return await Axios().get('/lecture-course-progress-report/current-chapter?lectureCourseId='+lectureCourseContentId+'');
     }
+    public async findAllLatestLectureProgressReport(semesterId: any) {
+        return Axios().get(`/lecture-course-progress-report/course-progress/${semesterId}`,{withCredentials:true});
+      }
 }
