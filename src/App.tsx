@@ -23,6 +23,7 @@ import { StudentSurvey } from "./page/student/survey/display"
 import { AdminManageDepartment } from "./page/admin/department"
 import { AdminManageLecturers } from "./page/admin/lectures"
 import { AdminManageStudent } from "./page/admin/student"
+import { UserAccountSetting } from "./component/settings"
 function App() {
 
   return (
@@ -55,7 +56,7 @@ function App() {
         <Route path="/admin/report" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
         <Route path="/admin/lecture" element={<AuthProvider><AdminManageLecturers/></AuthProvider>}></Route>
         <Route path="/admin/student" element={<AuthProvider><AdminManageStudent/></AuthProvider>}></Route>
-        <Route path="/settings" element={<AuthProvider><AdminReport/></AuthProvider>}></Route>
+        <Route path="/settings" element={<AuthProvider><UserAccountSetting/></AuthProvider>}></Route>
         
       </Routes>
       </div>
