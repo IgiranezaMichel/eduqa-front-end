@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, ReactNode, useEffect, useState } from "react";
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { toast, Toaster } from "sonner";
@@ -6,9 +8,10 @@ import { useStudentRegisterCourseWithInSemesterContext } from "../../context/stu
 import { StudentRegisterCourseDao } from "../../controller/studentregistercourse";
 import { LectureCourseDao } from "../../controller/lecturecourses";
 import { AddHome, Email, Person, Phone, Wc } from "@mui/icons-material";
+import { StudentCourseStatus } from "../../interface/StudentCourseStatus";
 interface IStudentRegisterCourseItem {
     StudentRegistercourse: IStudentRegisterCourse,
-    semester: any
+    semester: any,
     children: ReactNode
 
 }
@@ -42,7 +45,7 @@ export const CreateStudentStudentRegisterCourse: FC<IStudentRegisterCourseItem> 
     }
     const saveStudentRegisterCourse = (e: any) => {
         e.preventDefault();
-        new StudentRegisterCourseDao().addStudentCourse(studentRegistercourse.lectureCourseId,prop.semester).then(
+        new StudentRegisterCourseDao().addStudentCourse(studentRegistercourse.lectureCourseId,prop.semester,StudentCourseStatus.PENDING).then(
             data => { toast.success(data.data); refresh() }
         ).catch(err =>toast.error(err.response.data))
     }

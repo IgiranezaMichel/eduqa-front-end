@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, ReactNode, useEffect, useState } from "react";
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { IUser } from "../../interface/user";
@@ -54,7 +55,6 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
             data => {refresh(UserStatus.ACTIVE) ;toast.success(data.data);
                  }
         ).catch(err => {
-            console.log(err)
             toast.error(err.response.data)
         }
     )

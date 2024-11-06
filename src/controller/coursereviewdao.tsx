@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICourseReview } from "../interface/coursereview";
 import { Axios } from "../util/axios";
 
 export class CourseReviewDao{
 public async createCourseReview(input:ICourseReview){
-    const form=new FormData();
-    form.append('id',input.id);
-    form.append('lectureCourseId',input.lectureCourseId);
-    form.append('marks',input.marks as any);
-    return await Axios().post(`/course-review/register`,form)
+    
+    return await Axios().post(`/course-review/register`,input)
+}
+public async getStudentReviewFromLectureCourse(lectureCourseId:string){
+    return Axios().get('course-review/get/student-reviews/'+lectureCourseId)
 }
 public async getStudentCourseReview(){
     return await Axios().get(`/course-review/student/review`);
+}
+public async listOfPrincipleLectureReviews(){
+    return await Axios().get(`/course-review/review-details`);
 }
 }

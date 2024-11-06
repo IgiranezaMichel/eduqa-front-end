@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Navigation } from "../../../component/navigation"
 import { StudentMenu } from "../../../util/studentMenu"
 import { SemesterDao } from "../../../controller/semesterdao"
@@ -33,7 +34,7 @@ export  const StudentCourse = () => {
                 <button onClick={()=>setActive("queue")} className={active=='queue'?activeClass:inactiveClass}>Completed Courses</button>
                 <button onClick={()=>setActive("sem")} className={active=='sem'?activeClass:inactiveClass}>
                 <i className="text-sm">{semester.semesterName}</i> 
-            {' '}{semester.semNumber=1?'I':semester.semNumber==2?'II':semester.semNumber==3?'III':semester.semNumber==4?'IV':semester.semNumber==5?'V':semester.semNumber==6?'VI':semester.semNumber==7?'VII':semester.semNumber==8?'VIII':''} courses        
+            {' '}{semester.semNumber==1?'I':semester.semNumber==2?'II':semester.semNumber==3?'III':semester.semNumber==4?'IV':semester.semNumber==5?'V':semester.semNumber==6?'VI':semester.semNumber==7?'VII':semester.semNumber==8?'VIII':''} courses        
 
                 </button>
              </div>

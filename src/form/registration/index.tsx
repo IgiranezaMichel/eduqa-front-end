@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Autocomplete, Avatar, ListItem, ListItemAvatar, ListItemText, TextField } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react"
 import { UserDao } from "../../controller/userDao";
@@ -21,6 +22,7 @@ export const RegistrationForm = (prop: { children: ReactNode }) => {
   }
   const [student, setStudent] = useState<any>({});
   const handleChange = (event: React.SyntheticEvent, value: any | null) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     event;
     setSelectedOption(value);
     if (value) {

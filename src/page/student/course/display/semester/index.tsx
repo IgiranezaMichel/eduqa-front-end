@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { Close, DocumentScannerRounded, HistoryEdu, RateReview } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
@@ -25,10 +26,11 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                 .then(data => {
                     setRegistration(data.data); console.log(data.data);
                 })
-            // .catch(err=>toast.error(err.response.data))     
-        }, []
+        }, [prop.semesterId]
     )
-    console.log(lectureCourse);
+    console.log('lecture course');
+    
+    console.log(allCourse);
 
     return <>
         <div className="flex justify-between mb-2">
