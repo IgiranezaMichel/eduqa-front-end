@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { SemesterDao } from "../../../../controller/semesterdao";
 import { LectureCourseProgressReportDao } from "../../../../controller/lecturecourseprogressreport";
-import { Book, BookTwoTone } from "@mui/icons-material";
+import {BookTwoTone } from "@mui/icons-material";
 import { LinearProgress } from "@mui/material";
 
 export const CourseOnTrack=()=>{
@@ -43,5 +45,9 @@ export const CourseOnTrack=()=>{
         </div>
         </>)
     }
+       {courseList != undefined && courseList.length == 0 
+        &&<div className="text-center p-2 bg-blue-100">
+            No course track found!!
+            </div>}
     </section>
 }

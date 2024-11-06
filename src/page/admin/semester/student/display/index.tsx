@@ -119,6 +119,7 @@ const StudentHomeTable = (prop: { semester: any }) => {
                             </div>
                         </div>
                     </div>}
+                    
                 </section>
             </div>
         </section>

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { LectureCourseProgressCommentDao } from "../../../../controller/lecturecourseprogresscomment"
 import { SemesterDao } from "../../../../controller/semesterdao"
@@ -53,5 +55,9 @@ export const Suggestion = () => {
                 </div>
             </div>
         </div>)}
+        {latestComment != undefined && latestComment.length == 0 
+        &&<div className="text-center p-2 bg-blue-100">
+            No suggestion found!!
+            </div>}
     </section>
 }

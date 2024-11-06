@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Add, Close, ContactEmergency, People, Search } from "@mui/icons-material";
 import { useUserContext } from "../../../context/user"
 import { CreateStudent } from "../../../form/student/create";
@@ -12,10 +15,10 @@ import { ViewLectureCourse } from "../../../form/lecturecourse/view";
 import { ChangeUserStatusForm } from "../../../form/userstatus/create";
 import { generateReport } from "../../../component/generatereport";
 import { UserDao } from "../../../controller/userDao";
+import { useAuthenticationContext } from "../../../context/authentication";
 
 export const DisplayStudent = () => {
     const { content, update, refresh } = useUserContext();
-    console.log(content);
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const [student, setStudent] = useState<IUser>(
         {
@@ -31,6 +34,7 @@ export const DisplayStudent = () => {
             code: ''
         }
     );
+    const authentication=useAuthenticationContext()
     const [allStudent,setAllStudent]=useState([])
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
     const [isProcessingReport,setIsProcessingReport]=useState(false)
@@ -48,7 +52,7 @@ export const DisplayStudent = () => {
     }
     const printReport = () => {
         getAllUsers();
-        !isProcessingReport&&allStudent!=undefined&&allStudent.length!=0&&generateReport("student report", ["Name", "Email", "Phone Number", "Gender"], Array.from(allStudent,(data:any)=>[data.name,data.email,data.phoneNumber,data.gender]), "Michael ");
+        !isProcessingReport&&allStudent!=undefined&&allStudent.length!=0&&generateReport("student report", ["Name", "Email", "Phone Number", "Gender"], Array.from(allStudent,(data:any)=>[data.name,data.email,data.phoneNumber,data.gender]),authentication.content.name);
     }
     return <section className=" overflow-hidden h-full">
         <div className="float-end py-1 flex gap-3">
