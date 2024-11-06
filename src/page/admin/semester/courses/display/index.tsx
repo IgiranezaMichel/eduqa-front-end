@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { LectureCourseDao } from "../../../../../controller/lecturecourses";
 
@@ -114,6 +115,9 @@ export const DisplaySemesterCourseHome = (prop: { semester: any }) => {
                                             </div>
                                         </td>
                                     </tr>)}
+                                    {courses!=undefined&&courses.length==0&&<tr>
+                                        <td colSpan={5} className="text-center p-5">No data found !</td>
+                                        </tr>}
                                 </tbody>
                             </table>
                         </div>

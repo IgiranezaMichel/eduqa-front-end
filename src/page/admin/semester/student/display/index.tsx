@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Add, Close, Phone } from "@mui/icons-material"
 import { Dialog, IconButton } from "@mui/material"
@@ -9,8 +10,6 @@ import { Role } from "../../../../../enum/role";
 const StudentHomeTable = (prop: { semester: any }) => {
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const { content } = useSemesterUserContext()
-    console.log(content);
-
     return <>
         <section className="py-4 bg-blue-200 p-1 mb-1">
             <div className="flex justify-between gap-2 items-center">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { LectureCourseDao } from "../../../../../controller/lecturecourses"
 import { PhoneAndroid } from "@mui/icons-material"
@@ -8,8 +9,10 @@ export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => 
         ()=>{
             new LectureCourseDao().getAllLectureAvailableInSemester(prop.semester.id)
             .then(data=>setLectures(data.data)).catch(err=>console.log(err))
-        },[]
-    )
+        },[prop.semester.id]
+    );
+    console.log(lectures);
+    
     return <div>
         <div className="flex justify-between items-center py-2 bg-blue-200 p-1">
             <div>
@@ -105,6 +108,9 @@ export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => 
                                             </div>
                                         </td>
                                     </tr>)}
+                                    {lectures!=undefined&&lectures.length==0&&<tr>
+                                        <td colSpan={5} className="text-center p-5">No data found !</td>
+                                        </tr>}
                                 </tbody>
                             </table>
                         </div>

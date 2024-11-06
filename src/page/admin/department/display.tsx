@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Add, Close, People } from "@mui/icons-material"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -37,7 +38,7 @@ export const AdminDisplayDepartment = () => {
             <section className="flex items-center gap-3">
                 <select name="" id="" className="p-2 rounded border border-gray-300">
                     <option value="">Department filtering</option>
-                    {departmentList.map((item: any, index: number) => <option key={item.id + index} value={item.id}>{item.departmentName}</option>)
+                    {departmentList.map((item:any, index: number) => <option key={item.id + index} value={item.id}>{item.departmentName}</option>)
                     }
                 </select>
                 <button onClick={() => setOpenDialog({ open: true, type: 'create' })} className="bg-blue-900 text-white p-2 rounded-md"><Add /></button>
