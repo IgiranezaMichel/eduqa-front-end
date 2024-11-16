@@ -1,17 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Feedback, HistoryEduSharp, People } from "@mui/icons-material"
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { UserDao } from "../../../controller/userDao";
-import { Role } from "../../../enum/role";
 import { DashboardCard } from "../../hod/index/component/DashboardCard";
 import { LectureCourseDao } from "../../../controller/lecturecourses";
-import { UserStatus } from "../../../enum/userStatus";
+import { StudentRegisterCourseDao } from "../../../controller/studentregistercourse";
 
 export const InstructorOverview = (prop: { semester: any }) => {
     const [totalStudents, setTotalStudents] = useState(0)
     const [totalCourses, setTotalCourses] = useState(0)
     useEffect(() => {
-        new UserDao().countUserByRole(Role.ROLE_STUDENT, UserStatus.ACTIVE).then((res) => {
+        new StudentRegisterCourseDao().getTotalStudentToughtByLecture(prop.semester.id).then((res) => {
             setTotalStudents(res.data)
         }).catch((err) => {
             toast.error(err.message);
@@ -31,7 +30,7 @@ export const InstructorOverview = (prop: { semester: any }) => {
                 <div className="text-sm font-bold">{prop.semester.semesterName}</div>
             </div>
             <DashboardCard icon={<People />} title="Students"
-                path="/instructor/students"
+                path="/instructor/student"
                 className="border-r border-r-blue-200 px-5" total={totalStudents} />
             <DashboardCard icon={<HistoryEduSharp />} path="/instructor/courses"
                 className="border-r border-r-blue-200 px-5" title="Courses" total={totalCourses} />

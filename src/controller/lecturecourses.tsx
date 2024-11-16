@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILectureCourse } from "../interface/lecturecourse";
 import { IPage } from "../interface/page";
 import { Axios } from "../util/axios";

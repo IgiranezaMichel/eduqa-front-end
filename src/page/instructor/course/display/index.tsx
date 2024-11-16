@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Close, FileCopy, Visibility } from "@mui/icons-material";
 import { useLectureCourseContext } from "../../../../context/lecturecourse"
 import { ReactNode, useEffect, useState } from "react";

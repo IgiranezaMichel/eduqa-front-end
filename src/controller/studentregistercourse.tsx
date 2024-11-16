@@ -21,4 +21,7 @@ export class StudentRegisterCourseDao {
     public async getAllStudentRegisteredCourseWithInAsemester(semesterId:string){
         return Axios().get(`/registered-student/getall/student/registered/courses/${semesterId}`)
     }
+    public async getTotalStudentToughtByLecture(semesterId:string){
+        return Axios().get("/registered-student/total-student/join-lecture/"+semesterId)
+    }
 }
