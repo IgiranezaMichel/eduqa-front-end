@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { IState } from "../interface/state";
 import { LectureCourseDao } from "../controller/lecturecourses";
