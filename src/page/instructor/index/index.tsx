@@ -6,6 +6,7 @@ import { InstructorOverview } from "./instructoroverview"
 import { RecentCourse } from "./recentcourse"
 import { SemesterDao } from "../../../controller/semesterdao"
 import { toast } from "sonner"
+import { LectureReviews } from "../../component/reviews"
 
 export const InstructorHome = () => {
     const [semester, setSemester] = useState({});
@@ -26,7 +27,7 @@ export const InstructorHome = () => {
     )
 
     
-    return <Navigation items={InstructorMenu}>
+    return <Navigation items={InstructorMenu} additionalNavInfo={<LectureReviews/>}>
         <div className="overflow-x-hidden h-full">
             <IndexOverviewHeading />
             <InstructorOverview semester={semester} />

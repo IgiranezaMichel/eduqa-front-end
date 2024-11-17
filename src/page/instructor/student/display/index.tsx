@@ -2,41 +2,52 @@ import { ReactNode, useEffect, useState } from "react"
 import { StudentRegisterCourseDao } from "../../../../controller/studentregistercourse"
 import { SemesterDao } from "../../../../controller/semesterdao"
 import { IPage } from "../../../../interface/page"
-import { ContactEmergency,People, Search } from "@mui/icons-material"
+import { ContactEmergency, People, Search, StarRate } from "@mui/icons-material"
 import { InputAdornment, TextField } from "@mui/material"
 import { useStudentRegisterCourseContext } from "../../../../context/studentregistercourse"
+import { CourseReviewDao } from "../../../../controller/coursereviewdao"
 
-export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
-    const [currentSemester,setCurrentSemester] = useState<any>({})
-    const [page,setPage] = useState<IPage>({pageNumber:0,pageSize:10,search:'',sortBy:'id'})
-    const [studentList,setStudentList] = useState<any>([]);
+export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
+    const [currentSemester, setCurrentSemester] = useState<any>({})
+    const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
+    const [studentList, setStudentList] = useState<any>([]);
+    const [reviews,setReviews]=useState<any>(0);
     studentList;
-  useEffect(    
-    () => {
-        new SemesterDao().getCurrentSemester()
-        .then((res) => {
-            setCurrentSemester(res.data)
-        })
-    },[]
-  )
-  useEffect(
-    () => {
-        if(currentSemester.id!=undefined){ 
-            new StudentRegisterCourseDao()
-                .getListregisteredStudentForLectureCourses(currentSemester.id,page)
-            .then(data=>{setStudentList(data.data);console.log(data.data);
-            
-            })}
-    },[currentSemester.id]
-  )
-  const { content, update } = useStudentRegisterCourseContext();
+    useEffect(
+        () => {
+            new SemesterDao().getCurrentSemester()
+                .then((res) => {
+                    setCurrentSemester(res.data)
+                })
+        }, []
+    )
+    useEffect(
+        () => {
+            if (currentSemester.id != undefined) {
+                new StudentRegisterCourseDao()
+                    .getListregisteredStudentForLectureCourses(currentSemester.id, page)
+                    .then(data => {
+                        setStudentList(data.data); console.log(data.data);
+
+                    })
+            }
+        }, [currentSemester.id]
+    )
+    useEffect(
+        ()=>{
+           new CourseReviewDao().getAllLectureReview().then(data=>{
+            setReviews(data.data)
+           })
+        },[]
+    )
+    const { content, update } = useStudentRegisterCourseContext();
     useEffect(
         () => {
             update(page);
         }, [page]
     )
     return <section className=" overflow-hidden h-full">
-    
+
         <div className="flex items-center justify-between clear-both py-1">
             <section className="flex items-center">
                 <div className="items-center p-2 bg-green-800/10 text-black font-bold mx-2 hover:bg-blue-600">
@@ -51,7 +62,15 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
                     </div>
                 </section>
             </section>
-            
+            <section className="flex">
+            <div className="items-center p-2 bg-green-800/10 text-black font-bold mx-2 hover:bg-blue-600">
+                    <div className="text-xl"><StarRate className="text-3xl" />{content.size}</div>
+                </div>
+                 <div>
+                 {[...new Array(5)].map((_,index:any)=><StarRate className={`${index<reviews?'text-yellow-300':'text-gray-300'}`}/>)}
+                 <p className="text-gray-500 text-sm">Overall reviews</p>
+                 </div>
+            </section>
         </div>
         <div className="flex justify-between items-center py-2">
             <div>
@@ -68,10 +87,10 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
             </div>
             <section className="flex gap-2">
                 {prop.selectStatus}
-<select name="" id="" className="border border-gray-300 p-2 rounded-">
-        <option value="">select department</option>
-    </select>                
-<button className="p-1 bg-green-800/80">Export</button>
+                <select name="" id="" className="border border-gray-300 p-2 rounded-">
+                    <option value="">select department</option>
+                </select>
+                <button className="p-1 bg-green-800/80">Export</button>
             </section>
         </div>
         <section className="container  mx-auto">
@@ -98,10 +117,10 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
                                         </th>
 
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                        Department
+                                            Department
                                         </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                        Added timee  
+                                            Added timee
                                         </th>
                                     </tr>
                                 </thead>
@@ -146,7 +165,7 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
                                         </tr>)
                                         }
                                         {
-                                            studentList!=undefined&&studentList.data!=undefined&&studentList.data.length==0&&<tr>
+                                            studentList != undefined && studentList.data != undefined && studentList.data.length == 0 && <tr>
                                                 <td colSpan={7} className="text-center py-4 text-gray-500">No Data found</td>
                                             </tr>
                                         }
@@ -164,28 +183,28 @@ export const DisplayStudent = (prop:{selectStatus:ReactNode}) => {
             </div>
         </section>
         <div>
-        {studentList!=undefined&&studentList.data!=undefined&&studentList.data.length != 0 && 
-        <tr>
-                                            <td colSpan={9}>
-                                                <div className="flex  gap-4 items-center border-gray-200 bg-white px-4">
-                                                    <div>{studentList.pageNumber + 1} page out of {studentList.totalPage} in {studentList.size} records</div>
-                                                    <div className="flex gap-3">
-                                                        <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
-                                                            <option value="10">10</option>
-                                                            <option value="20">20</option>
-                                                            <option value="30">30</option>
-                                                        </select>
-                                                        <div>
-                                                            <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
-                                                                disabled={content.pageNumber == 0}
-                                                                className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
-                                                        </div>
-                                                        <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        }
+            {studentList != undefined && studentList.data != undefined && studentList.data.length != 0 &&
+                <tr>
+                    <td colSpan={9}>
+                        <div className="flex  gap-4 items-center border-gray-200 bg-white px-4">
+                            <div>{studentList.pageNumber + 1} page out of {studentList.totalPage} in {studentList.size} records</div>
+                            <div className="flex gap-3">
+                                <select onChange={e => setPage({ ...page, pageSize: Number(e.target.value) })} className="border border-gray-300 rounded-md text-sm">
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                </select>
+                                <div>
+                                    <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber - 1 }) }}
+                                        disabled={content.pageNumber == 0}
+                                        className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Previous</button>
+                                </div>
+                                <button onClick={() => { setPage({ ...page, pageNumber: content.pageNumber + 1 }) }} disabled={content.pageNumber + 1 == content.totalPage} className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">Next</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
         </div>
         {/* <Dialog maxWidth='xs' PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }} 
         open={openDialog.open&&openDialog.type=='create'}>

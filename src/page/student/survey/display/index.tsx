@@ -84,8 +84,8 @@ export const StudentSurvey=()=>{
                                         </td>
                                         <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap flex justify-between">
                                             <div>
-                                            {[...new Array(5)].map(()=>{
-                                                return <StarRate className={``}/>
+                                            {[...new Array(5)].map((_,index:number)=>{
+                                                return <StarRate className={`${index<items.totalReviews ? 'text-yellow-400' : 'text-gray-300'}`}/>
                                             })}
                                             </div>
                                             <div>
