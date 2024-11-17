@@ -6,13 +6,16 @@ import { ContactEmergency, People, Search, StarRate } from "@mui/icons-material"
 import { InputAdornment, TextField } from "@mui/material"
 import { useStudentRegisterCourseContext } from "../../../../context/studentregistercourse"
 import { CourseReviewDao } from "../../../../controller/coursereviewdao"
+import { generateReport } from "../../../../component/generatereport"
+import { useAuthenticationContext } from "../../../../context/authentication"
 
 export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
     const [currentSemester, setCurrentSemester] = useState<any>({})
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
     const [studentList, setStudentList] = useState<any>([]);
-    const [reviews,setReviews]=useState<any>(0);
+    const [reviews, setReviews] = useState<any>(0);
     studentList;
+    const user = useAuthenticationContext();
     useEffect(
         () => {
             new SemesterDao().getCurrentSemester()
@@ -27,18 +30,17 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                 new StudentRegisterCourseDao()
                     .getListregisteredStudentForLectureCourses(currentSemester.id, page)
                     .then(data => {
-                        setStudentList(data.data); console.log(data.data);
-
+                        setStudentList(data.data);
                     })
             }
         }, [currentSemester.id]
     )
     useEffect(
-        ()=>{
-           new CourseReviewDao().getAllLectureReview().then(data=>{
-            setReviews(data.data)
-           })
-        },[]
+        () => {
+            new CourseReviewDao().getAllLectureReview().then(data => {
+                setReviews(data.data)
+            })
+        }, []
     )
     const { content, update } = useStudentRegisterCourseContext();
     useEffect(
@@ -46,6 +48,9 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
             update(page);
         }, [page]
     )
+    const printReport = () => {
+        generateReport(user.content.name + " students report", ["Reg Number", "Student name", "Email", "Department", "Time stamp"], Array.from(studentList.data, (data: any) => [data.code, data.name + "\n" + data.gender, data.email + "\n" + data.phoneNumber, data.departmentName, data.timeStamp]), user.content.name);
+    }
     return <section className=" overflow-hidden h-full">
 
         <div className="flex items-center justify-between clear-both py-1">
@@ -63,13 +68,13 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                 </section>
             </section>
             <section className="flex">
-            <div className="items-center p-2 bg-green-800/10 text-black font-bold mx-2 hover:bg-blue-600">
+                <div className="items-center p-2 bg-green-800/10 text-black font-bold mx-2 hover:bg-blue-600">
                     <div className="text-xl"><StarRate className="text-3xl" />{content.size}</div>
                 </div>
-                 <div>
-                 {[...new Array(5)].map((_,index:any)=><StarRate className={`${index<reviews?'text-yellow-300':'text-gray-300'}`}/>)}
-                 <p className="text-gray-500 text-sm">Overall reviews</p>
-                 </div>
+                <div>
+                    {[...new Array(5)].map((_, index: any) => <StarRate className={`${index < reviews ? 'text-yellow-300' : 'text-gray-300'}`} />)}
+                    <p className="text-gray-500 text-sm">Overall reviews</p>
+                </div>
             </section>
         </div>
         <div className="flex justify-between items-center py-2">
@@ -90,7 +95,7 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                 <select name="" id="" className="border border-gray-300 p-2 rounded-">
                     <option value="">select department</option>
                 </select>
-                <button className="p-1 bg-green-800/80">Export</button>
+                <button className="p-1 bg-green-800/80" onClick={() => printReport()}>Export</button>
             </section>
         </div>
         <section className="container  mx-auto">
