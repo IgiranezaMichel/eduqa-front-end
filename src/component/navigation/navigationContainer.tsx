@@ -61,6 +61,7 @@ export const NavigationContainer: FC<Items> = (prop) => {
 
                 <div className="fixed  w-[80%]  flex justify-between border-b border-b-blue-300/50">
                     <div>
+                    {prop.additionalNavInfo}
                     </div>
                     <div className="flex gap-5 items-center pe-4 my-2">
                         <NotificationAdd />
