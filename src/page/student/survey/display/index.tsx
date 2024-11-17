@@ -1,23 +1,18 @@
 import { useEffect, useState } from "react"
 import { Navigation } from "../../../../component/navigation"
 import { StudentMenu } from "../../../../util/studentMenu"
-import { StudentRegisterCourseDao } from "../../../../controller/studentregistercourse"
-import { DocumentScannerRounded } from "@mui/icons-material"
-import { SemesterDao } from "../../../../controller/semesterdao"
+import { DocumentScannerRounded, RateReview, StarRate } from "@mui/icons-material"
+import { CourseReviewDao } from "../../../../controller/coursereviewdao"
 
 export const StudentSurvey=()=>{
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [semester,setSemester]=useState<any>({})
     useEffect(
         () => {
-            new SemesterDao().getCurrentSemester()
-            .then(data=>setSemester(data.data))
-        //    if(Object.keys(semester).length!=0){
-            new StudentRegisterCourseDao().getAllStudentRegisteredCourseWithInAsemester(semester.id)
-            .then(data => { setAllCourse(data.data); setIsLoading(false) })
+            new CourseReviewDao().getStudentCourseReview()
+            .then(data => { setAllCourse(data.data);console.log(data.data);
+             setIsLoading(false) })
             .catch(err => { console.log(err); setIsLoading(false) })
-        //    }
         }, []
     )
     return <Navigation items={StudentMenu} >
@@ -52,10 +47,6 @@ export const StudentSurvey=()=>{
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
                                             My Overall Review
                                         </th>
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
-                                            Suggestion
-                                        </th>
-                                        <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"></th>
 
                                     </tr>
                                 </thead>
@@ -91,13 +82,18 @@ export const StudentSurvey=()=>{
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{items.courseDuration} hr</td>
-                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <h2 className="text-sm font-normal">{items.courseCredit}</h2>
+                                        <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap flex justify-between">
+                                            <div>
+                                            {[...new Array(5)].map(()=>{
+                                                return <StarRate className={``}/>
+                                            })}
+                                            </div>
+                                            <div>
+                                                {items.totalReviews}/5
+                                            </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <h2 className="text-sm font-normal">{items.status}</h2>
-                                        </td>
+                                         
+                                       
                                     </tr>)}
                                 </tbody>
                             </table>
