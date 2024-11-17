@@ -57,9 +57,7 @@ export const DisplayCourse = (prop: { content: ReactNode,semester:any }) => {
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                         Group
                                     </th>
-                                    <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
-                                        Review
-                                    </th>
+
                                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                         Total student
                                     </th>
@@ -97,11 +95,7 @@ export const DisplayCourse = (prop: { content: ReactNode,semester:any }) => {
                                         <h2 className="text-sm text-center font-medium text-gray-800 ">{data.lectureCourseDuration} hr</h2>
                                     </td>
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">{data.lectureCourseGroup}</td>
-                                    <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60">
-                                            <h2 className="text-sm font-normal">{data.timeStamp}</h2>
-                                        </div>
-                                    </td>
+                             
                                     <td className="text-center"><div className="flex gap-2 items-center justify-center">{data.totalStudent}
                                         <Visibility onClick={() => { setLectureCourseContent(data); setOpenDialog({ open: true, type: 'view-student' }) }}
                                             className="text-md bg-green-800 text-white rounded-full p-1" />
@@ -157,7 +151,7 @@ export const DisplayCourse = (prop: { content: ReactNode,semester:any }) => {
         <Dialog open={openDialog.open && openDialog.type == 'suggestion'} onClose={() => setOpenDialog({ open: false, type: '' })}>
             <LectureCourseContentProvider>
                 <CourseAction lectureCourseContent={lectureCourseContent}>
-                    <IconButton onClick={() => setOpenDialog({ open: false, type: '' })}><Close /></IconButton>
+                    <IconButton className="text-white" onClick={() => setOpenDialog({ open: false, type: '' })}><Close /></IconButton>
                 </CourseAction>
             </LectureCourseContentProvider>
         </Dialog>
