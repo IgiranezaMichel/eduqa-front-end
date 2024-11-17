@@ -3,9 +3,9 @@ import { ReactNode } from "react"
 
 export const ShowUserProfile=(prop:{user:any,children:ReactNode})=>{
     return <>
-    <div className="bg-blue-950 text-white">{prop.children}</div>
-    <div className="grid grid-cols-2">
-        <img src={prop.user.picture} alt="" />
+    <div className="bg-blue-950 text-white ">{prop.children}</div>
+    <div className="flex">
+        <img src={prop.user.picture} className="max-h-[35dvh] max-w-[40%] object-cover object-center" alt="" />
         <div className="ms-2">
             <div className="mb-2 gap-2 items-center"><Person className="border rounded-full p-1 bg-blue-950 text-white"/> {prop.user.code}</div>
             <div className="mb-2 gap-2 items-center"><Person className="border rounded-full p-1 bg-blue-950 text-white"/> {prop.user.name}</div>
