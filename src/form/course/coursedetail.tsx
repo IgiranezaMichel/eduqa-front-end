@@ -18,7 +18,7 @@ export const CourseDetail = (prop: { lectureCourse: any, children: ReactNode }) 
   const { content, refresh } = useLectureCourseProgressReportContext();
   useEffect(
     () => {
-      new LectureCourseDao().getLectureCourseContent(prop.lectureCourse)
+      new LectureCourseDao().getLectureCourseContent(prop.lectureCourse.lectureCourseId)
         .then(data => {
           setCourseContent(data.data);
           setCourseProgressReport({ ...courseProgressReport, lectureCourseContentId: data.data.id })
@@ -27,7 +27,7 @@ export const CourseDetail = (prop: { lectureCourse: any, children: ReactNode }) 
   )
   useEffect(
     () => {
-      new LectureCourseProgressReportDao().getCurrentChapter(prop.lectureCourse)
+      new LectureCourseProgressReportDao().getCurrentChapter(prop.lectureCourse.lectureCourseId)
         .then(data => { setCurrentChapter(data.data); }).catch(err => console.log(err));
     }, []
   )
@@ -70,28 +70,29 @@ export const CourseDetail = (prop: { lectureCourse: any, children: ReactNode }) 
           </div>
           <div className="flex justify-between">
             <div className="bg-blue-950">
-              <Message onClick={() => { setCourseProgress(data); setOpenDialog({ type: 'comment', open: false }) }} className="text-white p-1" />
+              <Message onClick={() => { setCourseProgress(data); setOpenDialog({ type: 'comment', open: true }) }} className="text-white p-1" />
             </div>
             <div className="clear-both  text-sm">{data.timeStamp}</div>
           </div>
         </section>)}
       </section>
     </section>
-    <Dialog open={openDialog.open && openDialog.type == 'comment'} onClick={() => setOpenDialog({ ...openDialog, open: false })}>
+    <Dialog open={openDialog.open && openDialog.type == 'comment'} >
       <CourseContentComment lectureCourseProgress={courseProgress}>
-        <div className="flex justify-between items-center gap-10 bg-blue-900 text-white font-bold">
+        <div className="flex justify-between items-center gap-10 bg-blue-900 text-white font-bold sticky top-0 z-50">
           <section>
-            {/* <div>Course: {prop.lectureCourse.course.name}</div> */}
-            {/* <div>Course code: {prop.lectureCourse.course.code}</div> */}
-            {/* <div>Lecture : {prop.lectureCourse.lecture.name}</div> */}
-          </section>
+            <div>Courses: {prop.lectureCourse.lectureCourseName}</div>
+            <div>Course code: {prop.lectureCourse.lectureCourseCode}</div>
+            <div>Group : {prop.lectureCourse.lectureCourseGroup}</div>
+            <div>Total Student : {prop.lectureCourse.totalStudent}</div>
+        </section>
           <IconButton className="text-white" onClick={() => setOpenDialog({ ...openDialog, open: false })}>
             <Close />
           </IconButton>
         </div>
       </CourseContentComment>
     </Dialog>
-    <Dialog open={openDialog.open && openDialog.type == 'progress'} onClose={() => setOpenDialog({ ...openDialog, open: false })}>
+    <Dialog open={openDialog.open && openDialog.type == 'progress'} >
       <section className="">
         <div className="flex justify-between bg-blue-950 text-white p-2">
           <div className="font-bold">Track progress</div>
