@@ -28,10 +28,6 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                 })
         }, [prop.semesterId]
     )
-    console.log('lecture course');
-    
-    console.log(allCourse);
-
     return <>
         <div className="flex justify-between mb-2">
             <div className="flex items-center justify-between mb-1">
