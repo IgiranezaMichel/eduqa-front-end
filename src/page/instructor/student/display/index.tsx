@@ -1,20 +1,36 @@
-import { ReactNode, useEffect, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import { StudentRegisterCourseDao } from "../../../../controller/studentregistercourse"
 import { SemesterDao } from "../../../../controller/semesterdao"
 import { IPage } from "../../../../interface/page"
-import { ContactEmergency, People, Search, StarRate } from "@mui/icons-material"
-import { InputAdornment, TextField } from "@mui/material"
+import { ContactEmergency, GroupWork, People, Search, StarRate } from "@mui/icons-material"
+import { Button, IconButton, InputAdornment, Menu, MenuItem, MenuList, TextField } from "@mui/material"
 import { useStudentRegisterCourseContext } from "../../../../context/studentregistercourse"
 import { CourseReviewDao } from "../../../../controller/coursereviewdao"
 import { generateReport } from "../../../../component/generatereport"
 import { useAuthenticationContext } from "../../../../context/authentication"
+import { StudentCourseStatus } from "../../../../interface/StudentCourseStatus"
+import { toast } from "sonner"
 
 export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleAction=(status:StudentCourseStatus,id:string)=>{
+            new StudentRegisterCourseDao().changeStudentCourseStatus(id,status)
+            .then((data)=>toast.success(data.data))
+            .catch(er=>toast.error(er.response.data));
+        handleClose()
+    }
     const [currentSemester, setCurrentSemester] = useState<any>({})
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
     const [studentList, setStudentList] = useState<any>([]);
     const [reviews, setReviews] = useState<any>(0);
-    studentList;
+    console.log(studentList);
     const user = useAuthenticationContext();
     useEffect(
         () => {
@@ -127,6 +143,7 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right">
                                             Added timee
                                         </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 {studentList != undefined && studentList.data != undefined && <tbody className="bg-white divide-y divide-gray-200">
@@ -165,6 +182,31 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                                                     </svg>
 
                                                     <h2 className="text-sm font-normal">{data.timeStamp}</h2>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <IconButton
+                                                        id="basic-button"
+                                                        aria-controls={open ? 'basic-menu' : undefined}
+                                                        aria-haspopup="true"
+                                                        aria-expanded={open ? 'true' : undefined}
+                                                        onClick={handleClick}
+                                                    >
+                                                        <GroupWork />
+                                                    </IconButton>
+                                                    <Menu
+                                                        id="basic-menu"
+                                                        anchorEl={anchorEl}
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        MenuListProps={{
+                                                            'aria-labelledby': 'basic-button',
+                                                        }}
+                                                    >
+                                                        <MenuItem onClick={()=>handleAction(StudentCourseStatus.COMPLETE,data.id)}>Successed</MenuItem>
+                                                        <MenuItem onClick={()=>handleAction(StudentCourseStatus.REPEAT,data.id)}>Failed</MenuItem>
+                                                    </Menu>
                                                 </div>
                                             </td>
                                         </tr>)

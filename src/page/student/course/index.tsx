@@ -20,7 +20,7 @@ export  const StudentCourse = () => {
         },[]
     )
     const [active,setActive]=useState("all")
-    const activeClass="p-1 border bg-blue-900 text-white    "
+    const activeClass="p-1 border bg-blue-900 text-white"
     const inactiveClass="p-1 border"
     return (
         <Navigation items={StudentMenu}>

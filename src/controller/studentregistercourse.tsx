@@ -3,6 +3,9 @@ import { StudentCourseStatus } from "../interface/StudentCourseStatus";
 import { Axios } from "../util/axios";
 
 export class StudentRegisterCourseDao {
+    public async changeStudentCourseStatus(id: string, status: StudentCourseStatus) {
+       return Axios().get(`/registered-student/updateStudentStatus/${id}?status=${status}`)
+    }
      public  async addStudentCourse(lectureCourseId:string,semesterId:string,status:StudentCourseStatus) {
         return Axios().get(`/registered-student/register/${semesterId}?lectureCourseId=${lectureCourseId}&status=${status}`);
     }
