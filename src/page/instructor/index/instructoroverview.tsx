@@ -32,7 +32,7 @@ export const InstructorOverview = (prop: { semester: any }) => {
             <DashboardCard icon={<People />} title="Students"
                 path="/instructor/student"
                 className="border-r border-r-blue-200 px-5" total={totalStudents} />
-            <DashboardCard icon={<HistoryEduSharp />} path="/instructor/courses"
+            <DashboardCard icon={<HistoryEduSharp />} path="/instructor/course"
                 className="border-r border-r-blue-200 px-5" title="Courses" total={totalCourses} />
             <DashboardCard icon={<Feedback />}
                 path="/instructor/suggestions"
