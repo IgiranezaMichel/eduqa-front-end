@@ -15,7 +15,7 @@ export const StudentCourseDetail = (prop: { lectureCourse: any, children: ReactN
   const [courseProgressReport, setCourseProgressReport] = useState<ILectureCourseProgressReport>({
     id: '', lectureCourseContentId: '', title: ''
   });
-  const { content, refresh } = useLectureCourseProgressReportContext();
+  const { content } = useLectureCourseProgressReportContext();
   useEffect(
     () => {
       new LectureCourseDao().getLectureCourseContent(prop.lectureCourse.lectureCourseId)
@@ -98,12 +98,12 @@ export const StudentCourseDetail = (prop: { lectureCourse: any, children: ReactN
       <CourseContentComment lectureCourseProgress={courseProgress}>
         <div className="flex justify-between items-center gap-10 p-2 bg-blue-900 text-white font-bold">
           <section>
-          <div>Course: {prop.lectureCourse.course.name}</div>
-          <div>Course code: {prop.lectureCourse.course.code}</div>
-          <div>Lecture : {prop.lectureCourse.lecture.name}</div>
+            <div>Course: {prop.lectureCourse.course.name}</div>
+            <div>Course code: {prop.lectureCourse.course.code}</div>
+            <div>Lecture : {prop.lectureCourse.lecture.name}</div>
           </section>
-          <IconButton className="text-white" onClick={()=>setOpenDialog(false)}>
-            <Close/>
+          <IconButton className="text-white" onClick={() => setOpenDialog(false)}>
+            <Close />
           </IconButton>
         </div>
       </CourseContentComment>
