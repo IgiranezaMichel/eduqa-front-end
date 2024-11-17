@@ -11,7 +11,7 @@ public async getStudentReviewFromLectureCourse(lectureCourseId:string){
     return Axios().get('course-review/get/student-reviews/'+lectureCourseId)
 }
 public async getStudentCourseReview(){
-    return await Axios().get(`/course-review/student/review`);
+    return Axios().get(`/course-review/student/review`);
 }
 public async listOfPrincipleLectureReviews(){
     return await Axios().get(`/course-review/review-details`);
