@@ -1,9 +1,9 @@
 import { Navigation } from "../../../component/navigation"
 import { HodMenu } from "../../../util/hodMenu"
-import { Suggestions } from "./component/suggestions"
 import { CourseOnTrack } from "./component/courseontrack"
 import { HodOverview } from "./component/overview"
 import { IndexOverviewHeading } from "../../component"
+import { Suggestion } from "../../admin/index/suggestionbox/suggestion"
 
 export const HOD=()=>{
     return <Navigation items={HodMenu}>
@@ -13,7 +13,7 @@ export const HOD=()=>{
 <section>
     <div className="flex justify-between mt-5 gap-6">
      <section className=" w-[60%]">
-     <Suggestions/>
+     <Suggestion/>
      </section>
 
      <section className=" w-[40%]">
