@@ -8,6 +8,7 @@ import { CourseDao } from "../../../controller/courseDao"
 import { generateReport } from "../../../component/generatereport"
 import { useAuthenticationContext } from "../../../context/authentication"
 import { Download } from "@mui/icons-material"
+import { LectureReviews } from "../../component/reviews"
 
 export const InstructureCourse = () => {
     const [semester, setSemester] = useState<any>({});
@@ -36,7 +37,7 @@ export const InstructureCourse = () => {
         }
         )
     }
-    return <Navigation items={InstructorMenu}>
+    return <Navigation items={InstructorMenu} additionalNavInfo={<LectureReviews/>}>
         <LectureCourseProvider semesterId={semester.id}>
             <div className="w-full h-full overflow-x-hidden">
                 <DisplayCourse semester={semester} content={<>
