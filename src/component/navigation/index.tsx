@@ -5,12 +5,13 @@ import { NavigationContainer } from "./navigationContainer"
 
 export type Items={
     items:INavigationItems[],
-    children:ReactNode
+    children:ReactNode,
+    additionalNavInfo?:ReactNode
 }
 export const Navigation:FC<Items>=(prop)=>{
     return <AuthProvider>
           <section className="fixed w-full h-screen">
-        <NavigationContainer children={prop.children} items={prop.items}/>
+        <NavigationContainer additionalNavInfo={prop.additionalNavInfo} children={prop.children} items={prop.items}/>
     </section>
     </AuthProvider>
   
