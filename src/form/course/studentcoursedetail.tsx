@@ -96,7 +96,7 @@ export const StudentCourseDetail = (prop: { lectureCourse: any, children: ReactN
     </section>
     <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
       <CourseContentComment lectureCourseProgress={courseProgress}>
-        <div className="flex justify-between items-center gap-10 p-2 bg-blue-900 text-white font-bold">
+        <div className="flex justify-between items-center gap-10 p-2 bg-blue-900 text-white font-bold sticky top-0 z-50">
           <section>
             <div>Course: {prop.lectureCourse.course.name}</div>
             <div>Course code: {prop.lectureCourse.course.code}</div>
