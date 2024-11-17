@@ -142,7 +142,7 @@ export const RecentCourse = (prop: { semester: any, child: ReactNode }) => {
         </div>
         <Dialog open={showDiialog}>
             <LectureCourseProgressReportProvider lectureCourseId={lectureCourse.lectureCourseId}>
-                <CourseDetail lectureCourse={lectureCourse.lectureCourseId}>
+                <CourseDetail lectureCourse={lectureCourse}>
                     <div className="flex justify-between items-center bg-blue-950 p-1">
                         <div>
                             <h2 className="text-lg font-medium  text-white">
