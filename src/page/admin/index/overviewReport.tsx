@@ -4,7 +4,7 @@ import { Role } from "../../../enum/role"
 import { toast } from "sonner"
 import { CourseDao } from "../../../controller/courseDao"
 import { SemesterDao } from "../../../controller/semesterdao"
-import { Feedback, HistoryEduSharp, People } from "@mui/icons-material"
+import {  HistoryEduSharp, People } from "@mui/icons-material"
 import { DashboardCard } from "../../hod/index/component/DashboardCard"
 import { UserStatus } from "../../../enum/userStatus"
 
@@ -39,7 +39,7 @@ export const AdminIndexOverviewReport = () => {
   <div className="flex items-center justify-between border-t-4 border-t-blue-900 mt-5 p-2 border border-b-4 border-b-blue-200/50">
             <div className="border-r border-r-blue-200 pe-2">
                 {Object.keys(semester).length!=0?<div className="text-slate-600 font-bold mb-2 ">
-                Semester {semester.semNumber=1?'I':semester.semNumber==2?'II':semester.semNumber==3?'III':semester.semNumber==4?'IV':semester.semNumber==5?'V':semester.semNumber==6?'VI':semester.semNumber==7?'VII':semester.semNumber==8?'VIII':''}
+                Semester {semester.semNumber==1?'I':semester.semNumber==2?'II':semester.semNumber==3?'III':semester.semNumber==4?'IV':semester.semNumber==5?'V':semester.semNumber==6?'VI':semester.semNumber==7?'VII':semester.semNumber==8?'VIII':''}
                 </div>:<div>No Semester</div>}
                 <div className="text-sm font-bold">{semester.semesterName}</div>
             </div>
@@ -50,8 +50,5 @@ export const AdminIndexOverviewReport = () => {
             className="border-r border-r-blue-200 px-5" title="Courses" total={totalCourses} />
             <DashboardCard icon={<People />} path="/admin/lecture"
              className="border-r border-r-blue-200 ps-5" title="Lecturers" total={totalLecture} />
-            <DashboardCard icon={<Feedback />} 
-            path="/admin/suggestion"
-            title="Suggestions" total={15} />
         </div></>
 }

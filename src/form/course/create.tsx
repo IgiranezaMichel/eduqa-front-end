@@ -21,8 +21,17 @@ export const CreateCourse: FC<ICourseItem> = (prop) => {
     const saveCourse = (e:any) => {
         e.preventDefault();
         new CourseDao().registercourse(course).then(
-            data=>{toast.success(data.data);refresh()}
+            data=>{toast.success(data.data);refresh();handleReset()}
         ).catch(err=>toast.error(err.response.data))
+    }
+    const handleReset=()=>{
+        setCourse({
+            name: "",
+            code: "",
+            id: '',
+            credit: 0,
+            departmentId: prop.course.departmentId,
+        })
     }
     return <>
         <div>
@@ -36,19 +45,6 @@ export const CreateCourse: FC<ICourseItem> = (prop) => {
                     onChange={(e) => setCourse({ ...course, name: e.target.value })} className="mb-5" fullWidth />
                 <TextField required label='Module Credit' value={course.credit}
                     onChange={(e) => setCourse({ ...course, credit: Number(e.target.value) })} className="mb-5" fullWidth />
-{/*                 
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Select course Course Category</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={course.type}
-                        label="Select course Course Category"
-                    >
-                        <MenuItem value={CourseCategory.GENERAL}>General Course</MenuItem>
-                        <MenuItem value={CourseCategory.CORE}>Core Course</MenuItem>
-                     </Select>
-                </FormControl> */}
                 <div className="py-2 ">
                     <Toaster/>
                 <Button type="submit" className="bg-blue-950/90 w-full normal-case text-white p-3 font-bold text-xl">Add new course</Button>

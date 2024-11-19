@@ -1,29 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Add, Close, People } from "@mui/icons-material"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
+import {  useState } from "react"
 import { Dialog, IconButton } from "@mui/material"
 import { CreateDepartment } from "../../../form/department/create"
 import { IDepartment } from "../../../interface/department"
-import { DepartmentDao } from "../../../controller/departmentdao"
 import { useDepartmentContext } from "../../../context/department"
 import { HodOverview } from "../../hod/index/component/overview"
 
 export const AdminDisplayDepartment = () => {
-    const [departmentList, setdepartmentList] = useState([])
     const [department, setDepartment] = useState<IDepartment>({
         id: '',
         name: ''
     })
-    useEffect(
-        () => {
-            new DepartmentDao().getAlldepartment().then((res) => {
-                setdepartmentList(res.data)
-            }).catch((err) => {
-                toast.error(err.message);
-            })
-        }, []
-    )
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     const { content } = useDepartmentContext();
     console.log(content)
@@ -36,11 +24,6 @@ export const AdminDisplayDepartment = () => {
                 </div>
             </section>
             <section className="flex items-center gap-3">
-                <select name="" id="" className="p-2 rounded border border-gray-300">
-                    <option value="">Department filtering</option>
-                    {departmentList.map((item:any, index: number) => <option key={item.id + index} value={item.id}>{item.departmentName}</option>)
-                    }
-                </select>
                 <button onClick={() => setOpenDialog({ open: true, type: 'create' })} className="bg-blue-900 text-white p-2 rounded-md"><Add /></button>
             </section>
         </div>

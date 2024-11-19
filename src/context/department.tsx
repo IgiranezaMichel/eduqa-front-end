@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useContext, useEffect, useState } from "react";
 import { IState } from "../interface/state";
 import { DepartmentDao } from "../controller/departmentdao";

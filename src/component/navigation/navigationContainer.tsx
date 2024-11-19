@@ -24,7 +24,7 @@ export const NavigationContainer: FC<Items> = (prop) => {
         <div className="flex">
             <div className="w-[20%] flex flex-col h-screen border-r-2 border-r-blue-400/30 fixed">
                 <div className="flex items-center justify ms-5 py-5">
-                    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" className="w-10 h-10 rounded-full" />
+                    <img src="../../auca.png" alt="" className="w-16 h-16 rounded-full" />
                     <div className="font-bold text-xl ms-4">
                         EDUQA-<span className="text-blue-900">HUB</span>
                     </div>
@@ -42,7 +42,7 @@ export const NavigationContainer: FC<Items> = (prop) => {
                     </div>
                     )}
                 </div>
-                <div className="mt-auto">
+                <div className="mt-auto border-t-2 border-t-gray-300">
 
                     <NavigationItem icon={<Settings />} name="Settings" link="/settings" />
                     <div onClick={()=>setOpenLogoutDialog(true)} className={`flex gap-3 ps-5 py-2 cursor-pointer`}>

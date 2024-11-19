@@ -52,14 +52,28 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
     const saveStudent = (e: any) => {
         e.preventDefault();
         new UserDao().registerUser(student).then(
-            data => {refresh(UserStatus.ACTIVE) ;toast.success(data.data);
+            data => {refresh(UserStatus.ACTIVE) ;toast.success(data.data);handleReset()
                  }
         ).catch(err => {
             toast.error(err.response.data)
         }
     )
     }
-
+const handleReset = () => {
+        setStudent({
+            name: '',
+            email: '',
+            password: '',
+            status: UserStatus.ACTIVE,
+            code:'',
+            picture: '',
+            departmentId: '',
+            gender:'',
+            id:'',
+            phoneNumber:'',
+            role: prop.student.role
+        })
+}
     return <>
 
         <div>
@@ -67,9 +81,9 @@ export const CreateStudent: FC<IStudentItem> = (prop) => {
                 {prop.children}
             </div>
             <form className="p-2" onSubmit={saveStudent}>
-                <TextField required label='First Name' value={student.name}
+                <TextField required label='Name' value={student.name}
                     onChange={(e) => setStudent({ ...student, name: e.target.value })} className="mb-5" fullWidth />
-                <FormControl fullWidth className="mb-4">
+                <FormControl fullWidth className="mb-4" required>
                     <InputLabel id="gender-simple-select-label">Select gender</InputLabel>
                     <Select
                         labelId="gender-simple-select-label"
