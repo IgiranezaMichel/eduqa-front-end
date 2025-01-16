@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
-import { Close, DocumentScannerRounded, HistoryEdu, RateReview } from "@mui/icons-material"
+import { Close, DocumentScannerRounded } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
 import { RegistrationDao } from "../../../../../controller/registrationdao"
-import { Dialog, IconButton, TextField } from "@mui/material"
+import { Button, Dialog, IconButton, Tooltip } from "@mui/material"
 import { CreateStudentStudentRegisterCourse } from "../../../../../form/course/createStudentCourses"
 import { StudentRegisterCourseWithInSemesterProvider } from "../../../../../context/studentregisteredcourseinsemester"
 import { LectureCourseProgressReportProvider } from "../../../../../context/lecturecourseprogressreport"
@@ -14,13 +14,13 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     const [allCourse, setAllCourse] = useState<any>([])
     const [isLoading, setIsLoading] = useState(true)
     const [registration, setRegistration] = useState<any>({});
-    const [lectureCourse, setLectureCouse] = useState<any>({});
+    const [lectureCourse, setLectureCourse] = useState<any>({});
     const [studentRegistercourse, setStudentRegisterCourse] = useState<any>({})
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
     useEffect(
         () => {
             new StudentRegisterCourseDao().getAllStudentRegisteredCourseWithInAsemester(prop.semesterId)
-                .then(data => { setAllCourse(data.data); console.log(data.data); setIsLoading(false) })
+                .then(data => { setAllCourse(data.data); setIsLoading(false) })
                 .catch(err => { console.log(err); setIsLoading(false) })
             new RegistrationDao().getStudentCurrentSemesterRegistration()
                 .then(data => {
@@ -31,13 +31,13 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
     return <>
         <div className="flex justify-between mb-2">
             <div className="flex items-center justify-between mb-1">
-                <TextField
+                {/* <TextField
                     sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
-                    placeholder="Search" />
+                    placeholder="Search" /> */}
             </div>
 
             {Object.keys(registration).length != 0 ?
-                <button onClick={() => { setOpenDialog({ open: true, type: 'create' }) }} className="text-white font-bold border bg-blue-900">Add course</button> :
+                <button onClick={() => { setOpenDialog({ open: true, type: 'create' }) }} className="text-white font-bold border bg-blue-900 p-2">Add course</button> :
                 <div className="text-blue-900 font-bold">Contact School admin to register you in this semester</div>}
         </div>
         <section className="container  mx-auto overflow-hidden">
@@ -50,7 +50,6 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                     <tr>
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                             <div className="flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 rounded bg-gray-900 ring-offset-gray-900 border-gray-700" />
                                                 <button className="flex items-center gap-x-2">
                                                     <span>#</span>
                                                 </button>
@@ -82,8 +81,6 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                     {!isLoading && allCourse != undefined && allCourse.map((items: any, index: number) => <tr key={items.lectuureEmail}>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 rounded bg-gray-900 ring-offset-gray-900 border-gray-700" />
-
                                                 <span>{index + 1}</span>
                                             </div>
                                         </td>
@@ -111,13 +108,17 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                                             <h2 className="text-sm font-normal">{items.course.credit}</h2>
                                         </td>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                            <h2 className="text-sm font-normal">
-                                                <IconButton onClick={() => { setLectureCouse(items); setOpenDialog({ open: true, type: 'review' }) }}>
-                                                    <RateReview />
-                                                </IconButton>
-                                                <IconButton onClick={() => { setLectureCouse(items); setOpenDialog({ open: true, type: 'view' }) }}>
-                                                    <HistoryEdu />
-                                                </IconButton>
+                                            <h2 className="text-sm font-normal flex gap-2">
+                                                <Tooltip title="Course review" arrow>
+                                                    <Button variant='outlined' onClick={() => { setLectureCourse(items); setOpenDialog({ open: true, type: 'review' }) }}>
+                                                        review
+                                                    </Button>
+                                                </Tooltip>
+                                                <Tooltip title="Course Progress" arrow>
+                                                    <Button variant='outlined' onClick={() => { setLectureCourse(items); setOpenDialog({ open: true, type: 'view' }) }}>
+                                                        <img sizes="10px" width={24} src="../progress.png" alt="" />
+                                                    </Button>
+                                                </Tooltip>
                                             </h2>
                                         </td>
                                     </tr>)}
@@ -148,22 +149,22 @@ export const DisplaySemesterCourses = (prop: { semesterId: string }) => {
                             <div className="text-xl">{lectureCourse.course != undefined ? lectureCourse.course.code : ''}</div>
                             <div>{lectureCourse.course != undefined && lectureCourse.course.name}</div>
                         </div>
-                        <IconButton onClick={() => setOpenDialog({ open: false, type: 'view' })}><Close /></IconButton>
+                        <IconButton onClick={() => setOpenDialog({ open: false, type: 'view' })}><Close className="bg-white text-red-500 rounded-full"/></IconButton>
                     </div>
                 </StudentCourseDetail>
             </LectureCourseProgressReportProvider>
         </Dialog>
         <Dialog disablePortal maxWidth='md' sx={{ overflowX: 'hidden', overflowY: 'auto', position: 'fixed' }} open={openDialog.open && openDialog.type == 'review'}>
-                 <ReviewForm lectureCourse={lectureCourse}>
-                    <div className="flex items-center justify-between p-2 bg-blue-950 text-white  sticky top-0">
-                        <div>
-                            <div className="text-xl">{lectureCourse.course != undefined ? lectureCourse.course.code : ''}</div>
-                            <div>{lectureCourse.course != undefined && lectureCourse.course.name}</div>
-                        </div>
-                        <IconButton onClick={() => setOpenDialog({ open: false, type: 'view' })} className="text-white"><Close /></IconButton>
+            <ReviewForm lectureCourse={lectureCourse}>
+                <div className="flex items-center justify-between p-2 bg-blue-950 text-white  sticky top-0">
+                    <div>
+                        <div className="text-xl">{lectureCourse.course != undefined ? lectureCourse.course.code : ''}</div>
+                        <div>{lectureCourse.course != undefined && lectureCourse.course.name}</div>
                     </div>
-                </ReviewForm>
-         </Dialog>
-        
+                    <IconButton onClick={() => setOpenDialog({ open: false, type: 'view' })} className="text-white"><Close /></IconButton>
+                </div>
+            </ReviewForm>
+        </Dialog>
+
     </>
 }

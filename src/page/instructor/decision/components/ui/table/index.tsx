@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode, useEffect, useState } from "react"
-import { StudentRegisterCourseDao } from "../../../../controller/studentregistercourse"
-import { SemesterDao } from "../../../../controller/semesterdao"
-import { IPage } from "../../../../interface/page"
-import { ContactEmergency, GroupWork, People, Search, StarRate } from "@mui/icons-material"
 import { IconButton, InputAdornment, Menu, MenuItem,  TextField } from "@mui/material"
-import { useStudentRegisterCourseContext } from "../../../../context/studentregistercourse"
-import { CourseReviewDao } from "../../../../controller/coursereviewdao"
-import { generateReport } from "../../../../component/generatereport"
-import { useAuthenticationContext } from "../../../../context/authentication"
-import { StudentCourseStatus } from "../../../../interface/StudentCourseStatus"
+
 import { toast } from "sonner"
+import { StudentRegisterCourseDao } from "../../../../../../controller/studentregistercourse"
+import { SemesterDao } from "../../../../../../controller/semesterdao"
+import { CourseReviewDao } from "../../../../../../controller/coursereviewdao"
+import { generateReport } from "../../../../../../component/generatereport"
+import { ContactEmergency, GroupWork, People, Search, StarRate } from "@mui/icons-material"
+import { StudentCourseStatus } from "../../../../../../interface/StudentCourseStatus"
+import { useAuthenticationContext } from "../../../../../../context/authentication"
+import { IPage } from "../../../../../../interface/page"
+import { useStudentRegisterCourseContext } from "../../../../../../context/studentregistercourse"
 
 export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -31,7 +32,6 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
     const [studentList, setStudentList] = useState<any>([]);
     const [reviews, setReviews] = useState<any>(0);
-    console.log(studentList);
     const user = useAuthenticationContext();
     useEffect(
         () => {

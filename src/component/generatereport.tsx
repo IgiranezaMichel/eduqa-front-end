@@ -1,6 +1,7 @@
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import Image from '../../public/auca.png'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const generateReport =(head: string,colums:any[],rows: any[],printedBy:string) => {
     
     const doc = new jsPDF();

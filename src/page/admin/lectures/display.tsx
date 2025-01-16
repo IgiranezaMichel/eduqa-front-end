@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Add, BookmarkAdd, Close, Delete, Edit, People, PhoneAndroid, RemoveRedEye, Search } from "@mui/icons-material";
 import { useUserContext } from "../../../context/user"
 import { CreateStudent } from "../../../form/student/create";
@@ -13,10 +16,12 @@ import { ViewLectureCourse } from "../../../form/lecturecourse/view";
 import { ChangeUserStatusForm } from "../../../form/userstatus/create";
 import { UserDao } from "../../../controller/userDao";
 import { generateReport } from "../../../component/generatereport";
+import { useAuthenticationContext } from "../../../context/authentication";
 
 export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
     const { content, update } = useUserContext();
     const [openDialog, setOpenDialog] = useState({ open: false, type: 'create' });
+    const auth=useAuthenticationContext()
     const [student, setStudent] = useState<IUser>(
         {
             name: '',
@@ -31,7 +36,7 @@ export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
             code: ''
         }
     );
-    const [allStudent,setAllStudent]=useState([])
+    const [allLecture,setAllLectures]=useState([])
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' });
     const [isProcessingReport,setIsProcessingReport]=useState(false)
     useEffect(
@@ -42,13 +47,13 @@ export const DisplayLecture = (prop: { selectStatus: ReactNode }) => {
     const getAllUsers=()=>{
         setIsProcessingReport(true);
         return new UserDao().getAllUserByRoleAndStatus(Role.ROLE_INSTRACTOR,UserStatus.ACTIVE).then(
-            data=>{setAllStudent(data.data);
+            data=>{setAllLectures(data.data);
             ;setIsProcessingReport(false)}
         );
     }
     const printReport = () => {
         getAllUsers();
-        !isProcessingReport&&allStudent!=undefined&&allStudent.length!=0&&generateReport("Lecture report", ["Name", "Email", "Phone Number", "Gender"], Array.from(allStudent,(data:any)=>[data.name,data.email,data.phoneNumber,data.gender]), "Michael ");
+        !isProcessingReport&&allLecture!=undefined&&allLecture.length!=0&&generateReport("Lecture report", ["Name", "Email", "Phone Number", "Gender"], Array.from(allLecture,(data:any)=>[data.name,data.email,data.phoneNumber,data.gender]), auth.content.name);
     }
     return <section className=" overflow-hidden h-full">
 

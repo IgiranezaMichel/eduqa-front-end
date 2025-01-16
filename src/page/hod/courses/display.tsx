@@ -94,9 +94,6 @@ export const DisplayCourse=()=>{
                                     Duration
                                 </th>
                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Status
-                                </th>
-                                <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     Suggestion
                                 </th>
                                 <th scope="col" className="relative py-3.5 px-4">
@@ -135,7 +132,6 @@ export const DisplayCourse=()=>{
                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                             <h2 className="text-sm text-center font-medium text-gray-800 dark:text-white ">{data.credit}</h2>
                                 </td>
-                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">Monthly subscription</td>
                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800">
                                         <h2 className="text-sm font-normal">{data.timeStamp}</h2>

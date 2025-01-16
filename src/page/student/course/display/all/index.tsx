@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { DocumentScannerRounded } from "@mui/icons-material"
 import { StudentRegisterCourseDao } from "../../../../../controller/studentregistercourse"
@@ -23,7 +24,6 @@ export const DisplayCourse = () => {
                                     <tr>
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                             <div className="flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 rounded bg-gray-900 ring-offset-gray-900 border-gray-700" />
                                                 <button className="flex items-center gap-x-2">
                                                     <span>#</span>
                                                 </button>
@@ -55,8 +55,6 @@ export const DisplayCourse = () => {
                                     {!isLoading && allCourse != undefined && allCourse.map((items: any, index: number) => <tr key={items.lectuureEmail}>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 rounded bg-gray-900 ring-offset-gray-900 border-gray-700" />
-
                                                 <span>{index+1}</span>
                                             </div>
                                         </td>

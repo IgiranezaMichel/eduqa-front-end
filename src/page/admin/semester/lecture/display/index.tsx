@@ -2,9 +2,13 @@
 import { useEffect, useState } from "react"
 import { LectureCourseDao } from "../../../../../controller/lecturecourses"
 import { PhoneAndroid } from "@mui/icons-material"
+import { Dialog } from "@mui/material"
+import { ViewLectureCourse } from "../../../../../form/lecturecourse/view"
 
 export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => {
-    const [lectures, setLectures] = useState<any>([])
+    const [lectures, setLectures] = useState<any>([]);
+    const [openDialog,setOpenDialog]=useState(false);
+    const [lecture,setLecture]=useState<any>({});
     useEffect(
         ()=>{
             new LectureCourseDao().getAllLectureAvailableInSemester(prop.semester.id)
@@ -33,7 +37,6 @@ export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => 
                                     <tr>
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             <div className="flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 border-gray-300 rounded :bg-gray-900 :ring-offset-gray-900 :border-gray-700" />
                                                 <button className="flex items-center gap-x-2">
                                                     <span>#</span>
                                                 </button>
@@ -63,7 +66,6 @@ export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => 
                                     {lectures!=undefined&&lectures.length!=0&&lectures.map((data:any)=><tr>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 :text-gray-200 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 border-gray-300 rounded :bg-gray-900 :ring-offset-gray-900 :border-gray-700" />
 
                                                 <span>{data.code}</span>
                                             </div>
@@ -102,7 +104,7 @@ export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => 
 
                                         <td className="px-4 py-4 text-sm whitespace-nowrap">
                                             <div className="flex items-center gap-x-6">
-                                                <button className="text-gray-500 transition-colors border px-4 duration-200 :hover:text-indigo-500 :text-gray-300 hover:text-indigo-500 focus:outline-none">
+                                                <button onClick={()=>{setLecture(data);setOpenDialog(true)}} className="text-gray-500 transition-colors border px-4 duration-200 :hover:text-indigo-500 :text-gray-300 hover:text-indigo-500 focus:outline-none">
                                                     view
                                                 </button>
                                             </div>
@@ -118,5 +120,10 @@ export const DisplayAvailableLectureForASemester = (prop: { semester: any }) => 
                 </div>
             </div>
         </section>
+             <Dialog open={openDialog}
+                    PaperProps={{ style: { maxHeight: '90dvh', overflow: 'auto' } }}
+                    onClose={() => setOpenDialog(false)}>
+                    <ViewLectureCourse lecture={lecture} />
+                </Dialog>
     </div>
 }

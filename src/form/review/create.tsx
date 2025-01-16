@@ -83,12 +83,12 @@ export const ReviewForm=(prop:{lectureCourse:any,children:ReactNode})=>{
         },[]
     )
       return (
-        <div className="max-w-xl mx-auto p-5 bg-blue-600 text-white">
+        <div className="max-w-xl mx-auto p-5 ">
             {prop.children}
           <h1 className="text-center mb-5 text-lg font-bold">Course Survey</h1>
         {Object.keys(courseReviewObj).length==0?<>
             <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-5 p-2 bg-blue-600 text-white">
+            <div className="grid grid-cols-2 gap-5 p-2">
               <div>Question</div>
               <section className="flex justify-between">
                 <div>Bad</div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react"
 import { LectureCourseDao } from "../../controller/lecturecourses"
 import { toast } from "sonner";
@@ -7,10 +8,12 @@ export const ViewLectureCourse = (prop: { lecture: any }) => {
   const [lectureCourseList, setLectureCourseList] = useState<any>([]);
   useEffect(
     () => {
+      console.log(prop.lecture);
+      
       new LectureCourseDao().getLectureCourses(prop.lecture.id)
         .then(data => setLectureCourseList(data.data))
         .catch(err => toast.error(err.response.message))
-    }, []
+    }, [prop.lecture]
   )
   return <>
     <div className="mb-4">

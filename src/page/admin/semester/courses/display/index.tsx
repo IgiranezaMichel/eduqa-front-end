@@ -31,7 +31,6 @@ export const DisplaySemesterCourseHome = (prop: { semester: any }) => {
                                     <tr>
                                         <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             <div className="flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 border-gray-300 rounded :bg-gray-900 :ring-offset-gray-900 :border-gray-700" />
                                                 <button className="flex items-center gap-x-2">
                                                     <span>#</span>
                                                 </button>
@@ -52,17 +51,13 @@ export const DisplaySemesterCourseHome = (prop: { semester: any }) => {
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                             duration
                                         </th>
-                                        <th scope="col" className="relative py-3.5 px-4">
-                                            <span className="sr-only">Actions</span>
-                                        </th>
+
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 :divide-gray-700 :bg-gray-900">
                                     {courses != undefined && courses.length != 0 && courses.map((data: any) => <tr>
                                         <td className="px-4 py-4 text-sm font-medium text-gray-700 :text-gray-200 whitespace-nowrap">
                                             <div className="inline-flex items-center gap-x-3">
-                                                <input type="checkbox" className="text-blue-500 border-gray-300 rounded :bg-gray-900 :ring-offset-gray-900 :border-gray-700" />
-
                                                 <span>{data.code}</span>
                                             </div>
                                         </td>
@@ -103,17 +98,7 @@ export const DisplaySemesterCourseHome = (prop: { semester: any }) => {
                                                 <h2 className="text-sm font-normal">{data.course.duration} hrs</h2>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div className="flex items-center gap-x-6">
-                                                <button className="text-gray-500 transition-colors duration-200 :hover:text-indigo-500 :text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                    delete
-                                                </button>
-
-                                                <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                    Edit
-                                                </button>
-                                            </div>
-                                        </td>
+              
                                     </tr>)}
                                     {courses!=undefined&&courses.length==0&&<tr>
                                         <td colSpan={5} className="text-center p-5">No data found !</td>

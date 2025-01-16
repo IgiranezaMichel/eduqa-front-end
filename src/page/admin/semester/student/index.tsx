@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { SemesterUserProvider } from "../../../../context/semesteruser"
 import { Role } from "../../../../enum/role"

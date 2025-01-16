@@ -24,6 +24,7 @@ import { AdminManageDepartment } from "./page/admin/department"
 import { AdminManageLecturers } from "./page/admin/lectures"
 import { AdminManageStudent } from "./page/admin/student"
 import { UserAccountSetting } from "./component/settings"
+import { Deliberation } from "./page/instructor/decision"
 function App() {
 
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/instructor" element={<AuthProvider><InstructorHome/></AuthProvider>}></Route>
         <Route path="/instructor/course" element={<AuthProvider><InstructureCourse/></AuthProvider>}></Route>
         <Route path="/instructor/student" element={<AuthProvider><InstructorManageStudent/></AuthProvider>}></Route>
+        <Route path="/instructor/student/deliberation" element={<AuthProvider><Deliberation/></AuthProvider>}></Route>
 
         <Route path="/student" element={<AuthProvider><StudentIndex/></AuthProvider>}></Route>
         <Route path="/student/semesters" element={<AuthProvider><StudentSemester/></AuthProvider>}></Route>

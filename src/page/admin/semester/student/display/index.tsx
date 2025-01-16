@@ -65,11 +65,6 @@ const StudentHomeTable = (prop: { semester: any }) => {
                                                 <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 :text-gray-400">
                                                     Faculty
                                                 </th>
-
-
-                                                <th scope="col" className="relative py-3.5 px-4">
-                                                    <span className="sr-only">Actions</span>
-                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200 :divide-gray-700 :bg-gray-900">
@@ -101,17 +96,7 @@ const StudentHomeTable = (prop: { semester: any }) => {
                                                 <td className="px-4 py-4 text-sm text-gray-500 :text-gray-300 whitespace-nowrap">
                                                     {items.departmentName}
                                                 </td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-6">
-                                                        <button className="text-gray-500 transition-colors duration-200 :hover:text-indigo-500 :text-gray-300 hover:text-indigo-500 focus:outline-none">
-                                                            delete
-                                                        </button>
-
-                                                        <button className="text-blue-500 transition-colors duration-200 hover:text-indigo-500 focus:outline-none">
-                                                            Edit
-                                                        </button>
-                                                    </div>
-                                                </td>
+        
                                             </tr>)}
                                         </tbody>
                                     </table>

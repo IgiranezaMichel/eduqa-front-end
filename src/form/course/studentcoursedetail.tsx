@@ -66,12 +66,13 @@ export const StudentCourseDetail = (prop: { lectureCourse: any, children: ReactN
         <div className="p-1 border border-gray-300 rounded-md">
           <section className="bg-blue-950 text-white p-2 rounded-md">
             <div className="flex justify-between items-center clear-both">
+
               <div className="font-bold">
-                Completed Course content
-              </div>
-              <div className="font-bold">
-                {Object.keys(courseContent).length == 0 && courseContent.totalChapter == null ? 'No course content' :
+                {Object.keys(courseContent).length == 0 && courseContent.totalChapter == null ? 'No course content found' :
                   <>
+                    <div className="font-bold">
+                      Completed Course content
+                    </div>
                     <div className="float-end"> {currentChapter}/{courseContent.totalChapter}</div>
                     <LinearProgress variant="determinate" className="w-full" value={courseContent.currentChapter != null ? ((courseContent.currentChapter / courseContent.totalChapter) * 100) : 0} />
                     <b>Course Progress</b>
