@@ -10,7 +10,7 @@ export class StudentRegisterCourseDao {
         return Axios().get(`/registered-student/register/${semesterId}?lectureCourseId=${lectureCourseId}&status=${status}`);
     }
     public  async getListregisteredStudentForLectureCourses(semesterId:string, page:IPage) {
-        return Axios().post(`/registered-student/get/student/${semesterId}`,page);
+        return Axios().post(`/registered-student/get/student-list/${semesterId}`,page);
     }
     public  async getStudentCourses(page:IPage) {
         return Axios().post(`/registered-student/get/student/courses`,page);
