@@ -6,16 +6,17 @@ import { StudentRegisterCourseDao } from "../../../../../../controller/studentre
 import { SemesterDao } from "../../../../../../controller/semesterdao"
 import { CourseReviewDao } from "../../../../../../controller/coursereviewdao"
 import { generateReport } from "../../../../../../component/generatereport"
-import { ContactEmergency, People, Search, StarRate } from "@mui/icons-material"
+import { CalendarMonth, ContactEmergency, People, Search, StarRate } from "@mui/icons-material"
 import { useAuthenticationContext } from "../../../../../../context/authentication"
 import { IPage } from "../../../../../../interface/page"
 import { useStudentRegisterCourseContext } from "../../../../../../context/studentregistercourse"
-import { DeliberationAction } from "../table-actions/deliberationaction"
+import { AttendanceAction } from "../table-actions/attendance"
 
-export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
+export const DisplayAttendance = (prop: { selectStatus: ReactNode }) => {
     const [currentSemester, setCurrentSemester] = useState<any>({})
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
     const [studentList, setStudentList] = useState<any>([]);
+    const [date,setDate] = useState<any>(new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds());
     const [reviews, setReviews] = useState<any>(0);
     const user = useAuthenticationContext();
     useEffect(
@@ -82,7 +83,7 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
             </section>
         </div>
         <div className="flex justify-between items-center py-2">
-            <div>
+            <div className="flex gap-2">
                 <TextField
                     onChange={e => setPage({ ...page, search: e.target.value })}
                     sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
@@ -91,6 +92,16 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                         startAdornment: (
                             <InputAdornment position="start">
                                 < Search />
+                            </InputAdornment>),
+                    }} />
+                    <TextField type="datetime-local" value={date}
+                    onChange={e => setDate(e.target.value)}
+                    sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
+                    placeholder="Search"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                < CalendarMonth />
                             </InputAdornment>),
                     }} />
             </div>
@@ -173,7 +184,7 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                                                 </div>
                                             </td>
                                             <td>
-                                              <DeliberationAction studentCourse={data}/>
+                                              <AttendanceAction studentCourse={data}/>
                                             </td>
                                         </tr>)
                                         }

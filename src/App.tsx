@@ -25,6 +25,7 @@ import { AdminManageLecturers } from "./page/admin/lectures"
 import { AdminManageStudent } from "./page/admin/student"
 import { UserAccountSetting } from "./component/settings"
 import { Deliberation } from "./page/instructor/decision"
+import { Attendance } from "./page/instructor/attendance"
 function App() {
 
   return (
@@ -42,6 +43,7 @@ function App() {
         
         <Route path="/instructor" element={<AuthProvider><InstructorHome/></AuthProvider>}></Route>
         <Route path="/instructor/course" element={<AuthProvider><InstructureCourse/></AuthProvider>}></Route>
+        <Route path="/instructor/student/attendance" element={<AuthProvider><Attendance/></AuthProvider>}></Route>
         <Route path="/instructor/student" element={<AuthProvider><InstructorManageStudent/></AuthProvider>}></Route>
         <Route path="/instructor/student/deliberation" element={<AuthProvider><Deliberation/></AuthProvider>}></Route>
 
