@@ -8,8 +8,6 @@ import { IAttendanceRecord } from "../../../../../../interface/attendanceRecord"
 import { toast, Toaster } from "sonner";
 
 export const ViewAttendanceList = (prop: { attendance: any }) => {
-    console.log(prop.attendance);
-    
     const [open, setOpen] = useState(false)
     return <>
         <button onClick={() => setOpen(true)} className="p-2 bg-blue-950/60">
@@ -30,25 +28,25 @@ export const ViewAttendanceList = (prop: { attendance: any }) => {
     </>
 }
 
-const DisplayAttendanceList = (prop:{attendanceId:any}) => {
-    const { content,refresh } = useAttendanceRecordContext();
+const DisplayAttendanceList = (prop: { attendanceId: any }) => {
+    const { content, refresh } = useAttendanceRecordContext();
     console.log(content);
-    
-    const handleAttendance=(attendance:IAttendanceRecord)=>{
+
+    const handleAttendance = (attendance: IAttendanceRecord) => {
         new AttendanceRecordController().createAttendanceRecord(attendance)
-        .then((res)=>{
-           toast.success(res.data) ;
-           refresh();
-        }).catch(e=>{toast.error(e.response.message);console.error(e)});
+            .then((res) => {
+                toast.success(res.data);
+                refresh();
+            }).catch(e => { toast.error(e.response.message); console.error(e) });
     }
     return <>
-    <main className="grid grid-cols-5 gap-2 items-center border p-1 rounded-md w-full h-full bg-blue-900/50 py-4">
-        <div className="border-r">Student</div>
-        <div  className="border-r">Contacts</div>
-        <div className="border-r">Faculty</div>
-        <div className="border-r">Attendance status</div>
-        <div >Action</div>
-    </main>
+        <main className="grid grid-cols-5 gap-2 items-center border p-1 rounded-md w-full h-full bg-blue-900/50 py-4">
+            <div className="border-r">Student</div>
+            <div className="border-r">Contacts</div>
+            <div className="border-r">Faculty</div>
+            <div className="border-r">Attendance status</div>
+            <div >Action</div>
+        </main>
         {Object.keys(content).length != 0 && content.data != undefined && <div>
             {content.data.length != 0 && content.data.map(
                 (data: any) => <div className="grid grid-cols-5 gap-2 items-center border p-1 rounded-md w-full h-full">
@@ -67,52 +65,60 @@ const DisplayAttendanceList = (prop:{attendanceId:any}) => {
                         {data.student.departmentName}
                     </div>
                     <div>
-                        {data.isPresent!=null ? <div >
-                            {data.isPresent ? <div className="bg-green-500 text-white p-1 rounded-md flex">Present</div> :<div className="bg-red-500 text-white p-1 rounded-md flex">Absent</div>}
-                        </div> : 
-                        <div >Not set</div>}
+                        {data.isPresent != null ? <div >
+                            {data.isPresent ? <div className="bg-green-500 text-white p-1 rounded-md flex">Present</div> : <div className="bg-red-500 text-white p-1 rounded-md flex">Absent</div>}
+                        </div> :
+                            <div >Not set</div>}
                     </div>
                     <div className="flex gap-2 items-center justify-center">
-                        {data.isPresent!=null ? <div >
-                            {data.isPresent?
-                            <button className="bg-blue-500 text-white p-1 rounded-md"
-                            onClick={()=>{handleAttendance({
-                                id:data.id,
-                                present:false,
-                                studentCourseId:data.studentCourseId,
-                                attendanceId:prop.attendanceId
-                            })}}
-                            >Absent</button>:
-                            <button onClick={()=>{handleAttendance({
-                                id:data.id,
-                                present:true,
-                                studentCourseId:data.studentCourseId,
-                                attendanceId:prop.attendanceId
-                            })}} className="bg-blue-950 text-white p-1 rounded-md">Present</button>}
-                            </div>:
+                        {data.isPresent != null ? <div >
+                            {data.isPresent ?
+                                <button className="bg-blue-500 text-white p-1 rounded-md"
+                                    onClick={() => {
+                                        handleAttendance({
+                                            id: data.id,
+                                            present: false,
+                                            studentCourseId: data.studentCourseId,
+                                            attendanceId: prop.attendanceId
+                                        })
+                                    }}
+                                >Absent</button> :
+                                <button onClick={() => {
+                                    handleAttendance({
+                                        id: data.id,
+                                        present: true,
+                                        studentCourseId: data.studentCourseId,
+                                        attendanceId: prop.attendanceId
+                                    })
+                                }} className="bg-blue-950 text-white p-1 rounded-md">Present</button>}
+                        </div> :
                             <div className="flex gap-2 items-center justify-center">
                                 <button className="bg-blue-950 text-white p-1 rounded-md"
-                                onClick={()=>{handleAttendance({
-                                    id:data.id,
-                                    present:true,
-                                    studentCourseId:data.studentCourseId,
-                                    attendanceId:prop.attendanceId
-                                })}}>Present</button>
+                                    onClick={() => {
+                                        handleAttendance({
+                                            id: data.id,
+                                            present: true,
+                                            studentCourseId: data.studentCourseId,
+                                            attendanceId: prop.attendanceId
+                                        })
+                                    }}>Present</button>
                                 <button className="bg-blue-500 text-white p-1 rounded-md"
-                                onClick={()=>{handleAttendance({
-                                    id:data.id,
-                                    present:false,
-                                    studentCourseId:data.studentCourseId,
-                                    attendanceId:prop.attendanceId
-                                })}}>Absent</button>
+                                    onClick={() => {
+                                        handleAttendance({
+                                            id: data.id,
+                                            present: false,
+                                            studentCourseId: data.studentCourseId,
+                                            attendanceId: prop.attendanceId
+                                        })
+                                    }}>Absent</button>
                             </div>
-                            }
+                        }
                     </div>
                 </div>)}
-                {content.data.length ==0&&<section className="text-center">
-                    No data found
-                    </section>}
+            {content.data.length == 0 && <section className="text-center">
+                No data found
+            </section>}
         </div>}
-        <Toaster/>
+        <Toaster />
     </>
 }
