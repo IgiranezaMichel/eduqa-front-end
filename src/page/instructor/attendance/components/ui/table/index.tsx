@@ -9,6 +9,7 @@ import { IPage } from "../../../../../../interface/page"
 import { useAttendanceContext } from "../../../../../../context/attendance"
 import { AddNewAttendance } from "../../actions/addAttendance"
 import { ViewAttendanceList } from "../table-actions/viewAttendanceList"
+import { ViewAttendanceHistory } from "../table-actions/attendanceHistory"
 
 export const DisplayAttendance = () => {
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
@@ -104,9 +105,7 @@ export const DisplayAttendance = () => {
                                 </div>
                                 <div className="flex gap-3">
                                     <ViewAttendanceList attendance={item}/>
-                                    <button className="p-2 bg-blue-950/60">
-                                        <Visibility />
-                                    </button>
+                                    <ViewAttendanceHistory attendance={item}/>
                                 </div>
                             </div>
                         })
