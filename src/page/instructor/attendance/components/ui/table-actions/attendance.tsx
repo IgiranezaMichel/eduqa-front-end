@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GroupWork } from "@mui/icons-material"
-import { IconButton, Menu, MenuItem } from "@mui/material"
+import { IconButton, Menu } from "@mui/material"
 import { useState } from "react";
-import { IAttendance } from "../../../../../../interface/attendance";
-import { AttendanceController } from "../../../../../../controller/attendanceController";
-import { toast } from "sonner";
+// import { IAttendance } from "../../../../../../interface/attendance";
+// import { AttendanceController } from "../../../../../../controller/attendanceController";
+// import { toast } from "sonner";
 
-export const AttendanceAction = (prop: {date:string, studentCourse: any }) => {
+export const AttendanceAction = () => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -16,12 +16,12 @@ export const AttendanceAction = (prop: {date:string, studentCourse: any }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const handleAction = (attendance: IAttendance) => {
-        new AttendanceController().createAttendance(attendance)
-            .then((data) => toast.success(data.data))
-            .catch(er => toast.error(er.response.data));
-        handleClose();
-    }
+    // const handleAction = (attendance: IAttendance) => {
+    //     new AttendanceController().createAttendance(attendance)
+    //         .then((data) => toast.success(data.data))
+    //         .catch(er => toast.error(er.response.data));
+    //     handleClose();
+    // }
     return (
         <div>
             <IconButton
@@ -42,8 +42,8 @@ export const AttendanceAction = (prop: {date:string, studentCourse: any }) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem onClick={() => { handleAction({ id: '', isPresent: false, studentRegisteredId: prop.studentCourse.id,date:prop.date }); }}>Attend</MenuItem>
-                <MenuItem onClick={() => { handleAction({ id: '', isPresent: true, studentRegisteredId: prop.studentCourse.id ,date:prop.date})}}>Not attended</MenuItem>
+                {/* <MenuItem onClick={() => { handleAction({ id: '', studentRegisteredId: prop.studentCourse.id,date:prop.date }); }}>Attend</MenuItem>
+                <MenuItem onClick={() => { handleAction({ id: '',  studentRegisteredId: prop.studentCourse.id ,date:prop.date})}}>Not attended</MenuItem> */}
             </Menu>
         </div>
     )

@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ReactNode, useEffect, useState } from "react"
-import {InputAdornment, TextField } from "@mui/material"
+import React, {  useEffect, useState } from "react"
+import { InputAdornment, TextField } from "@mui/material"
 import { CourseReviewDao } from "../../../../../../controller/coursereviewdao"
-import { generateReport } from "../../../../../../component/generatereport"
-import { CalendarMonth, People, Search, StarRate } from "@mui/icons-material"
-import { useAuthenticationContext } from "../../../../../../context/authentication"
+import { People, Search, StarRate, Visibility } from "@mui/icons-material"
+// import { useAuthenticationContext } from "../../../../../../context/authentication"
 import { IPage } from "../../../../../../interface/page"
-import { useStudentRegisterCourseContext } from "../../../../../../context/studentregistercourse"
+import { useAttendanceContext } from "../../../../../../context/attendance"
+import { AddNewAttendance } from "../../actions/addAttendance"
+import { ViewAttendanceList } from "../table-actions/viewAttendanceList"
 
-export const DisplayAttendance = (prop: { selectStatus: ReactNode }) => {
+export const DisplayAttendance = () => {
     const [page, setPage] = useState<IPage>({ pageNumber: 0, pageSize: 10, search: '', sortBy: 'id' })
-    const [date,setDate] = useState<any>(new Date().getFullYear()+"-"+new Date().getMonth()+1+"-"+new Date().getDate()+" "+new Date().getHours()+":"+new Date().getMinutes()+":"+new Date().getSeconds());
     const [reviews, setReviews] = useState<any>(0);
-    const user = useAuthenticationContext();
+    // const user = useAuthenticationContext();    
     useEffect(
         () => {
             new CourseReviewDao().getAllLectureReview().then(data => {
@@ -21,15 +21,17 @@ export const DisplayAttendance = (prop: { selectStatus: ReactNode }) => {
             })
         }, []
     )
-    const { content, update } = useStudentRegisterCourseContext();
+    const { content, update } = useAttendanceContext();
+    console.log(content);
+
     useEffect(
         () => {
             update(page);
         }, [page]
     )
-    const printReport = () => {
-        generateReport(user.content.name + " students report", ["Reg Number", "Student name", "Email", "Department", "Time stamp"], Array.from(studentList.data, (data: any) => [data.code, data.name + "\n" + data.gender, data.email + "\n" + data.phoneNumber, data.departmentName, data.timeStamp]), user.content.name);
-    }
+    // const printReport = () => {
+    //     generateReport(user.content.name + " students report", ["Reg Number", "Student name", "Email", "Department", "Time stamp"], Array.from(studentList.data, (data: any) => [data.code, data.name + "\n" + data.gender, data.email + "\n" + data.phoneNumber, data.departmentName, data.timeStamp]), user.content.name);
+    // }
     return <section className=" overflow-hidden h-full">
 
         <div className="flex items-center justify-between clear-both py-1">
@@ -39,10 +41,10 @@ export const DisplayAttendance = (prop: { selectStatus: ReactNode }) => {
                 </div>
                 <section>
                     <div className="font-bold text-xl">
-                        List of Student
+                        List of Attendance
                     </div>
                     <div className="text-gray-500 text-sm">
-                        This table contains all the student
+                        This table contains all attendance list
                     </div>
                 </section>
             </section>
@@ -68,36 +70,52 @@ export const DisplayAttendance = (prop: { selectStatus: ReactNode }) => {
                                 < Search />
                             </InputAdornment>),
                     }} />
-                    <TextField type="datetime-local" value={date}
-                    onChange={e => setDate(e.target.value)}
-                    sx={{ '& .MuiInputBase-root': { height: '40px', }, }}
-                    placeholder="Search"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                < CalendarMonth />
-                            </InputAdornment>),
-                    }} />
             </div>
-            <section className="flex gap-2">
-                {prop.selectStatus}
-                <select name="" id="" className="border border-gray-300 p-2 rounded-">
-                    <option value="">select department</option>
-                </select>
-                <button className="p-1 bg-green-800/80" onClick={() => printReport()}>Export</button>
-            </section>
+            <AddNewAttendance />
         </div>
-        <section className="container  mx-auto">
-            <div className="flex flex-col ">
-                <div className="-mx-4 -my-2 overflow-x-auto  overflow-auto h-[50dvh] mb-2 border-0 sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="overflow-hidden border border-gray-200  md:rounded-lg">
-                      
-                        </div>
+
+        {Object.keys(content).length != 0 &&
+            content.data != undefined && <div>
+                <div>
+                    <div className="grid grid-cols-4 p-2 border rounded-md bg-blue-900/50 gap-1">
+                        <div className="border-r border-gray-300 p-2">Course</div>
+                        <div className="border-r border-gray-300 p-2">Attendance Time</div>
+                        <div className="border-r border-gray-300 p-2">Recorded Date</div>
+                        <div>Action</div>
                     </div>
+                    {content.data.length != 0 && content.data.length != 0 &&
+                        content.data.map((item: any, index: number) => {
+                            return <div key={index} className="grid grid-cols-4 p-2 border rounded-md mt-2 items-center gap-1">
+                                <div className="flex justify-center gap-2">
+                                    <div className="bg-blue-300 p-1 flex items-center">
+                                        {item.course.code}
+                                    </div>
+                                    <section>
+                                        <div className="bg-blue-300 p-1 items-center text-sm">{item.course.name}</div>
+                                        <div><b>credit:</b>{item.course.credit}</div>
+                                        <div><b>Duration :</b>{item.course.duration} hrs/week</div>
+                                    </section>
+                                </div>
+                                <div>
+                                    {item.date}
+                                </div>
+                                <div>
+                                    {item.timeStamp}
+                                </div>
+                                <div className="flex gap-3">
+                                    <ViewAttendanceList attendance={item}/>
+                                    <button className="p-2 bg-blue-950/60">
+                                        <Visibility />
+                                    </button>
+                                </div>
+                            </div>
+                        })
+
+                    }
                 </div>
-            </div>
-        </section>
-   
+                {content.data.length == 0 && <section className="text-center p-4">
+                    No attendance data found
+                </section>}
+            </div>}
     </section>
 }

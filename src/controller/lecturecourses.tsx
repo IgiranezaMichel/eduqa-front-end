@@ -13,6 +13,9 @@ export class LectureCourseDao {
     public async getLectureCourses(id: any) {
         return Axios().get(`/lecture-course/all/${id}`);
     }
+    public async getLecturePrincipleCourses() {
+        return Axios().get(`/lecture-course/all`);
+    }
     public async createLectureCourse(lectureCourses: ILectureCourse) {
         return Axios().post('/lecture-course/register', lectureCourses)
     }
