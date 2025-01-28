@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArrowRight, Close, FileCopy, People } from "@mui/icons-material"
 import { ReactNode, useEffect, useState } from "react"
 import { LectureCourseDao } from "../../../controller/lecturecourses"
@@ -26,7 +27,7 @@ export const RecentCourse = (prop: { semester: any, child: ReactNode }) => {
                         toast.error(err.message); setIsLoading(false);
                     });
             }
-        }, [prop.semester]
+        }, [prop.semester,page]
 
     );
     return <>

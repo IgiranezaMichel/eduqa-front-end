@@ -52,7 +52,7 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                         
                     })
             }
-        }, [currentSemester.id]
+        }, [currentSemester.id,page]
     )
     useEffect(
         () => {
@@ -155,15 +155,15 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                                         {studentList.data.length != 0 && studentList.data.map((data: any, index: number) => <tr>
                                             <td key={index + data.id} className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                 <div className="inline-flex items-center gap-x-3">
-                                                    <span> {data.code}</span>
+                                                    <span> {data.student.code}</span>
                                                 </div>
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500whitespace-nowrap">
                                                 <div className="flex items-center gap-x-2">
-                                                    <img className="object-cover w-8 h-8 rounded-full" src={data.picture} alt="" />
+                                                    <img className="object-cover w-8 h-8 rounded-full" src={data.student.picture} alt="" />
                                                     <div>
-                                                        <h2 className="text-sm font-medium text-gray-800 ">{data.name}</h2>
-                                                        <p className="text-xs font-normal text-gray-600">{data.gender}</p>
+                                                        <h2 className="text-sm font-medium text-gray-800 ">{data.student.name}</h2>
+                                                        <p className="text-xs font-normal text-gray-600">{data.student.gender}</p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -172,8 +172,8 @@ export const DisplayStudent = (prop: { selectStatus: ReactNode }) => {
                                                 <div className="flex items-center gap-x-2">
                                                     <ContactEmergency />
                                                     <div>
-                                                        <h2 className="text-sm font-medium text-gray-800">{data.email}</h2>
-                                                        <p className="text-xs font-normal text-gray-600">{data.phoneNumber}</p>
+                                                        <h2 className="text-sm font-medium text-gray-800">{data.student.email}</h2>
+                                                        <p className="text-xs font-normal text-gray-600">{data.student.phoneNumber}</p>
                                                     </div>
                                                 </div>
                                             </td>
