@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IState } from "../interface/state";
@@ -34,7 +35,13 @@ export const AuthProvider = (prop: { children: ReactNode }) => {
                     }
                 }
                 else if (user.role == Role.ROLE_HOD) {
-                    navigation("/hod")
+                    if (location.pathname == "/"){
+                        navigation("/hod")
+                    }
+                    else if(location.pathname.indexOf('hod')!=0){
+                        navigation(location.pathname)
+                    }
+                    
                 }
                 else if (user.role == Role.ROLE_INSTRACTOR) {
                     if (location.pathname == "/")

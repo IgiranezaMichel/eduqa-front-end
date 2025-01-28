@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Close, East, Email, Phone } from "@mui/icons-material"
-import { Avatar, IconButton, Modal } from "@mui/material"
+import { Avatar, FormControl, IconButton, InputLabel, MenuItem, Modal, Select } from "@mui/material"
 import { useState } from "react"
 import { AttendanceRecordProvider, useAttendanceRecordContext } from "../../../../../../context/attendanceRecord";
 import { AttendanceRecordController } from "../../../../../../controller/attendanceRecordController";
 import { IAttendanceRecord } from "../../../../../../interface/attendanceRecord";
 import { toast, Toaster } from "sonner";
+import { IPage } from "../../../../../../interface/page";
 
 export const ViewAttendanceList = (prop: { attendance: any }) => {
     const [open, setOpen] = useState(false)
@@ -30,7 +31,9 @@ export const ViewAttendanceList = (prop: { attendance: any }) => {
 
 const DisplayAttendanceList = (prop: { attendanceId: any }) => {
     const { content, refresh } = useAttendanceRecordContext();
-    console.log(content);
+    const[page,setPage]=useState<IPage>({
+        pageNumber:0,pageSize:10,search:'',sortBy:'id'
+    })
 
     const handleAttendance = (attendance: IAttendanceRecord) => {
         new AttendanceRecordController().createAttendanceRecord(attendance)
@@ -40,6 +43,16 @@ const DisplayAttendanceList = (prop: { attendanceId: any }) => {
             }).catch(e => { toast.error(e.response.message); console.error(e) });
     }
     return <>
+        <section className="flex justify-between">
+            <div>
+                <FormControl>
+                    <InputLabel>sort by</InputLabel>
+                    <Select>
+                        <MenuItem >Date</MenuItem>
+                    </Select>
+                </FormControl>
+            </div>
+        </section>
         <main className="grid grid-cols-5 gap-2 items-center border p-1 rounded-md w-full h-full bg-blue-900/50 py-4">
             <div className="border-r">Student</div>
             <div className="border-r">Contacts</div>

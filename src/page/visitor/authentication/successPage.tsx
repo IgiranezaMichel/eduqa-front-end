@@ -36,8 +36,7 @@ export const SuccessAuthenticationPage=()=>{
     useEffect(
         ()=>{
             const userData=new UserDao().successLogin();
-            userData.then(
-                data=>{data.data;setIsLoading(false)}
+            userData.then(()=>{setIsLoading(false)}
             )
             .catch(err=>{console.log(err);setIsLoading(false)})
         }
